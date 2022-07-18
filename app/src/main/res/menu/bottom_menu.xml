@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id = "@+id/menu_item_calendar"
+        android:icon = "@drawable/ic_calendar"
+        android:orderInCategory="1"
+        android:title="@null" />
+    <item
+        android:id = "@+id/menu_item_current_day"
+        android:title= ""
+        android:gravity="center"
+        android:font="@font/indie_flower"
+        android:orderInCategory="2"/>
+    <item
+        android:id = "@+id/menu_item_profile"
+        android:icon = "@drawable/ic_person"
+        android:size = "46dp"
+        android:title="@null"
+        android:orderInCategory="3"/>
+</menu>

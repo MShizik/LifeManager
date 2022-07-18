@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".FragmentCalendar">
+
+
+    <GridLayout
+        android:id = "@+id/calendar_days_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="320dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="200dp"
+        android:rowCount = "5"
+        android:columnCount = "7" >
+
+
+
+    </GridLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cur_day_constraint_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/calendar_btn_day"
+            android:layout_marginTop="70dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:background="@drawable/rounded_day"
+            android:fontFamily="@font/indie_flower"
+            android:text="11"
+            android:paddingEnd="10dp"
+            android:gravity="center_horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="100dp" />
+
+        <TextView
+            android:id="@+id/cur_day_answer_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="KEEP IT UP"
+            android:textSize="32dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/indie_flower"
+            app:layout_constraintTop_toBottomOf="@id/calendar_btn_day"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    
+
+</FrameLayout>

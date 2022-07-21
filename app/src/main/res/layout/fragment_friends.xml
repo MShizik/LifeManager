@@ -22,7 +22,7 @@
             android:textAllCaps="false"
             android:textSize="24dp"
             android:textStyle="normal"
-            android:fontFamily="@font/indie_flower"
+            android:fontFamily="@font/my_written"
             app:layout_constraintStart_toStartOf = "parent"
             app:layout_constraintEnd_toStartOf="@id/friend_invite_list_btn"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,7 +38,7 @@
             android:textAllCaps="false"
             android:textSize="24dp"
             android:textStyle="normal"
-            android:fontFamily="@font/indie_flower"
+            android:fontFamily="@font/my_written"
             app:layout_constraintStart_toEndOf="@id/friend_friend_list_btn"
             app:layout_constraintEnd_toEndOf = "parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -48,10 +48,28 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ListView
+        android:id = "@+id/friend_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="100dp"
         android:layout_marginRight="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginBottom="100dp"/>
+        android:layout_marginBottom="160dp"/>
+
+    <Button
+        android:id="@+id/friend_friend_list_new_btn"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="580dp"
+        android:layout_marginBottom="100dp"
+        android:fontFamily="@font/my_written"
+        android:text="Invite friend"
+        android:textAllCaps="false"
+        android:textColor="#70A6D3"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        android:layout_gravity="center_horizontal"/>
+
+
 </FrameLayout>

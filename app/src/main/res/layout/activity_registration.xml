@@ -4,19 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".RegistrationActivity">
 
     <TextView
-        android:id="@+id/main_text_greeting"
+        android:id="@+id/reg_text_greeting"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="40dp"
-        android:fontFamily="@font/my_written"
-        android:letterSpacing="0.1"
-        android:lineSpacingExtra="5dp"
-        android:text="There are 16 hours left\nDon't waste them"
+        android:fontFamily="@font/indie_flower"
+        android:text="Become more productive"
         android:textColor="@color/black"
         android:textSize="32dp"
         android:textStyle="normal"
@@ -26,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/main_text_email_field"
+        android:id="@+id/reg_text_email_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
@@ -34,9 +32,8 @@
         android:layout_marginEnd="60dp"
         android:background="@drawable/input_field"
         android:ems="10"
-        android:fontFamily="@font/my_written"
+        android:fontFamily="@font/indie_flower"
         android:textColorHint="#686868"
-        android:letterSpacing="0.1"
         android:hint="Email"
         android:textSize="20dp"
         android:gravity="center_vertical|left"
@@ -45,18 +42,17 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_text_greeting" />
+        app:layout_constraintTop_toBottomOf="@id/reg_text_greeting" />
 
     <EditText
-        android:id="@+id/main_text_password_field"
+        android:id="@+id/reg_text_password_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="60dp"
         android:background="@drawable/input_field"
-        android:fontFamily="@font/my_written"
-        android:letterSpacing="0.1"
+        android:fontFamily="@font/indie_flower"
         android:textColorHint="#686868"
         android:ems="10"
         android:hint="Password"
@@ -67,46 +63,43 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_text_email_field" />
+        app:layout_constraintTop_toBottomOf="@id/reg_text_email_field" />
+
+    <EditText
+        android:id="@+id/reg_text_password_repeat_field"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/input_field"
+        android:fontFamily="@font/indie_flower"
+        android:textColorHint="#686868"
+        android:ems="10"
+        android:hint="Repeat your password"
+        android:textSize="20dp"
+        android:gravity="center_vertical|left"
+        android:paddingBottom="4dp"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reg_text_password_field" />
 
     <Button
-        android:id="@+id/main_sign_btn"
+        android:id="@+id/reg_registration_btn"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign in"
-        android:textColor="@color/black"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/indie_flower"
+        android:text="Registration"
         android:textAllCaps="false"
+        android:textColor="@color/black"
         android:textSize="32dp"
         android:textStyle="normal"
-        android:fontFamily="@font/my_written"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.749" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/main_reg_btn"
-        android:background="@drawable/btn_stroke"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign up"
-        android:layout_marginTop="10dp"
-        android:paddingTop="2dp"
-        android:paddingBottom="4dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:textColor="@color/black"
-        android:textAllCaps="false"
-        android:textSize="32dp"
-        android:textStyle="normal"
-        android:fontFamily="@font/my_written"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_sign_btn" />
-
+        app:layout_constraintTop_toBottomOf="@+id/reg_text_password_repeat_field" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

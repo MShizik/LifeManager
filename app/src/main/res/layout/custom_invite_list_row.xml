@@ -8,30 +8,35 @@
     android:paddingBottom="10dp"
     android:paddingTop="10dp">
 
-    <Button
+    <TextView
+        android:id = "@+id/special_tv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+    <ImageButton
         android:id="@+id/invite_accept_btn"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/Widget.Material3.Button.IconButton"
-        android:drawableLeft = "@drawable/ic_baseline_check_24"
-        android:textColor="@color/black"
-        android:textAllCaps="false"
-        android:textSize="32dp"
-        android:textStyle="normal"
-        android:fontFamily="@font/my_written"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_centerVertical="true"
+        android:background="?attr/selectableItemBackground"
+        android:src = "@drawable/ic_baseline_check_24"
         android:layout_marginLeft="50dp"
         android:layout_toRightOf="@id/invite_list_name_layout"/>
-    <Button
+    <ImageButton
         android:id="@+id/invite_decline_btn"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/Widget.Material3.Button.IconButton"
-        android:drawableLeft = "@drawable/ic_baseline_close_24"
-        android:textColor="@color/black"
-        android:textAllCaps="false"
-        android:textSize="32dp"
-        android:textStyle="normal"
-        android:fontFamily="@font/my_written"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_centerVertical="true"
+        android:background="?attr/selectableItemBackground"
+        android:src = "@drawable/ic_baseline_close_24"
         android:layout_marginLeft="50dp"
         android:layout_toRightOf="@id/invite_accept_btn"/>
 
@@ -40,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="25dp"
         android:layout_marginRight="5dp"
         android:padding = "3dp">
         <TextView

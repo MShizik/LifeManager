@@ -60,6 +60,7 @@
         android:dividerHeight="8dp"
         android:overScrollMode="never"
         android:scrollbars="none"
+        android:visibility="gone"
         />
 
     <ListView
@@ -74,8 +75,8 @@
         android:dividerHeight="8dp"
         android:overScrollMode="never"
         android:scrollbars="none"
-
-        android:visibility="gone" />
+        tools:listitem="@layout/custom_invite_list_row"
+        android:visibility="visible" />
 
     <Button
         android:id="@+id/friend_friend_list_new_btn"

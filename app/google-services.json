@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "100878294771",
+    "firebase_url": "https://lifemanager-4acf4-default-rtdb.firebaseio.com",
+    "project_id": "lifemanager-4acf4",
+    "storage_bucket": "lifemanager-4acf4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100878294771:android:56164056a4a6c35228a186",
+        "android_client_info": {
+          "package_name": "com.example.life_manager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100878294771-tfhe1fuvo62bdkpsid9edc610j7ka407.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVOnYvop8Vsy7T_7igJTUfrxhuTq8_tus"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "100878294771-tfhe1fuvo62bdkpsid9edc610j7ka407.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -14,7 +14,6 @@
     <item
         android:id = "@+id/menu_item_profile"
         android:icon = "@drawable/ic_person"
-        android:size = "46dp"
         android:title="@null"
         android:orderInCategory="3"/>
 </menu>

@@ -54,7 +54,28 @@
         android:layout_marginTop="100dp"
         android:layout_marginRight="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginBottom="160dp"/>
+        android:layout_marginBottom="160dp"
+        tools:listitem="@layout/custom_friend_list_row"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        />
+
+    <ListView
+        android:id="@+id/friend_invite_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="160dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/friend_friend_list_new_btn"

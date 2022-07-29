@@ -14,7 +14,7 @@ import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
 
-    private var etEmailUser: EditText? = null
+    var etEmailUser: EditText? = null
     private var etPasswordUser: EditText? = null
     private var tvInfoApp: TextView? = null
 

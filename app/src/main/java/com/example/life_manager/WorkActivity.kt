@@ -23,10 +23,29 @@ class WorkActivity : AppCompatActivity() {
         menu_binding.workBNav.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.menu_item_calendar -> {
-
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.work_fragment_holder, FragmentCalendar.newInstance())
+                        .commit()
                 }
-                R.id.menu_item_profile -> {}
-                R.id.menu_item_current_day -> {}
+                R.id.menu_item_profile -> {
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.work_fragment_holder, ProfileFragment.newInstance())
+                        .commit()
+                }
+                R.id.menu_item_current_day -> {
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.work_fragment_holder, FragmentCurrentDay.newInstance())
+                        .commit()
+                }
+                R.id.menu_item_friends ->{
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.work_fragment_holder, FragmentFriends.newInstance())
+                        .commit()
+                }
             }
             true
         }

@@ -14,14 +14,14 @@ import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
 
-    var etEmailUser: EditText? = null
+    private var etEmailUser: EditText? = null
     private var etPasswordUser: EditText? = null
     private var tvInfoApp: TextView? = null
 
     private var btnSignUser: Button? = null
     private var btnRegUser: Button? = null
 
-    private lateinit var database: DatabaseReference
+    lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,9 +41,19 @@ class MainActivity : AppCompatActivity() {
             startActivity(regIntent)
         }
 
+
+        var stEmailUser: String? = null
+        var stNameUser: String? = null
+        var stSurnameUser: String? = null
+        var stNicknameUser: String? = null
+
         btnSignUser?.setOnClickListener {
-            database.child("users").child(etEmailUser?.text.toString()).child("password").get().addOnSuccessListener {
-                if(it.value.toString().equals(etPasswordUser?.text.toString())){
+            database.child("users").child(etEmailUser?.text.toString()).get().addOnSuccessListener {
+                if(it.child("password").value.toString().equals(etPasswordUser?.text.toString())){
+                    stEmailUser = etEmailUser?.text.toString()
+                    stNameUser = it.child("name").value.toString()
+                    stSurnameUser = it.child("surname").value.toString()
+                    stNicknameUser = it.child("nickname").value.toString()
                     startActivity(Intent(this, WorkActivity::class.java))
                 }
                 else{

@@ -45,11 +45,11 @@ class RegistrationActivity : AppCompatActivity() {
         btnRegApp?.setOnClickListener {
             if(checkEmailAddress()){
                 if(etPasswordUser?.text.toString().equals(etPasswordRepeatUser?.text.toString())){
-                    database = Firebase.database.reference.child("users").child(etEmailUser?.text.toString())
-                    database.child("password").setValue(etPasswordUser?.text.toString())
-                    database.child("name").setValue(etNameUser?.text.toString())
-                    database.child("surname").setValue(etSurnameUser?.text.toString())
-                    database.child("nickname").setValue(etNicknameUser?.text.toString())
+                    database = Firebase.database.reference
+                    database.child("users").child(etEmailUser?.text.toString()).child("password").setValue(etPasswordUser?.text.toString())
+                    database.child("users").child(etEmailUser?.text.toString()).child("name").setValue(etNameUser?.text.toString())
+                    database.child("users").child(etEmailUser?.text.toString()).child("surname").setValue(etSurnameUser?.text.toString())
+                    database.child("users").child(etEmailUser?.text.toString()).child("nickname").setValue(etNicknameUser?.text.toString())
                 }
                 else{
                     tvInfoApp?.text = "Your passwords are different"

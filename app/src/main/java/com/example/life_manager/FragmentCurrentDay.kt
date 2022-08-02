@@ -1,5 +1,6 @@
 package com.example.life_manager
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,18 +9,25 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.SwitchCompat
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.util.*
 
 class FragmentCurrentDay : Fragment() {
 
-    private var btnInterestSwtch : SwitchCompat? = null
-    private var btnProductiveSwtch : SwitchCompat? = null
-    private var btnOrdinarySwtch : SwitchCompat? = null
-    private var btnCurrentDay : Button? = null
-    private var btnSaveUser : Button? = null
+    private val database : DatabaseReference = Firebase.database.reference
 
-    private var etDiaryUser : EditText? = null
-
+    private var stEmailUser : String = "aboba"
+    private var iSwitchesState : Int = 0
+    private var stNoteUser : String = "aboba"
+    private var chosenYear : String = SimpleDateFormat("yyyy", Locale.getDefault()).format(Date())
+    private var chosenMonth : String = SimpleDateFormat("MM", Locale.getDefault()).format(Date())
+    private var chosenDate : String = SimpleDateFormat("dd", Locale.getDefault()).format(Date())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,9 +40,104 @@ class FragmentCurrentDay : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val btnCurDay : AppCompatButton = view.findViewById(R.id.cur_btn_day)
+        val btnSaveUser : Button = view.findViewById(R.id.cur_day_save_btn)
+
+        val switchOrdinaryDay : SwitchCompat = view.findViewById(R.id.cur_day_switch_ordinary)
+        val switchProductiveDay : SwitchCompat = view.findViewById(R.id.cur_day_switch_productive)
+        val switchInterestDay : SwitchCompat = view.findViewById(R.id.cur_day_switch_interest)
+
+        val etNoteUser : EditText = view.findViewById(R.id.cur_et_day)
+
+        btnCurDay.text = chosenDate.toString()
+
+        when(iSwitchesState){
+            1 -> {
+                switchOrdinaryDay.isChecked = true
+                btnCurDay.setBackgroundColor(Color.parseColor("#bbdefb"))
+            }
+
+            2 -> {
+                switchInterestDay.isChecked = true
+                btnCurDay.setBackgroundColor(Color.parseColor("#ffcc00"))
+            }
+
+            3 -> {
+                switchProductiveDay.isChecked = true
+                btnCurDay.setBackgroundColor(Color.parseColor("#f0989f"))
+            }
+        }
+
+        if(stNoteUser != "aboba"){
+            etNoteUser.setText(stNoteUser)
+        }
 
 
 
+        switchInterestDay.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                switchOrdinaryDay.isChecked = false
+                switchProductiveDay.isChecked = false
+
+                iSwitchesState = 2
+
+                btnCurDay.setBackgroundColor(Color.parseColor("#ffcc00"))
+
+            }
+            else{
+                iSwitchesState = 0
+
+                btnCurDay.setBackgroundColor(Color.parseColor("#f5f5f5"))
+            }
+        }
+
+        switchOrdinaryDay.setOnCheckedChangeListener { buttonView, isChecked  ->
+            if(isChecked){
+                switchInterestDay.isChecked = false
+                switchProductiveDay.isChecked = false
+
+                iSwitchesState = 1
+
+                btnCurDay.setBackgroundColor(Color.parseColor("#bbdefb"))
+            }
+            else{
+                iSwitchesState = 0
+
+                btnCurDay.setBackgroundColor(Color.parseColor("#f5f5f5"))
+            }
+        }
+
+        switchProductiveDay.setOnCheckedChangeListener{ buttonView, isChecked ->
+            if(isChecked){
+                switchInterestDay.isChecked = false
+                switchOrdinaryDay.isChecked = false
+
+                iSwitchesState = 3
+
+                btnCurDay.setBackgroundColor(Color.parseColor("#f0989f"))
+
+            }
+            else{
+                iSwitchesState = 0
+
+                btnCurDay.setBackgroundColor(Color.parseColor("#f5f5f5"))
+            }
+
+        }
+
+        btnSaveUser.setOnClickListener{
+            database.child("users").child(stEmailUser).child("days").child(chosenYear).child(chosenMonth).child(chosenDate).child("SwitchesState").setValue(iSwitchesState)
+            database.child("users").child(stEmailUser).child("days").child(chosenYear).child(chosenMonth).child(chosenDate).child("Notion").setValue(etNoteUser.text.toString())
+        }
+
+
+    }
+
+    fun getDataFromFirebase(){
+        database.child("users").child(stEmailUser).child("days").child(chosenYear).child(chosenMonth).child(chosenDate).get().addOnSuccessListener {
+            iSwitchesState = it.child("SwitchesState").value.toString().toInt()
+            stNoteUser = it.child("Notion").value.toString()
+        }
     }
 
 

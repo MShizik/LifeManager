@@ -7,11 +7,6 @@
     android:paddingBottom="10dp"
     android:paddingTop="10dp">
 
-    <TextView
-        android:id = "@+id/special_tv"
-        android:layout_width="0dp"
-        android:layout_height="0dp"/>
-
     <ImageButton
         android:id="@+id/invite_accept_btn"
         android:layout_width="wrap_content"
@@ -48,7 +43,7 @@
         android:layout_marginRight="5dp"
         android:padding = "3dp">
         <TextView
-            android:id="@+id/friend_list_name_txt"
+            android:id="@+id/invite_list_name_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Stas"
@@ -60,7 +55,7 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
-            android:id="@+id/friend_list_surname_txt"
+            android:id="@+id/invite_list_surname_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sidorov"
@@ -70,11 +65,11 @@
             android:letterSpacing="0.1"
             android:textColor="@color/black"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/friend_list_name_txt"
+            app:layout_constraintStart_toEndOf="@id/invite_list_name_txt"
             />
 
         <TextView
-            android:id="@+id/friend_list_nickname_txt"
+            android:id="@+id/invite_list_nickname_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Shiz"
@@ -84,7 +79,7 @@
 
             android:letterSpacing="0.1"
             android:textColor="#787878"
-            app:layout_constraintTop_toBottomOf="@id/friend_list_name_txt"
+            app:layout_constraintTop_toBottomOf="@id/invite_list_name_txt"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 

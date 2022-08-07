@@ -1,5 +1,6 @@
 package com.example.life_manager
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -46,6 +47,9 @@ class RegistrationActivity : AppCompatActivity() {
             if(checkEmailAddress()){
                 if(etPasswordUser?.text.toString().equals(etPasswordRepeatUser?.text.toString())){
                     database = Firebase.database.reference
+                    database.child("users").child(etEmailUser?.text.toString()).child("countProductive").setValue(0)
+                    database.child("users").child(etEmailUser?.text.toString()).child("countOrdinary").setValue(0)
+                    database.child("users").child(etEmailUser?.text.toString()).child("countInterest").setValue(0)
                     database.child("users").child(etEmailUser?.text.toString()).child("password").setValue(etPasswordUser?.text.toString())
                     database.child("users").child(etEmailUser?.text.toString()).child("name").setValue(etNameUser?.text.toString())
                     database.child("users").child(etEmailUser?.text.toString()).child("surname").setValue(etSurnameUser?.text.toString())
@@ -53,6 +57,7 @@ class RegistrationActivity : AppCompatActivity() {
                     database.child("users").child(etEmailUser?.text.toString()).child("invitelist").child("base").setValue("basement")
                     database.child("users").child(etEmailUser?.text.toString()).child("friends").child("base").setValue("basement")
                     database.child("users").child(etEmailUser?.text.toString()).child("lastnotion").setValue("lastNotion!!!")
+                    startActivity(Intent(this, WorkActivity::class.java))
 
                 }
                 else{

@@ -43,8 +43,8 @@ class FragmentFriends : Fragment() {
         getFriendsData()
         getInviteData()
 
-        var adapterFriendsList : DataFriendAdapter = DataFriendAdapter(this, alFriendList)
-        var adapterInviteList : DataInviteAdapter = DataInviteAdapter(this, alInviteList)
+        var adapterFriendsList : DataFriendAdapter = DataFriendAdapter(requireContext(), alFriendList)
+        var adapterInviteList : DataInviteAdapter = DataInviteAdapter(requireContext(), alInviteList)
 
         lvFriendListView.adapter = adapterFriendsList
         lvInviteListView.adapter = adapterInviteList
@@ -63,34 +63,34 @@ class FragmentFriends : Fragment() {
     fun getFriendsData(){
         database.child("users").child(stEmailuser).child("friendlist").get().addOnSuccessListener {
             for (i in it.children){
-                var tmpNameFriend : String
-                var tmpSurNameFriend : String
-                var tmpNickNameFriend : String
-                var tmpLastNotion : String
+                var tmpNameFriend : String = ""
+                var tmpSurNameFriend : String = ""
+                var tmpNickNameFriend : String = ""
+                var tmpLastNotion : String = ""
 
-                var tmpProductiveCount : Int
-                var tmpInterestCount : Int
-                var tmpOrdinaryCount : Int
-                var percentesProductive : Int
-                var percentesInterest : Int
-                var percentsOrdinary : Int
+                var  tmpProductiveCount : Int = 0
+                var tmpInterestCount : Int = 0
+                var tmpOrdinaryCount : Int = 0
+                var percentesProductive : Int = 0
+                var percentesInterest : Int = 0
+                var percentesOrdinary : Int = 0
 
-                database.child("users").child(i.key.toString()).get().addOnSuccessListener { dsFriend -> DataSnapshot
-                    tmpNameFriend = dsFriend.child("name").value.toString()
-                    tmpSurNameFriend = dsFriend.child("surname").value.toString()
-                    tmpNickNameFriend = dsFriend.child("nickname").value.toString()
-                    tmpLastNotion = dsFriend.child("lastnotion").value.toString()
+                database.child("users").child(i.key.toString()).get().addOnSuccessListener {
+                    tmpNameFriend = it.child("name").value.toString()
+                    tmpSurNameFriend = it.child("surname").value.toString()
+                    tmpNickNameFriend = it.child("nickname").value.toString()
+                    tmpLastNotion = it.child("lastnotion").value.toString()
 
-                    tmpProductiveCount = dsFriend.child("countProductive").value.toString()
-                    tmpInterestCount = dsFriend.child("countInterest").value.toString()
-                    tmpOrdinaryCount = dsFriend.child("countOrdinary").value.toString()
+                    tmpProductiveCount = it.child("countProductive").value.toString().toInt()
+                    tmpInterestCount = it.child("countInterest").value.toString().toInt()
+                    tmpOrdinaryCount = it.child("countOrdinary").value.toString().toInt()
                 }
 
                 percentesProductive = tmpProductiveCount / (tmpProductiveCount + tmpInterestCount + tmpOrdinaryCount) * 100
                 percentesInterest = tmpInterestCount / (tmpProductiveCount + tmpInterestCount + tmpOrdinaryCount) * 100
                 percentesOrdinary = tmpInterestCount / (tmpProductiveCount + tmpInterestCount + tmpOrdinaryCount) * 100
 
-                var tmpDataObj : DataHolder = DataHolder(i.key.toString(), tmpNameFriend, tmpSurNameFriend, tmpNickNameFriend, tmpLastNotion, percentesProductive, percentesInterest, percentsOrdinary)
+                var tmpDataObj : DataHolder = DataHolder(i.key.toString(), tmpNameFriend, tmpSurNameFriend, tmpNickNameFriend, tmpLastNotion, percentesProductive.toString(), percentesInterest.toString(), percentesOrdinary.toString())
                 alFriendList.add(tmpDataObj)
             }
         }
@@ -99,14 +99,14 @@ class FragmentFriends : Fragment() {
     fun getInviteData(){
         database.child("users").child(stEmailuser).child("invitelist").get().addOnSuccessListener {
             for (i in it.children){
-                var tmpNameFriend : String
-                var tmpSurNameFriend : String
-                var tmpNickNameFriend : String
+                var tmpNameFriend : String = ""
+                var tmpSurNameFriend : String = ""
+                var tmpNickNameFriend : String = ""
 
-                database.child("users").child(i.key.toString()).get().addOnSuccessListener { dsFriend -> DataSnapshot
-                    tmpNameFriend = dsFriend.child("name").value.toString()
-                    tmpSurNameFriend = dsFriend.child("surname").value.toString()
-                    tmpNickNameFriend = dsFriend.child("nickname").value.toString()
+                database.child("users").child(i.key.toString()).get().addOnSuccessListener {
+                    tmpNameFriend = it.child("name").value.toString()
+                    tmpSurNameFriend = it.child("surname").value.toString()
+                    tmpNickNameFriend = it.child("nickname").value.toString()
                 }
 
                 var tmpDataObj : inviteListDataHolder = inviteListDataHolder(tmpNameFriend, tmpSurNameFriend, tmpNickNameFriend, i.key.toString(), stEmailuser)

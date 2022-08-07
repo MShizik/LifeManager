@@ -54,12 +54,12 @@ class DataInviteAdapter  (private val context: Context, private val arrayList: j
         btnAccept.setOnClickListener {
             database.child(arrayList[position].stEmailUser.toString()).child("invitelist").child(arrayList[position].stFriendEmail.toString()).get().addOnSuccessListener {
                 database.child(arrayList[position].stEmailUser.toString()).child("friendlist").child(arrayList[position].stFriendEmail.toString()).setValue(1)
-                database.child(arrayList[position].stEmailUser.toString()).child("invitelist").child(arrayList[position].stFriendEmail.toString()).delete()
+                database.child(arrayList[position].stEmailUser.toString()).child("invitelist").child(arrayList[position].stFriendEmail.toString()).removeValue()
             }
         }
         btnDecline.setOnClickListener {
             database.child(arrayList[position].stEmailUser).child("invitelist").child(arrayList[position].stFriendEmail).get().addOnSuccessListener{
-                database.child(arrayList[position].stEmailUser).child("invitelist").child(arrayList[position].stFriendEmail).delete()
+                database.child(arrayList[position].stEmailUser).child("invitelist").child(arrayList[position].stFriendEmail).removeValue()
             }
         }
 

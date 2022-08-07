@@ -4,12 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/btn_stroke.xml" value="0.356" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/dialog_background.xml" value="0.341" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.341" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/rounded_day.xml" value="0.356" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/activity_main.xml" value="0.14285714285714285" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/activity_registration.xml" value="0.25" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/card_layout.xml" value="0.75" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/custom_friend_list_row.xml" value="0.28804347826086957" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/custom_invite_list_row.xml" value="0.33" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/dialog_add_friend.xml" value="0.3875" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/dialog_delete_friend.xml" value="0.3875" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/fragment_calendar.xml" value="0.32065217391304346" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/fragment_current_day.xml" value="0.5" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/fragment_friends.xml" value="0.33" />

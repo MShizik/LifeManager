@@ -7,7 +7,7 @@
     android:background="@drawable/dialog_background">
 
     <TextView
-        android:id="@+id/add_text_email_field"
+        android:id="@+id/delete_text_field"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/add_accept_btn"
+        android:id="@+id/delete_accept_btn"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,10 +43,10 @@
         android:fontFamily="@font/my_written"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_text_email_field" />
+        app:layout_constraintTop_toBottomOf="@+id/delete_text_field" />
 
     <Button
-        android:id="@+id/add_decline_btn"
+        android:id="@+id/delete_decline_btn"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/add_accept_btn"
-        app:layout_constraintTop_toBottomOf="@+id/add_text_email_field" />
+        app:layout_constraintStart_toEndOf="@id/delete_accept_btn"
+        app:layout_constraintTop_toBottomOf="@+id/delete_text_field" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

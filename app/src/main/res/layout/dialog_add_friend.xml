@@ -14,6 +14,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/input_field"
+
         android:ems="10"
         android:fontFamily="@font/my_written"
         android:textColorHint="#686868"

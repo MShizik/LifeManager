@@ -1,20 +1,26 @@
 package com.example.life_manager
 
+
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.provider.ContactsContract
-import androidx.fragment.app.Fragment
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ListView
-import com.google.firebase.database.DataSnapshot
+import androidx.fragment.app.Fragment
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
+
 class FragmentFriends : Fragment() {
 
-    val stEmailuser : String = "aboba"
+    val stEmailUser : String = "aboba"
 
     private var alFriendList : ArrayList<DataHolder> = arrayListOf()
     private var alInviteList : ArrayList<inviteListDataHolder> = arrayListOf()
@@ -27,7 +33,7 @@ class FragmentFriends : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_current_day, container, false)
+        return inflater.inflate(R.layout.fragment_friends, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,7 +47,6 @@ class FragmentFriends : Fragment() {
         val lvInviteListView : ListView = view.findViewById(R.id.friend_list_view)
 
         getFriendsData()
-        getInviteData()
 
         var adapterFriendsList : DataFriendAdapter = DataFriendAdapter(requireContext(), alFriendList)
         var adapterInviteList : DataInviteAdapter = DataInviteAdapter(requireContext(), alInviteList)
@@ -50,18 +55,28 @@ class FragmentFriends : Fragment() {
         lvInviteListView.adapter = adapterInviteList
 
         btnInviteListOpen.setOnClickListener{
+            getInviteData()
             lvFriendListView.visibility = View.INVISIBLE
             lvInviteListView.visibility = View.VISIBLE
         }
 
         btnFriendListOpen.setOnClickListener {
+            getFriendsData()
             lvFriendListView.visibility = View.VISIBLE
             lvInviteListView.visibility = View.INVISIBLE
+        }
+
+        btnInviteFriend.setOnClickListener {
+            startDialogInviteFriend()
+        }
+        lvFriendListView.setOnItemLongClickListener { parent, view, position, id ->
+            startDialogDeleteFriend(alFriendList[position].stFriendEmail)
+            return@setOnItemLongClickListener(true)
         }
     }
 
     fun getFriendsData(){
-        database.child("users").child(stEmailuser).child("friendlist").get().addOnSuccessListener {
+        database.child("users").child(stEmailUser).child("friendlist").get().addOnSuccessListener {
             for (i in it.children){
                 var tmpNameFriend : String = ""
                 var tmpSurNameFriend : String = ""
@@ -97,7 +112,7 @@ class FragmentFriends : Fragment() {
     }
 
     fun getInviteData(){
-        database.child("users").child(stEmailuser).child("invitelist").get().addOnSuccessListener {
+        database.child("users").child(stEmailUser).child("invitelist").get().addOnSuccessListener {
             for (i in it.children){
                 var tmpNameFriend : String = ""
                 var tmpSurNameFriend : String = ""
@@ -109,11 +124,53 @@ class FragmentFriends : Fragment() {
                     tmpNickNameFriend = it.child("nickname").value.toString()
                 }
 
-                var tmpDataObj : inviteListDataHolder = inviteListDataHolder(tmpNameFriend, tmpSurNameFriend, tmpNickNameFriend, i.key.toString(), stEmailuser)
+                var tmpDataObj : inviteListDataHolder = inviteListDataHolder(tmpNameFriend, tmpSurNameFriend, tmpNickNameFriend, i.key.toString(), stEmailUser)
                 alInviteList.add(tmpDataObj)
             }
         }
     }
+
+    fun startDialogInviteFriend(){
+        Handler(Looper.getMainLooper()).post {
+            val dialog_find_friend = Dialog(requireContext())
+            dialog_find_friend.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog_find_friend.setContentView(R.layout.dialog_add_friend)
+            val etEmailUser = dialog_find_friend.findViewById(R.id.add_text_email_field) as EditText
+            val dialog_util_confirmation_btn = dialog_find_friend.findViewById(R.id.add_find_btn) as Button
+            dialog_util_confirmation_btn.setOnClickListener {
+                database.child("users").child(etEmailUser.text.toString()).child("invitelist").child(stEmailUser).setValue(1)
+                dialog_find_friend.cancel()
+            }
+            dialog_find_friend.setCancelable(true)
+            dialog_find_friend.show()
+        }
+    }
+
+    fun startDialogDeleteFriend(stEmailFriend : String) {
+        Handler(Looper.getMainLooper()).post {
+            val dialog_delete_friend = Dialog(requireContext())
+            dialog_delete_friend.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog_delete_friend.setContentView(R.layout.dialog_delete_friend)
+            val btnDeleteFriend =
+                dialog_delete_friend.findViewById(R.id.delete_accept_btn) as Button
+            val btnDeclineDelete =
+                dialog_delete_friend.findViewById(R.id.delete_decline_btn) as Button
+
+            btnDeclineDelete.setOnClickListener {
+                dialog_delete_friend.cancel()
+            }
+            btnDeleteFriend.setOnClickListener {
+                database.child("users").child(stEmailUser).child("friendlist").child(stEmailFriend)
+                    .removeValue()
+                database.child("users").child(stEmailFriend).child("friendlist").child(stEmailUser)
+                    .removeValue()
+                dialog_delete_friend.cancel()
+            }
+            dialog_delete_friend.setCancelable(true)
+            dialog_delete_friend.show()
+        }
+    }
+
 
     companion object {
         @JvmStatic

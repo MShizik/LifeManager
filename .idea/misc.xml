@@ -5,14 +5,20 @@
       <map>
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/btn_stroke.xml" value="0.356" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/rounded_day.xml" value="0.356" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/activity_main.xml" value="0.14285714285714285" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/activity_registration.xml" value="0.25" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/card_layout.xml" value="0.75" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/custom_invite_list_row.xml" value="0.33" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/fragment_calendar.xml" value="0.32065217391304346" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/fragment_current_day.xml" value="0.5" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/fragment_friends.xml" value="0.33" />
       </map>
     </option>
   </component>
   <component name="ProjectRootManageb" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK" />
   <component name="ProjectType">
     <option name="id" value="Android" />
   </component>

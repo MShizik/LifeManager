@@ -50,6 +50,10 @@ class RegistrationActivity : AppCompatActivity() {
                     database.child("users").child(etEmailUser?.text.toString()).child("name").setValue(etNameUser?.text.toString())
                     database.child("users").child(etEmailUser?.text.toString()).child("surname").setValue(etSurnameUser?.text.toString())
                     database.child("users").child(etEmailUser?.text.toString()).child("nickname").setValue(etNicknameUser?.text.toString())
+                    database.child("users").child(etEmailUser?.text.toString()).child("invitelist").child("base").setValue("basement")
+                    database.child("users").child(etEmailUser?.text.toString()).child("friends").child("base").setValue("basement")
+                    database.child("users").child(etEmailUser?.text.toString()).child("lastnotion").setValue("lastNotion!!!")
+
                 }
                 else{
                     tvInfoApp?.text = "Your passwords are different"

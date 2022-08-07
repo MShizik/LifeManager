@@ -126,6 +126,23 @@ class FragmentCurrentDay : Fragment() {
         }
 
         btnSaveUser.setOnClickListener{
+            var tmpDataSaver : Int
+            when(iSwitchesState) {
+
+                3 ->{
+                    database.child("users").child(stEmailUser).child("countProductive").get().addOnSuccessListener { tmpDataSaver = it.value.toString().toInt() }
+                    database.child("users").child(stEmailUser).child("countProductive").setValue(tmpDataSaver+1)
+                }
+                2 ->{
+                    database.child("users").child(stEmailUser).child("countInterest").get().addOnSuccessListener { tmpDataSaver = it.value.toString().toInt() }
+                    database.child("users").child(stEmailUser).child("countInterest").setValue(tmpDataSaver+1)
+                }
+                1 ->{
+                    database.child("users").child(stEmailUser).child("countOrdinary").get().addOnSuccessListener { tmpDataSaver = it.value.toString().toInt() }
+                    database.child("users").child(stEmailUser).child("countOrdinary").setValue(tmpDataSaver+1)
+                }
+            }
+            database.child("users").child(stEmailUser).child("lastnotion").setValue(etNoteUser.text.toString())
             database.child("users").child(stEmailUser).child("days").child(chosenYear).child(chosenMonth).child(chosenDate).child("SwitchesState").setValue(iSwitchesState)
             database.child("users").child(stEmailUser).child("days").child(chosenYear).child(chosenMonth).child(chosenDate).child("Notion").setValue(etNoteUser.text.toString())
         }

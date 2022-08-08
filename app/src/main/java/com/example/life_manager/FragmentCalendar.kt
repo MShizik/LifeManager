@@ -15,6 +15,7 @@ import androidx.test.core.app.ApplicationProvider
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
@@ -25,6 +26,7 @@ class FragmentCalendar : Fragment() {
 
     private val database : DatabaseReference = Firebase.database.reference
     private var stEmailUser : String = "aboba"
+    private var iSwitchesState : Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +57,23 @@ class FragmentCalendar : Fragment() {
         var prevdate = curdate.plus(Period.of(-1,-1,0))
         var nextdate = curdate.plus(Period.of(1,1,0))
 
+        stEmailUser = arguments?.getString("email").toString()
+
+
+        when(iSwitchesState){
+            1 -> {
+                btnCurDay.setBackgroundColor(Color.parseColor("#bbdefb"))
+            }
+
+            2 -> {
+                btnCurDay.setBackgroundColor(Color.parseColor("#ffcc00"))
+            }
+
+            3 -> {
+                btnCurDay.setBackgroundColor(Color.parseColor("#f0989f"))
+            }
+        }
+
         btnCurDay.text = curdate.dayOfMonth.toString()
         btnCurMth.text = curdate.month.toString()
         btnCurYear.text = curdate.year.toString()
@@ -68,9 +87,14 @@ class FragmentCalendar : Fragment() {
         fillGrlLayout(grlDaysHolder,curdate)
 
         btnCurDay.setOnClickListener {
-            val transition = requireActivity().supportFragmentManager.beginTransaction()
-            transition.replace(R.id.work_fragment_holder, FragmentCurrentDay.newInstance())
-                .addToBackStack(null).commit()
+            var fragmentCurDay = FragmentCurrentDay()
+            fragmentCurDay.arguments?.putString("email", stEmailUser)
+            fragmentCurDay.arguments?.putString("date", SimpleDateFormat("dd", Locale.getDefault()).format(Date()))
+            fragmentCurDay.arguments?.putString("month",SimpleDateFormat("MM", Locale.getDefault()).format(Date()))
+            fragmentCurDay.arguments?.putString("year", SimpleDateFormat("yyyy", Locale.getDefault()).format(Date()))
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.work_fragment_holder, fragmentCurDay)
+            transaction.commit()
         }
 
         btnNextYear.setOnClickListener {
@@ -158,8 +182,13 @@ class FragmentCalendar : Fragment() {
                 }
             }
             btnNewCard.setOnClickListener {
+                var fragmentCurDay = FragmentCurrentDay()
+                fragmentCurDay.arguments?.putString("email", stEmailUser)
+                fragmentCurDay.arguments?.putString("date", SimpleDateFormat("dd", Locale.getDefault()).format(Date()))
+                fragmentCurDay.arguments?.putString("month",SimpleDateFormat("MM", Locale.getDefault()).format(Date()))
+                fragmentCurDay.arguments?.putString("year", SimpleDateFormat("yyyy", Locale.getDefault()).format(Date()))
                 val transition = requireActivity().supportFragmentManager.beginTransaction()
-                transition.replace(R.id.work_fragment_holder, FragmentCurrentDay.newInstance())
+                transition.replace(R.id.work_fragment_holder,fragmentCurDay)
                     .addToBackStack(null).commit()
             }
             newc.addView(btnNewCard)
@@ -167,6 +196,12 @@ class FragmentCalendar : Fragment() {
             val col = GridLayout.spec(i/7-1)
             val gridP = GridLayout.LayoutParams(row, col)
             grlDaysHolder.addView(newc, gridP)
+        }
+    }
+
+    fun getDataFromFirebase(){
+        database.child("users").child(stEmailUser).child("days").child(SimpleDateFormat("yyyy", Locale.getDefault()).format(Date())).child(SimpleDateFormat("MM", Locale.getDefault()).format(Date())).child(SimpleDateFormat("dd", Locale.getDefault()).format(Date())).get().addOnSuccessListener {
+            iSwitchesState = it.child("SwitchesState").value.toString().toInt()
         }
     }
 

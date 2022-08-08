@@ -49,6 +49,15 @@ class FragmentCurrentDay : Fragment() {
 
         val etNoteUser : EditText = view.findViewById(R.id.cur_et_day)
 
+        stEmailUser = arguments?.getString("email").toString()
+
+        chosenDate = arguments?.getString("date").toString()
+        chosenMonth = arguments?.getString("month").toString()
+        chosenYear = arguments?.getString("year").toString()
+
+
+        getDataFromFirebase()
+
         btnCurDay.text = chosenDate.toString()
 
         when(iSwitchesState){
@@ -126,7 +135,7 @@ class FragmentCurrentDay : Fragment() {
         }
 
         btnSaveUser.setOnClickListener{
-            var tmpDataSaver : Int
+            var tmpDataSaver : Int = 0
             when(iSwitchesState) {
 
                 3 ->{

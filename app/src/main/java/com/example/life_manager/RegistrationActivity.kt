@@ -72,7 +72,9 @@ class RegistrationActivity : AppCompatActivity() {
                                 .child("friends").child("base").setValue("basement")
                             database.child("users").child(etEmailUser?.text.toString())
                                 .child("lastnotion").setValue("lastNotion!!!")
-                            startActivity(Intent(this, WorkActivity::class.java))
+                            var intentToWorkActivity = Intent(applicationContext, WorkActivity::class.java)
+                            intentToWorkActivity.putExtra("email",etEmailUser?.text.toString())
+                            startActivity(intentToWorkActivity)
                         }
 
                 }

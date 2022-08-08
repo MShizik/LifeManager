@@ -54,7 +54,9 @@ class MainActivity : AppCompatActivity() {
                     stNameUser = it.child("name").value.toString()
                     stSurnameUser = it.child("surname").value.toString()
                     stNicknameUser = it.child("nickname").value.toString()
-                    startActivity(Intent(this, WorkActivity::class.java))
+                    var intentToWorkActivity = Intent(this, WorkActivity::class.java)
+                    intentToWorkActivity.putExtra("email", etEmailUser?.text.toString())
+                    startActivity(intentToWorkActivity)
                 }
                 else{
                     tvInfoApp?.text = "Wrong password"

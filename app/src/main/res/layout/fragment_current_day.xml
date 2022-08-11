@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
     tools:context=".FragmentCurrentDay">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +19,7 @@
             android:layout_height="140dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="25dp"
-            android:background="@drawable/rounded_day"
+            android:background ="@drawable/rounded_day"
 
             android:fontFamily="@font/indie_flower"
             android:gravity="center_horizontal"
@@ -127,12 +128,12 @@
                 android:fontFamily="@font/indie_flower"
                 android:gravity="center_horizontal|bottom"
                 android:hint="Write little note"
-                android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:paddingBottom="2dp"
                 android:textSize="24dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:inputType="textMultiLine"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

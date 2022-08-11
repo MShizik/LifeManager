@@ -50,10 +50,13 @@ class FragmentCurrentDay : Fragment() {
         val etNoteUser : EditText = view.findViewById(R.id.cur_et_day)
 
         stEmailUser = arguments?.getString("email").toString()
+        System.out.println(stEmailUser+"fuck")
 
         chosenDate = arguments?.getString("date").toString()
         chosenMonth = arguments?.getString("month").toString()
         chosenYear = arguments?.getString("year").toString()
+
+        System.out.println(chosenDate+"fuck")
 
 
         getDataFromFirebase()
@@ -161,10 +164,13 @@ class FragmentCurrentDay : Fragment() {
 
     fun getDataFromFirebase(){
         database.child("users").child(stEmailUser).child("days").child(chosenYear).child(chosenMonth).child(chosenDate).get().addOnSuccessListener {
-            iSwitchesState = it.child("SwitchesState").value.toString().toInt()
-            stNoteUser = it.child("Notion").value.toString()
+            if(it.value != null) {
+                iSwitchesState = it.child("SwitchesState").value.toString().toInt()
+                stNoteUser = it.child("Notion").value.toString()
+            }
         }
     }
+
 
 
 

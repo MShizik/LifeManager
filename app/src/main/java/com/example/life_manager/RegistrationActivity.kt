@@ -5,6 +5,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils.isEmpty
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -44,39 +45,42 @@ class RegistrationActivity : AppCompatActivity() {
         btnRegApp = findViewById(R.id.reg_registration_btn)
 
         btnRegApp?.setOnClickListener {
-            if(checkEmailAddress()){
+            if(!checkEmailAddress()){
                 if(etPasswordUser?.text.toString().equals(etPasswordRepeatUser?.text.toString())){
                     database = Firebase.database.reference
-                    database.child("users").child((etEmailUser?.text.toString())).get().addOnSuccessListener {
-                        tvInfoApp?.text = "User with this email already exist"
-                        tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
-                    }
-                        .addOnFailureListener {
-                            database.child("users").child(etEmailUser?.text.toString())
+
+                    database.child("users").child((etEmailUser?.text.toString().replace(".",""))).get().addOnSuccessListener {
+                        if (it.value != null) {
+                            tvInfoApp?.text = "User with this email already exist"
+                            tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
+                        }
+                        else{
+                            System.out.println("fuck_this_shit")
+                            database.child("users").child(etEmailUser?.text.toString().replace(".", ""))
                                 .child("countProductive").setValue(0)
-                            database.child("users").child(etEmailUser?.text.toString())
+                            database.child("users").child(etEmailUser?.text.toString().replace(".",""))
                                 .child("countOrdinary").setValue(0)
-                            database.child("users").child(etEmailUser?.text.toString())
+                            database.child("users").child(etEmailUser?.text.toString().replace(".",""))
                                 .child("countInterest").setValue(0)
-                            database.child("users").child(etEmailUser?.text.toString())
+                            database.child("users").child(etEmailUser?.text.toString().replace(".",""))
                                 .child("password").setValue(etPasswordUser?.text.toString())
-                            database.child("users").child(etEmailUser?.text.toString())
+                            database.child("users").child(etEmailUser?.text.toString().replace(".",""))
                                 .child("name").setValue(etNameUser?.text.toString())
-                            database.child("users").child(etEmailUser?.text.toString())
+                            database.child("users").child(etEmailUser?.text.toString().replace(".",""))
                                 .child("surname").setValue(etSurnameUser?.text.toString())
-                            database.child("users").child(etEmailUser?.text.toString())
+                            database.child("users").child(etEmailUser?.text.toString().replace(".",""))
                                 .child("nickname").setValue(etNicknameUser?.text.toString())
-                            database.child("users").child(etEmailUser?.text.toString())
+                            database.child("users").child(etEmailUser?.text.toString().replace(".",""))
                                 .child("invitelist").child("base").setValue("basement")
-                            database.child("users").child(etEmailUser?.text.toString())
+                            database.child("users").child(etEmailUser?.text.toString().replace(".",""))
                                 .child("friends").child("base").setValue("basement")
-                            database.child("users").child(etEmailUser?.text.toString())
+                            database.child("users").child(etEmailUser?.text.toString().replace(".",""))
                                 .child("lastnotion").setValue("lastNotion!!!")
                             var intentToWorkActivity = Intent(applicationContext, WorkActivity::class.java)
-                            intentToWorkActivity.putExtra("email",etEmailUser?.text.toString())
+                            intentToWorkActivity.putExtra("email",etEmailUser?.text.toString().replace(".",""))
                             startActivity(intentToWorkActivity)
                         }
-
+                    }
                 }
                 else{
                     tvInfoApp?.text = "Your passwords are different"
@@ -91,6 +95,6 @@ class RegistrationActivity : AppCompatActivity() {
     }
 
     fun checkEmailAddress(): Boolean{
-        return !isEmpty(etEmailUser?.text.toString()) && android.util.Patterns.EMAIL_ADDRESS.matcher(etEmailUser?.text.toString()).matches()
+        return !isEmpty(etEmailUser?.text.toString().replace(".","")) && android.util.Patterns.EMAIL_ADDRESS.matcher(etEmailUser?.text.toString().replace(".","")).matches()
     }
 }

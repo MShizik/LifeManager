@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         var stNicknameUser: String? = null
 
         btnSignUser?.setOnClickListener {
-            database.child("users").child(etEmailUser?.text.toString()).get().addOnSuccessListener {
+            database.child("users").child(etEmailUser?.text.toString().replace(".", "")).get().addOnSuccessListener {
                 if(it.child("password").value.toString().equals(etPasswordUser?.text.toString())){
                     stEmailUser = etEmailUser?.text.toString()
                     stNameUser = it.child("name").value.toString()

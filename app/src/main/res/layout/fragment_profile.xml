@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="20dp"
             android:fontFamily="@font/my_written"
             android:letterSpacing="0.1"
             android:text="Interesting days:"
@@ -91,12 +91,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="0dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:fontFamily="@font/my_written"
             android:letterSpacing="0.1"
             android:text="33%"
-            android:textColor="@color/black"
+            android:textColor="#ffcc00"
             android:textSize="24dp"
+            app:layout_constraintStart_toEndOf="@id/pro_statistic_interest_txt"
             app:layout_constraintTop_toBottomOf="@+id/pro_statistic_txt"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -119,15 +120,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="0dp"
             android:layout_marginLeft="10dp"
             android:fontFamily="@font/my_written"
             android:letterSpacing="0.1"
             android:text="33%"
-            android:textColor="@color/black"
+            android:textColor="#f0989f"
             android:textSize="24dp"
             app:layout_constraintTop_toBottomOf="@+id/pro_statistic_interest_txt"
-            app:layout_constraintStart_toEndOf="@id/pro_statistic_productive_txt"/>
+            app:layout_constraintStart_toEndOf="@id/pro_statistic_productive_txt"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
             android:id="@+id/pro_statistic_ordinary_txt"
@@ -153,7 +154,7 @@
             android:fontFamily="@font/my_written"
             android:letterSpacing="0.1"
             android:text="33%"
-            android:textColor="@color/black"
+            android:textColor="#bbdefb"
             android:textSize="24dp"
             app:layout_constraintTop_toBottomOf="@+id/pro_statistic_productive_txt"
             app:layout_constraintEnd_toEndOf="parent"/>

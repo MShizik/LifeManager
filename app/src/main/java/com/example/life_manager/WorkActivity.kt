@@ -17,19 +17,21 @@ class WorkActivity : AppCompatActivity() {
         menu_binding = ActivityWorkBinding.inflate(layoutInflater)
         setContentView(menu_binding.root)
 
-        stEmailUser = intent.extras?.getString("email").toString()
-
+        stEmailUser = intent.extras?.getString("email").toString().replace(".","")
+        System.out.println(stEmailUser.toString()+"fuckkk")
         var fragmentToChange : Fragment
 
         fragmentToChange = FragmentCurrentDay()
-        fragmentToChange.arguments?.putString("email",stEmailUser)
-        fragmentToChange.arguments?.putString("date", SimpleDateFormat("dd", Locale.getDefault()).format(Date()))
-        fragmentToChange.arguments?.putString("month",SimpleDateFormat("MM", Locale.getDefault()).format(Date()))
-        fragmentToChange.arguments?.putString("year", SimpleDateFormat("yyyy", Locale.getDefault()).format(Date()))
-
+        var tmpBundle : Bundle = Bundle()
+        tmpBundle.putString("email",stEmailUser)
+        tmpBundle.putString("date", SimpleDateFormat("dd", Locale.getDefault()).format(Date()))
+        tmpBundle.putString("month",SimpleDateFormat("MM", Locale.getDefault()).format(Date()))
+        tmpBundle.putString("year", SimpleDateFormat("yyyy", Locale.getDefault()).format(Date()))
+        fragmentToChange.arguments = tmpBundle
+        System.out.println(fragmentToChange.arguments?.getString("email")+"fuuuuuuck")
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.work_fragment_holder, FragmentCurrentDay.newInstance())
+            .replace(R.id.work_fragment_holder, fragmentToChange)
             .commit()
 
 

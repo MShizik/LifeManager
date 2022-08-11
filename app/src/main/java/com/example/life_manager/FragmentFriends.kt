@@ -20,7 +20,7 @@ import com.google.firebase.ktx.Firebase
 
 class FragmentFriends : Fragment() {
 
-    val stEmailUser : String = "aboba"
+    var stEmailUser : String = "aboba"
 
     private var alFriendList : ArrayList<DataHolder> = arrayListOf()
     private var alInviteList : ArrayList<inviteListDataHolder> = arrayListOf()
@@ -46,7 +46,11 @@ class FragmentFriends : Fragment() {
         val lvFriendListView : ListView = view.findViewById(R.id.friend_list_view)
         val lvInviteListView : ListView = view.findViewById(R.id.friend_list_view)
 
+        stEmailUser = arguments?.getString("email").toString()
+
         getFriendsData()
+        getInviteData()
+
 
         var adapterFriendsList : DataFriendAdapter = DataFriendAdapter(requireContext(), alFriendList)
         var adapterInviteList : DataInviteAdapter = DataInviteAdapter(requireContext(), alInviteList)
@@ -55,13 +59,22 @@ class FragmentFriends : Fragment() {
         lvInviteListView.adapter = adapterInviteList
 
         btnInviteListOpen.setOnClickListener{
+            btnFriendListOpen.setTextColor(Color.parseColor("#787878"))
+            btnInviteListOpen.setTextColor(Color.parseColor("#FF000000"))
             getInviteData()
+            adapterInviteList = DataInviteAdapter(requireContext(), alInviteList)
+            lvInviteListView.adapter = adapterInviteList
+            System.out.println(alFriendList.toString()+"fck")
             lvFriendListView.visibility = View.INVISIBLE
             lvInviteListView.visibility = View.VISIBLE
         }
 
         btnFriendListOpen.setOnClickListener {
+            btnFriendListOpen.setTextColor(Color.parseColor("#FF000000"))
+            btnInviteListOpen.setTextColor(Color.parseColor("#787878"))
             getFriendsData()
+            adapterFriendsList = DataFriendAdapter(requireContext(), alFriendList)
+            lvFriendListView.adapter = adapterFriendsList
             lvFriendListView.visibility = View.VISIBLE
             lvInviteListView.visibility = View.INVISIBLE
         }
@@ -112,20 +125,28 @@ class FragmentFriends : Fragment() {
     }
 
     fun getInviteData(){
-        database.child("users").child(stEmailUser).child("invitelist").get().addOnSuccessListener {
-            for (i in it.children){
+        database.child("users").child(stEmailUser).child("invitelist").get().addOnSuccessListener { it ->
+            System.out.println(stEmailUser.toString()+"fcccck")
+            it.children.forEach { i ->
                 var tmpNameFriend : String = ""
                 var tmpSurNameFriend : String = ""
                 var tmpNickNameFriend : String = ""
 
-                database.child("users").child(i.key.toString()).get().addOnSuccessListener {
-                    tmpNameFriend = it.child("name").value.toString()
-                    tmpSurNameFriend = it.child("surname").value.toString()
-                    tmpNickNameFriend = it.child("nickname").value.toString()
+                database.child("users").child(i.key.toString()).get().addOnSuccessListener { datatwo ->
+                    System.out.println(datatwo.toString() + "data")
+                    tmpNameFriend = datatwo.child("name").value.toString()
+                    tmpSurNameFriend = datatwo.child("surname").value.toString()
+                    tmpNickNameFriend = datatwo.child("nickname").value.toString()
+                    System.out.println(tmpNameFriend + "fck")
+                    var tmpDataObj: inviteListDataHolder = inviteListDataHolder(
+                        tmpNameFriend,
+                        tmpSurNameFriend,
+                        tmpNickNameFriend,
+                        i.key.toString(),
+                        stEmailUser
+                    )
+                    alInviteList.add(tmpDataObj)
                 }
-
-                var tmpDataObj : inviteListDataHolder = inviteListDataHolder(tmpNameFriend, tmpSurNameFriend, tmpNickNameFriend, i.key.toString(), stEmailUser)
-                alInviteList.add(tmpDataObj)
             }
         }
     }
@@ -138,7 +159,7 @@ class FragmentFriends : Fragment() {
             val etEmailUser = dialog_find_friend.findViewById(R.id.add_text_email_field) as EditText
             val dialog_util_confirmation_btn = dialog_find_friend.findViewById(R.id.add_find_btn) as Button
             dialog_util_confirmation_btn.setOnClickListener {
-                database.child("users").child(etEmailUser.text.toString()).child("invitelist").child(stEmailUser).setValue(1)
+                database.child("users").child(etEmailUser.text.toString().replace(".","")).child("invitelist").child(stEmailUser).setValue(1)
                 dialog_find_friend.cancel()
             }
             dialog_find_friend.setCancelable(true)

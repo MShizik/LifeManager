@@ -48,28 +48,29 @@ class MainActivity : AppCompatActivity() {
         var stNicknameUser: String? = null
 
         btnSignUser?.setOnClickListener {
-            database.child("users").child(etEmailUser?.text.toString().replace(".", "")).get().addOnSuccessListener {
-                if(it.child("password").value.toString().equals(etPasswordUser?.text.toString())){
-                    stEmailUser = etEmailUser?.text.toString()
-                    stNameUser = it.child("name").value.toString()
-                    stSurnameUser = it.child("surname").value.toString()
-                    stNicknameUser = it.child("nickname").value.toString()
-                    var intentToWorkActivity = Intent(this, WorkActivity::class.java)
-                    intentToWorkActivity.putExtra("email", etEmailUser?.text.toString())
-                    startActivity(intentToWorkActivity)
+            database.child("users").child(etEmailUser?.text.toString().replace(".", "")).get()
+                .addOnSuccessListener {
+                    if (it.value != null) {
+                        if (it.child("password").value.toString()
+                                .equals(etPasswordUser?.text.toString())
+                        ) {
+                            stEmailUser = etEmailUser?.text.toString()
+                            stNameUser = it.child("name").value.toString()
+                            stSurnameUser = it.child("surname").value.toString()
+                            stNicknameUser = it.child("nickname").value.toString()
+                            var intentToWorkActivity = Intent(this, WorkActivity::class.java)
+                            intentToWorkActivity.putExtra("email", etEmailUser?.text.toString())
+                            startActivity(intentToWorkActivity)
+                        } else {
+                            tvInfoApp?.text = "Wrong password"
+                            tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
+                        }
+                    } else {
+                        tvInfoApp?.text = "Unknown user"
+                        tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
+                    }
                 }
-                else{
-                    tvInfoApp?.text = "Wrong password"
-                    tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
-                }
-            }.addOnFailureListener{
-                    tvInfoApp?.text = "Unknown user"
-                    tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
-            }
         }
-
-
-
     }
 }
 

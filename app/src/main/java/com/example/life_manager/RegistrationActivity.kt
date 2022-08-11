@@ -75,7 +75,7 @@ class RegistrationActivity : AppCompatActivity() {
                                     .child("lastnotion").setValue("lastNotion!!!")
                                 etEmailUser?.visibility = View.INVISIBLE
                                 etNicknameUser?.visibility = View.VISIBLE
-                                tvInfoApp?.text = "Become more productive"
+                                tvInfoApp?.text = "Write your nickname"
                                 tvInfoApp?.setTextColor(Color.parseColor("#FF000000"))
                                 iCounterClicks++
                             }
@@ -91,7 +91,7 @@ class RegistrationActivity : AppCompatActivity() {
                         database.child("users").child(stEmailUser).child("nickname").setValue(etNicknameUser?.text.toString())
                         etNicknameUser?.visibility = View.INVISIBLE
                         etNameUser?.visibility = View.VISIBLE
-                        tvInfoApp?.text = "Become more productive"
+                        tvInfoApp?.text = "Write your name"
                         tvInfoApp?.setTextColor(Color.parseColor("#FF000000"))
                         iCounterClicks++
                     }else{
@@ -104,7 +104,7 @@ class RegistrationActivity : AppCompatActivity() {
                         database.child("users").child(stEmailUser).child("name").setValue(etNameUser?.text.toString())
                         etNameUser?.visibility = View.INVISIBLE
                         etSurnameUser?.visibility = View.VISIBLE
-                        tvInfoApp?.text = "Become more productive"
+                        tvInfoApp?.text = "Write your surname"
                         tvInfoApp?.setTextColor(Color.parseColor("#FF000000"))
                         iCounterClicks++
                     }else{
@@ -120,7 +120,7 @@ class RegistrationActivity : AppCompatActivity() {
                         etPasswordUser?.visibility = View.VISIBLE
                         etPasswordRepeatUser?.visibility = View.VISIBLE
                         btnRegApp?.text = "Registration"
-                        tvInfoApp?.text = "Become more productive"
+                        tvInfoApp?.text = "Write your password"
                         tvInfoApp?.setTextColor(Color.parseColor("#FF000000"))
                         iCounterClicks++
                     }else{

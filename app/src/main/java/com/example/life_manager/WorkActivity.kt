@@ -39,7 +39,9 @@ class WorkActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.menu_item_calendar -> {
                     fragmentToChange = FragmentCalendar()
-                    fragmentToChange.arguments?.putString("email", stEmailUser)
+                    var tmpBundle : Bundle = Bundle()
+                    tmpBundle.putString("email",stEmailUser)
+                    fragmentToChange.arguments = tmpBundle
                     supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.work_fragment_holder, fragmentToChange)
@@ -47,7 +49,9 @@ class WorkActivity : AppCompatActivity() {
                 }
                 R.id.menu_item_profile -> {
                     fragmentToChange = ProfileFragment()
-                    fragmentToChange.arguments?.putString("email", stEmailUser)
+                    var tmpBundle : Bundle = Bundle()
+                    tmpBundle.putString("email",stEmailUser)
+                    fragmentToChange.arguments = tmpBundle
                     supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.work_fragment_holder, fragmentToChange)
@@ -55,10 +59,12 @@ class WorkActivity : AppCompatActivity() {
                 }
                 R.id.menu_item_current_day -> {
                     fragmentToChange = FragmentCurrentDay()
-                    fragmentToChange.arguments?.putString("email", stEmailUser)
-                    fragmentToChange.arguments?.putString("date", SimpleDateFormat("dd", Locale.getDefault()).format(Date()))
-                    fragmentToChange.arguments?.putString("month",SimpleDateFormat("MM", Locale.getDefault()).format(Date()))
-                    fragmentToChange.arguments?.putString("year", SimpleDateFormat("yyyy", Locale.getDefault()).format(Date()))
+                    var tmpBundle : Bundle = Bundle()
+                    tmpBundle.putString("email",stEmailUser)
+                    tmpBundle.putString("date", SimpleDateFormat("dd", Locale.getDefault()).format(Date()))
+                    tmpBundle.putString("month",SimpleDateFormat("MM", Locale.getDefault()).format(Date()))
+                    tmpBundle.putString("year", SimpleDateFormat("yyyy", Locale.getDefault()).format(Date()))
+                    fragmentToChange.arguments = tmpBundle
                     supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.work_fragment_holder, fragmentToChange)
@@ -66,7 +72,9 @@ class WorkActivity : AppCompatActivity() {
                 }
                 R.id.menu_item_friends ->{
                     fragmentToChange = FragmentFriends()
-                    fragmentToChange.arguments?.putString("email", stEmailUser)
+                    var tmpBundle : Bundle = Bundle()
+                    tmpBundle.putString("email",stEmailUser)
+                    fragmentToChange.arguments = tmpBundle
                     supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.work_fragment_holder, fragmentToChange)

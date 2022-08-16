@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusedByDefault="true"
     tools:context=".RegistrationActivity">
 
     <TextView
@@ -11,11 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-android:layout_marginBottom="50dp"
+        android:layout_marginBottom="50dp"
         android:layout_marginEnd="40dp"
         android:fontFamily="@font/my_written"
         android:letterSpacing="0.1"
-        android:text="Become more productive"
+        android:text="@string/reg_greeting"
         android:textColor="@color/black"
         android:textSize="32dp"
         android:textStyle="normal"
@@ -50,7 +52,8 @@ android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <EditText
         android:id="@+id/reg_text_nickname_field"
@@ -184,7 +187,7 @@ android:layout_marginBottom="50dp"
         android:layout_marginTop="250dp"
         android:fontFamily="@font/my_written"
         android:letterSpacing="0.1"
-        android:text="next"
+        android:text="@string/next_btn"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="32dp"
@@ -193,5 +196,26 @@ android:layout_marginBottom="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/reg_prev_step_btn"
+        android:background="@drawable/btn_stroke"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:fontFamily="@font/my_written"
+        android:letterSpacing="0.1"
+        android:text="@string/previous_btn"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="32dp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reg_registration_btn"
+        android:visibility="gone"
+
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

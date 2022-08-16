@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,11 +8,34 @@
     tools:context=".FragmentCurrentDay">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#A8FFFFFF"
+        android:translationZ="8dp"
+        tools:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/main_progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:indeterminateTint="#f0989f"
+            android:progressDrawable="@drawable/progres_bar_style"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cur_day_constraint_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal|top">
+        android:layout_gravity="center_horizontal|top"
+        android:layout_centerHorizontal="true">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/cur_btn_day"
@@ -23,9 +46,9 @@
 
             android:background ="@drawable/rounded_day"
 
-            android:fontFamily="@font/indie_flower"
-            android:gravity="center_horizontal"
-            android:paddingEnd="10dp"
+            android:fontFamily="@font/my_written"
+            android:gravity="center"
+            android:paddingEnd="0dp"
             android:text="11"
             android:textSize="100dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -37,9 +60,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="How was your day?"
-            android:textSize="24dp"
-            android:fontFamily="@font/indie_flower"
+            android:text="@string/cur_day_question"
+            android:textSize="32dp"
+            android:fontFamily="@font/my_written"
             app:layout_constraintTop_toBottomOf="@id/cur_btn_day"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -48,16 +71,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id = "@+id/cur_day_constraint_checkers"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical"
         android:layout_marginLeft="70dp"
         android:layout_marginTop="60dp"
-        android:layout_marginBottom="100dp"
         android:layout_marginRight="70dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cur_day_constraint_btn">
+        android:layout_below ="@id/cur_day_constraint_btn">
 
 
 
@@ -66,6 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible">
@@ -84,11 +105,11 @@
 
             <TextView
                 android:id="@+id/cur_day_interest_txt"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:fontFamily="@font/indie_flower"
-                android:text="Interesting"
+                android:fontFamily="@font/my_written"
+                android:text="@string/interesting_field_cur"
                 android:textColor="@color/black"
                 android:textSize="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -100,14 +121,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cur_day_constraint_productive"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:layout_marginTop="15dp"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cur_day_constraint_interest">
 
             <androidx.appcompat.widget.SwitchCompat
@@ -124,13 +145,13 @@
 
             <TextView
                 android:id="@+id/cur_day_productive_txt"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:fontFamily="@font/indie_flower"
-                android:text="Productive"
+                android:fontFamily="@font/my_written"
+                android:text="@string/productive_field_cur"
                 android:textColor="@color/black"
                 android:textSize="24dp"
+                android:gravity="left"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/cur_day_switch_productive"
                 app:layout_constraintStart_toStartOf="parent"
@@ -141,7 +162,7 @@
             android:id="@+id/cur_day_constraint_ordinary"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:layout_marginTop="15dp"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -162,10 +183,10 @@
             <TextView
                 android:id="@+id/cur_day_ordinary_txt"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="18dp"
-                android:fontFamily="@font/indie_flower"
-                android:text="Ordinary "
+                android:fontFamily="@font/my_written"
+                android:text="@string/ordinary_field_cur"
                 android:textColor="@color/black"
                 android:textSize="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -182,52 +203,55 @@
         android:id="@+id/cur_day_constraint_diary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="150dp"
+        android:layout_above="@+id/cur_day_save_btn"
+        android:layout_below="@id/cur_day_constraint_checkers"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="20dp"
         android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cur_day_constraint_checkers"
         tools:visibility="visible">
 
         <EditText
             android:id="@+id/cur_et_day"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="20dp"
-            android:fontFamily="@font/indie_flower"
+            android:layout_gravity="bottom"
+            android:backgroundTint="@color/black"
+            android:fontFamily="@font/my_written"
             android:gravity="center_horizontal|bottom"
-            android:hint="Write little note"
+            android:hint="@string/write_note_question"
             android:inputType="textMultiLine"
-            android:maxHeight="100dp"
+            android:lineSpacingExtra="5dp"
+            android:maxHeight="200dp"
             android:minHeight="48dp"
-            android:paddingBottom="2dp"
+            android:paddingBottom="10dp"
             android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/cur_day_save_btn"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/indie_flower"
-            android:gravity="center_horizontal"
-            android:text="Save"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="32dp"
-            android:textStyle="normal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cur_et_day" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <Button
+        android:id="@+id/cur_day_save_btn"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom ="10dp"
+        android:fontFamily="@font/my_written"
+        android:gravity="center_horizontal"
+        android:text="@string/save_btn"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="32dp"
+        android:textStyle="normal" />
 
-</FrameLayout>
+
+</RelativeLayout>

@@ -1,5 +1,55 @@
 <resources>
-    <string name="app_name">Life_Manager</string>
+    <string name="app_name">Life Manager</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main_greeting">There are some hours left, Don\'t waste them</string>
+    <string name="sign_up_btn">sign up</string>
+    <string name="sign_in_btn">sign in</string>
+    <string name="wrong_password_message">wrong password</string>
+    <string name="unknown_user_message">unknown user</string>
+    <string name="reg_greeting">become more productive</string>
+    <string name="next_btn">next</string>
+    <string name="previous_btn">previous</string>
+    <string name="reg_exist_user_message">User with this email already exist</string>
+    <string name="nickname_greeting">write your nickname</string>
+    <string name="wrong_email_message">wrong email, try again</string>
+    <string name="nickname_errror_message">nickname should be at least 2 symbols</string>
+    <string name="name_greeting">Write your name</string>
+    <string name="name_error_message">Name should be at least 2 symbols</string>
+    <string name="surname_greeting">Write your surname</string>
+    <string name="surname_error_message">Surname should be at least 2 symbols</string>
+    <string name="password_greeting">Write your password</string>
+    <string name="different_passwords_message">Your passwords are different</string>
+    <string name="password_error_message">password should be at least 2 symbols</string>
+    <string name="email_greeting">Write your email</string>
+    <string name="interesting_field_cur">interesting</string>
+    <string name="productive_field_cur">productive</string>
+    <string name="ordinary_field_cur">ordinary</string>
+    <string name="cur_day_question">how was your day?</string>
+    <string name="save_btn">save</string>
+    <string name="write_note_question">Write little note</string>
+    <string name="friends_btn">Friends</string>
+    <string name="invite_list_btn">invite list</string>
+    <string name="invite_friend_btn">Invite friend</string>
+    <string name="delete_friend_btn">delete friend?</string>
+    <string name="find_btn">find</string>
+    <string name="yes_btn">yes</string>
+    <string name="no_btn">no</string>
+    <string name="profile_greeting">Improve your day</string>
+    <string name="statistic_field">statistic:</string>
+    <string name="interesting_days_field">interesting days:</string>
+    <string name="productive_days_field">productive days:</string>
+    <string name="ordinary_days_field">ordinary days:</string>
+    <string name="change_user_btn">change user</string>
+    <string name="db_users_str" translatable="false">users</string>
+    <string name="db_count_inter_str" translatable="false">countInterest</string>
+    <string name="db_count_prod_str" translatable="false">countProductive</string>
+    <string name="db_count_ordinary_str" translatable="false">countOrdinary</string>
+    <string name="db_days_str" translatable="false">days</string>
+    <string name="db_last_notion_str" translatable="false">lastnotion</string>
+    <string name="db_name_str" translatable="false">name</string>
+    <string name="db_nickname_str" translatable="false">nickname</string>
+    <string name="db_password_str" translatable="false">password</string>
+    <string name="db_surname_str" translatable="false">surname</string>
+    <string name="db_invite_list_str" translatable="false">invitelist</string>
+    <string name="db_friend_list_str" translatable="false">friendlist</string>
 </resources>

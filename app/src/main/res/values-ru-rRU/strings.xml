@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Life_Manager</string>
+    <string name="main_greeting">Жизнь коротка, используй её с умом</string>
+    <string name="sign_up_btn">регистрация</string>
+    <string name="sign_in_btn">войти</string>
+    <string name="wrong_password_message">неправильный пароль</string>
+    <string name="unknown_user_message">неизвестный пользователь</string>
+    <string name="reg_greeting">стань продуктивнее</string>
+    <string name="next_btn">Далее</string>
+    <string name="previous_btn">назад</string>
+    <string name="reg_exist_user_message">Пользователь с такой почтой уже существует</string>
+    <string name="nickname_greeting">введите свой никнейм</string>
+    <string name="wrong_email_message">Неправильный адресс почты, попробуйте еще</string>
+    <string name="nickname_errror_message">Никнейм должен быть больше 2 символов</string>
+    <string name="name_greeting">Введите свое имя</string>
+    <string name="name_error_message">Имя должно быть длиннее 2 символов</string>
+    <string name="surname_greeting">Введите фамилию</string>
+    <string name="surname_error_message">Фамилия должна быть длиннее двух символов</string>
+    <string name="password_greeting">Введите пароль</string>
+    <string name="different_passwords_message">Пароли не совпадают</string>
+    <string name="password_error_message">пароль должен быть длиннее двух символов</string>
+    <string name="email_greeting">Введите электронную почту</string>
+    <string name="interesting_field_cur">интересно</string>
+    <string name="productive_field_cur">продуктивно</string>
+    <string name="ordinary_field_cur">обычно</string>
+    <string name="save_btn">сохранить</string>
+    <string name="cur_day_question">Как прошёл твой день?</string>
+    <string name="write_note_question">напиши небольшую заметку</string>
+    <string name="friends_btn">Друзья</string>
+    <string name="invite_list_btn">Заявки</string>
+    <string name="invite_friend_btn">Пригласить друга</string>
+    <string name="delete_friend_btn">Удалить друга?</string>
+    <string name="find_btn">найти</string>
+    <string name="yes_btn">да</string>
+    <string name="no_btn">нет</string>
+    <string name="profile_greeting">Улучши свой день</string>
+    <string name="statistic_field">Статистика:</string>
+    <string name="interesting_days_field">Интересных дней:</string>
+    <string name="productive_days_field">Продуктивных дней:</string>
+    <string name="ordinary_days_field">Обычных дней</string>
+    <string name="change_user_btn">Сменить пользователя</string>
+</resources>

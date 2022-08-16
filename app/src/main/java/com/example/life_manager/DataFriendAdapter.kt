@@ -41,7 +41,7 @@ class DataFriendAdapter  (private val context: Context, private val arrayList: j
             tvFirstName = convertView.findViewById(R.id.friend_list_name_txt)
             tvSurName = convertView.findViewById(R.id.friend_list_surname_txt)
             tvNickName = convertView.findViewById(R.id.friend_list_nickname_txt)
-            tvLastNotion = convertView.findViewById(R.id.friend_list_nickname_txt)
+            tvLastNotion = convertView.findViewById(R.id.friend_list_last_notion_txt)
             tvPercentsProductive = convertView.findViewById(R.id.friend_list_percentages_productive_txt)
             tvPercentsInterest = convertView.findViewById(R.id.friend_list_percentages_interest_txt)
             tvPercentsOrdinary = convertView.findViewById(R.id.friend_list_percentages_ordinary_txt)
@@ -50,9 +50,9 @@ class DataFriendAdapter  (private val context: Context, private val arrayList: j
             tvSurName.text = arrayList[position].stSurName
             tvNickName.text = arrayList[position].stNickName
             tvLastNotion.text = arrayList[position].stLastNotion
-            tvPercentsProductive.text = arrayList[position].stPercentsProductive
-            tvPercentsInterest.text = arrayList[position].stPercentsInterest
-            tvPercentsOrdinary.text = arrayList[position].stPercentsOrdinary
+            tvPercentsProductive.text = arrayList[position].stPercentsProductive + "%"
+            tvPercentsInterest.text = arrayList[position].stPercentsInterest + "%"
+            tvPercentsOrdinary.text = arrayList[position].stPercentsOrdinary + "%"
 
             return convertView
         }

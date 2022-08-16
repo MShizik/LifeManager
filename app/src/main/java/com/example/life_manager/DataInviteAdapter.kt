@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageButton
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import org.w3c.dom.Text
 
 class DataInviteAdapter  (private val context: Context, private val arrayList: java.util.ArrayList<inviteListDataHolder>) : BaseAdapter() {
 
@@ -53,14 +52,19 @@ class DataInviteAdapter  (private val context: Context, private val arrayList: j
         tvNickName.text = arrayList[position].stNickName
 
         btnAccept.setOnClickListener {
-            database.child(arrayList[position].stEmailUser.toString()).child("invitelist").child(arrayList[position].stFriendEmail.toString()).get().addOnSuccessListener {
-                database.child(arrayList[position].stEmailUser.toString()).child("friendlist").child(arrayList[position].stFriendEmail.toString()).setValue(1)
-                database.child(arrayList[position].stEmailUser.toString()).child("invitelist").child(arrayList[position].stFriendEmail.toString()).removeValue()
+            database.child(context.resources.getString(R.string.db_users_str)).child(arrayList[position].stEmailUser.toString()).child(context.resources.getString(R.string.db_invite_list_str)).child(arrayList[position].stFriendEmail.toString()).get().addOnSuccessListener {
+                database.child(context.resources.getString(R.string.db_users_str)).child(arrayList[position].stEmailUser.toString()).child(context.resources.getString(R.string.db_friend_list_str)).child(arrayList[position].stFriendEmail.toString()).setValue(1)
+                database.child(context.resources.getString(R.string.db_users_str)).child(arrayList[position].stEmailUser.toString()).child(context.resources.getString(R.string.db_invite_list_str)).child(arrayList[position].stFriendEmail.toString()).removeValue()
+                database.child(context.resources.getString(R.string.db_users_str)).child(arrayList[position].stFriendEmail.toString()).child(context.resources.getString(R.string.db_friend_list_str)).child(arrayList[position].stEmailUser.toString()).setValue(1)
+                arrayList.removeAt(position)
+                notifyDataSetChanged()
             }
         }
         btnDecline.setOnClickListener {
-            database.child(arrayList[position].stEmailUser).child("invitelist").child(arrayList[position].stFriendEmail).get().addOnSuccessListener{
-                database.child(arrayList[position].stEmailUser).child("invitelist").child(arrayList[position].stFriendEmail).removeValue()
+            database.child(context.resources.getString(R.string.db_users_str)).child(arrayList[position].stEmailUser).child(context.resources.getString(R.string.db_invite_list_str)).child(arrayList[position].stFriendEmail).get().addOnSuccessListener{
+                database.child(context.resources.getString(R.string.db_users_str)).child(arrayList[position].stEmailUser).child(context.resources.getString(R.string.db_invite_list_str)).child(arrayList[position].stFriendEmail).removeValue()
+                arrayList.removeAt(position)
+                notifyDataSetChanged()
             }
         }
 

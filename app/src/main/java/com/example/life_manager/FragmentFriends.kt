@@ -7,15 +7,20 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.ProgressBar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.text.FieldPosition
+import java.util.concurrent.TimeUnit
 
 
 class FragmentFriends : Fragment() {
@@ -24,6 +29,9 @@ class FragmentFriends : Fragment() {
 
     private var alFriendList : ArrayList<DataHolder> = arrayListOf()
     private var alInviteList : ArrayList<inviteListDataHolder> = arrayListOf()
+
+    private lateinit var adapterFriendsList : DataFriendAdapter
+    private lateinit var adapterInviteList : DataInviteAdapter
 
     val database  = Firebase.database.reference
 
@@ -44,111 +52,205 @@ class FragmentFriends : Fragment() {
         val btnInviteFriend : Button = view.findViewById(R.id.friend_friend_list_new_btn)
 
         val lvFriendListView : ListView = view.findViewById(R.id.friend_list_view)
-        val lvInviteListView : ListView = view.findViewById(R.id.friend_list_view)
+        val lvInviteListView : ListView = view.findViewById(R.id.friend_invite_list_view)
 
-        stEmailUser = arguments?.getString("email").toString()
+        val prbarFriends = view.findViewById(R.id.progress_layout) as ConstraintLayout
+        prbarFriends.visibility = View.VISIBLE
 
-        getFriendsData()
-        getInviteData()
-
-
-        var adapterFriendsList : DataFriendAdapter = DataFriendAdapter(requireContext(), alFriendList)
-        var adapterInviteList : DataInviteAdapter = DataInviteAdapter(requireContext(), alInviteList)
+        adapterFriendsList = DataFriendAdapter(requireContext(), alFriendList)
+        adapterInviteList = DataInviteAdapter(requireContext(), alInviteList)
 
         lvFriendListView.adapter = adapterFriendsList
         lvInviteListView.adapter = adapterInviteList
 
+        stEmailUser = arguments?.getString("email").toString()
+
+        getFriendsData(object : callbackFriendList{
+            override fun onCallback(iChildrenCount : Long, tmpData : DataHolder) {
+                if(iChildrenCount != 0.toLong()) {
+                    alFriendList.add(tmpData)
+                    if (alFriendList.size >= iChildrenCount) {
+                        recheckAdapter()
+                        lvFriendListView.visibility = View.VISIBLE
+                        lvInviteListView.visibility = View.INVISIBLE
+                        TimeUnit.MILLISECONDS.sleep(500L)
+                        prbarFriends.visibility = View.GONE
+                    }
+                }else{
+                    TimeUnit.MILLISECONDS.sleep(500L)
+                    prbarFriends.visibility = View.GONE
+                }
+            }
+        })
+
         btnInviteListOpen.setOnClickListener{
+            prbarFriends.visibility = View.VISIBLE
             btnFriendListOpen.setTextColor(Color.parseColor("#787878"))
             btnInviteListOpen.setTextColor(Color.parseColor("#FF000000"))
-            getInviteData()
-            adapterInviteList = DataInviteAdapter(requireContext(), alInviteList)
-            lvInviteListView.adapter = adapterInviteList
-            System.out.println(alFriendList.toString()+"fck")
-            lvFriendListView.visibility = View.INVISIBLE
-            lvInviteListView.visibility = View.VISIBLE
+            getInviteData(object : callbackInviteList{
+                override fun onCallback(iChildrenCount: Long, tmpData: inviteListDataHolder) {
+                    if(iChildrenCount == 0L){
+                        lvFriendListView.visibility = View.INVISIBLE
+                        lvInviteListView.visibility = View.VISIBLE
+                        TimeUnit.MILLISECONDS.sleep(500L)
+                        prbarFriends.visibility = View.GONE
+                    }
+                    else {
+                        alInviteList.add(tmpData)
+                        if(alInviteList.size.toLong() == iChildrenCount) {
+                            recheckAdapter()
+                            lvFriendListView.visibility = View.INVISIBLE
+                            lvInviteListView.visibility = View.VISIBLE
+                            TimeUnit.MILLISECONDS.sleep(500L)
+                            prbarFriends.visibility = View.GONE
+                        }
+                    }
+                }
+            })
         }
 
         btnFriendListOpen.setOnClickListener {
+            prbarFriends.visibility = View.VISIBLE
             btnFriendListOpen.setTextColor(Color.parseColor("#FF000000"))
             btnInviteListOpen.setTextColor(Color.parseColor("#787878"))
-            getFriendsData()
-            adapterFriendsList = DataFriendAdapter(requireContext(), alFriendList)
-            lvFriendListView.adapter = adapterFriendsList
-            lvFriendListView.visibility = View.VISIBLE
-            lvInviteListView.visibility = View.INVISIBLE
+            getFriendsData(object : callbackFriendList{
+                override fun onCallback(iChildrenCount : Long, tmpData : DataHolder) {
+                    if(iChildrenCount != 0.toLong()) {
+                        alFriendList.add(tmpData)
+                        if (alFriendList.size >= iChildrenCount) {
+                            recheckAdapter()
+                            lvFriendListView.visibility = View.VISIBLE
+                            lvInviteListView.visibility = View.INVISIBLE
+                            TimeUnit.MILLISECONDS.sleep(500L)
+                            prbarFriends.visibility = View.GONE
+                        }
+                    }else{
+                        TimeUnit.MILLISECONDS.sleep(500L)
+                        prbarFriends.visibility = View.GONE
+                    }
+
+                }
+            })
         }
 
         btnInviteFriend.setOnClickListener {
             startDialogInviteFriend()
         }
+
         lvFriendListView.setOnItemLongClickListener { parent, view, position, id ->
-            startDialogDeleteFriend(alFriendList[position].stFriendEmail)
+            startDialogDeleteFriend(alFriendList[position].stFriendEmail, position)
+
             return@setOnItemLongClickListener(true)
         }
     }
 
-    fun getFriendsData(){
-        database.child("users").child(stEmailUser).child("friendlist").get().addOnSuccessListener {
-            for (i in it.children){
-                var tmpNameFriend : String = ""
-                var tmpSurNameFriend : String = ""
-                var tmpNickNameFriend : String = ""
-                var tmpLastNotion : String = ""
-
-                var  tmpProductiveCount : Int = 0
-                var tmpInterestCount : Int = 0
-                var tmpOrdinaryCount : Int = 0
-                var percentesProductive : Int = 0
-                var percentesInterest : Int = 0
-                var percentesOrdinary : Int = 0
-
-                database.child("users").child(i.key.toString()).get().addOnSuccessListener {
-                    tmpNameFriend = it.child("name").value.toString()
-                    tmpSurNameFriend = it.child("surname").value.toString()
-                    tmpNickNameFriend = it.child("nickname").value.toString()
-                    tmpLastNotion = it.child("lastnotion").value.toString()
-
-                    tmpProductiveCount = it.child("countProductive").value.toString().toInt()
-                    tmpInterestCount = it.child("countInterest").value.toString().toInt()
-                    tmpOrdinaryCount = it.child("countOrdinary").value.toString().toInt()
-                }
-
-                percentesProductive = tmpProductiveCount / (tmpProductiveCount + tmpInterestCount + tmpOrdinaryCount) * 100
-                percentesInterest = tmpInterestCount / (tmpProductiveCount + tmpInterestCount + tmpOrdinaryCount) * 100
-                percentesOrdinary = tmpInterestCount / (tmpProductiveCount + tmpInterestCount + tmpOrdinaryCount) * 100
-
-                var tmpDataObj : DataHolder = DataHolder(i.key.toString(), tmpNameFriend, tmpSurNameFriend, tmpNickNameFriend, tmpLastNotion, percentesProductive.toString(), percentesInterest.toString(), percentesOrdinary.toString())
-                alFriendList.add(tmpDataObj)
-            }
-        }
+    fun recheckAdapter(){
+        println("hohohoho")
+        adapterInviteList.notifyDataSetChanged()
+        adapterFriendsList.notifyDataSetChanged()
     }
 
-    fun getInviteData(){
-        database.child("users").child(stEmailUser).child("invitelist").get().addOnSuccessListener { it ->
-            System.out.println(stEmailUser.toString()+"fcccck")
-            it.children.forEach { i ->
-                var tmpNameFriend : String = ""
-                var tmpSurNameFriend : String = ""
-                var tmpNickNameFriend : String = ""
+    fun getFriendsData(callbackFriendList: callbackFriendList){
+        database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_friend_list_str)).get().addOnSuccessListener {
+            alFriendList.clear()
+            System.out.println("w're here")
+            if (it.value == null){
+                callbackFriendList.onCallback(0.toLong(), DataHolder("","","","","","","",""))
+            }else {
+                it.children.forEach { i ->
+                    var tmpNameFriend: String = ""
+                    var tmpSurNameFriend: String = ""
+                    var tmpNickNameFriend: String = ""
+                    var tmpLastNotion: String = ""
 
-                database.child("users").child(i.key.toString()).get().addOnSuccessListener { datatwo ->
-                    System.out.println(datatwo.toString() + "data")
-                    tmpNameFriend = datatwo.child("name").value.toString()
-                    tmpSurNameFriend = datatwo.child("surname").value.toString()
-                    tmpNickNameFriend = datatwo.child("nickname").value.toString()
-                    System.out.println(tmpNameFriend + "fck")
-                    var tmpDataObj: inviteListDataHolder = inviteListDataHolder(
-                        tmpNameFriend,
-                        tmpSurNameFriend,
-                        tmpNickNameFriend,
-                        i.key.toString(),
-                        stEmailUser
-                    )
-                    alInviteList.add(tmpDataObj)
+                    var tmpProductiveCount: Int = 0
+                    var tmpInterestCount: Int = 0
+                    var tmpOrdinaryCount: Int = 0
+                    var percentesProductive: Int = 0
+                    var percentesInterest: Int = 0
+                    var percentesOrdinary: Int = 0
+
+                    database.child(resources.getString(R.string.db_users_str)).child(i.key.toString()).get()
+                        .addOnSuccessListener { datatwo ->
+                            tmpNameFriend = datatwo.child(resources.getString(R.string.db_name_str)).value.toString()
+                            tmpSurNameFriend = datatwo.child(resources.getString(R.string.db_surname_str)).value.toString()
+                            tmpNickNameFriend = datatwo.child(resources.getString(R.string.db_nickname_str)).value.toString()
+                            tmpLastNotion = datatwo.child(resources.getString(R.string.db_last_notion_str)).value.toString()
+                            println("last" + tmpLastNotion)
+
+                            tmpProductiveCount =
+                                datatwo.child(resources.getString(R.string.db_count_prod_str)).value.toString().toInt()
+                            tmpInterestCount =
+                                datatwo.child(resources.getString(R.string.db_count_inter_str)).value.toString().toInt()
+                            tmpOrdinaryCount =
+                                datatwo.child(resources.getString(R.string.db_count_ordinary_str)).value.toString().toInt()
+                            if (tmpProductiveCount == 0 && tmpInterestCount == 0 && tmpOrdinaryCount == 0) {
+                                percentesProductive = 33
+                                percentesInterest = 33
+                                percentesOrdinary = 33
+                            } else {
+                                percentesProductive =
+                                    tmpProductiveCount / (tmpProductiveCount + tmpInterestCount + tmpOrdinaryCount) * 100
+                                percentesInterest =
+                                    tmpInterestCount / (tmpProductiveCount + tmpInterestCount + tmpOrdinaryCount) * 100
+                                percentesOrdinary =
+                                    tmpInterestCount / (tmpProductiveCount + tmpInterestCount + tmpOrdinaryCount) * 100
+                            }
+                            callbackFriendList.onCallback(
+                                it.childrenCount.toLong(),
+                                DataHolder(
+                                    i.key.toString(),
+                                    tmpNameFriend,
+                                    tmpSurNameFriend,
+                                    tmpNickNameFriend,
+                                    tmpLastNotion,
+                                    percentesProductive.toString(),
+                                    percentesInterest.toString(),
+                                    percentesOrdinary.toString()
+                                )
+                            )
+                        }
+
                 }
             }
         }
+
+        println("theFirstStep" + alFriendList.toString())
+
+    }
+
+    fun getInviteData(callbackInviteList: callbackInviteList){
+        database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_invite_list_str)).get().addOnSuccessListener { it ->
+            System.out.println(stEmailUser.toString()+"fcccck")
+            alInviteList.clear()
+            if(it.value == null){
+                callbackInviteList.onCallback(0L, inviteListDataHolder("","","","",""))
+            }else {
+                it.children.forEach { i ->
+                    var tmpNameFriend: String = ""
+                    var tmpSurNameFriend: String = ""
+                    var tmpNickNameFriend: String = ""
+
+                    database.child(resources.getString(R.string.db_users_str)).child(i.key.toString()).get()
+                        .addOnSuccessListener { datatwo ->
+                            System.out.println(datatwo.toString() + "data")
+                            tmpNameFriend = datatwo.child(resources.getString(R.string.db_name_str)).value.toString()
+                            tmpSurNameFriend = datatwo.child(resources.getString(R.string.db_surname_str)).value.toString()
+                            tmpNickNameFriend = datatwo.child(resources.getString(R.string.db_nickname_str)).value.toString()
+                            var tmpDataObj: inviteListDataHolder = inviteListDataHolder(
+                                tmpNameFriend,
+                                tmpSurNameFriend,
+                                tmpNickNameFriend,
+                                i.key.toString(),
+                                stEmailUser
+                            )
+
+                            callbackInviteList.onCallback(it.childrenCount,tmpDataObj)
+                        }
+                }
+            }
+        }
+
     }
 
     fun startDialogInviteFriend(){
@@ -159,15 +261,20 @@ class FragmentFriends : Fragment() {
             val etEmailUser = dialog_find_friend.findViewById(R.id.add_text_email_field) as EditText
             val dialog_util_confirmation_btn = dialog_find_friend.findViewById(R.id.add_find_btn) as Button
             dialog_util_confirmation_btn.setOnClickListener {
-                database.child("users").child(etEmailUser.text.toString().replace(".","")).child("invitelist").child(stEmailUser).setValue(1)
-                dialog_find_friend.cancel()
+                database.child(resources.getString(R.string.db_users_str)).child(etEmailUser.text.toString()).get().addOnSuccessListener {
+                    if(it.value != null) {
+                        database.child(resources.getString(R.string.db_users_str)).child(etEmailUser.text.toString().replace(".", ""))
+                            .child(resources.getString(R.string.db_invite_list_str)).child(stEmailUser).setValue(1)
+                    }
+                }
+                    dialog_find_friend.cancel()
             }
             dialog_find_friend.setCancelable(true)
             dialog_find_friend.show()
         }
     }
 
-    fun startDialogDeleteFriend(stEmailFriend : String) {
+    fun startDialogDeleteFriend(stEmailFriend : String, position: Int){
         Handler(Looper.getMainLooper()).post {
             val dialog_delete_friend = Dialog(requireContext())
             dialog_delete_friend.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -181,15 +288,25 @@ class FragmentFriends : Fragment() {
                 dialog_delete_friend.cancel()
             }
             btnDeleteFriend.setOnClickListener {
-                database.child("users").child(stEmailUser).child("friendlist").child(stEmailFriend)
+                database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_friend_list_str)).child(stEmailFriend)
                     .removeValue()
-                database.child("users").child(stEmailFriend).child("friendlist").child(stEmailUser)
+                database.child(resources.getString(R.string.db_users_str)).child(stEmailFriend).child(resources.getString(R.string.db_friend_list_str)).child(stEmailUser)
                     .removeValue()
+                alFriendList.removeAt(position)
+                recheckAdapter()
                 dialog_delete_friend.cancel()
             }
             dialog_delete_friend.setCancelable(true)
             dialog_delete_friend.show()
         }
+    }
+
+    interface callbackFriendList{
+        fun onCallback(iChildrenCount : Long, tmpData : DataHolder)
+    }
+
+    interface callbackInviteList{
+        fun onCallback(iChildrenCount : Long, tmpData : inviteListDataHolder)
     }
 
 

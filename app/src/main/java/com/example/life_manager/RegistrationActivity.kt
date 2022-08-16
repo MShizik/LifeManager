@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -27,6 +28,7 @@ class RegistrationActivity : AppCompatActivity() {
     private var tvInfoApp : TextView? = null
 
     private var btnRegApp : Button? = null
+    private var btnPrevReg : AppCompatButton? = null
 
     private lateinit var database: DatabaseReference
 
@@ -44,6 +46,7 @@ class RegistrationActivity : AppCompatActivity() {
         tvInfoApp = findViewById(R.id.reg_text_greeting)
 
         btnRegApp = findViewById(R.id.reg_registration_btn)
+        btnPrevReg = findViewById(R.id.reg_prev_step_btn)
 
         var iCounterClicks : Int = 0
 
@@ -53,104 +56,148 @@ class RegistrationActivity : AppCompatActivity() {
         btnRegApp?.setOnClickListener {
             when (iCounterClicks){
                 0->{
-                    if(!checkEmailAddress()){
+                    if(checkEmailAddress()){
                         stEmailUser = etEmailUser?.text.toString().replace(".","")
-                        database.child("users").child(stEmailUser).get().addOnSuccessListener {
-                            if (it.child("password").value != null) {
-                                tvInfoApp?.text = "User with this email already exist"
+                        database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).get().addOnSuccessListener {
+                            if (it.child(resources.getString(R.string.db_password_str)).value != null) {
+                                tvInfoApp?.text =resources.getString(R.string.reg_exist_user_message)
                                 tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
                             }
                             else{
-                                database.child("users").child(stEmailUser)
-                                    .child("countProductive").setValue(0)
-                                database.child("users").child(stEmailUser)
-                                    .child("countOrdinary").setValue(0)
-                                database.child("users").child(stEmailUser)
-                                    .child("countInterest").setValue(0)
-                                database.child("users").child(stEmailUser)
-                                    .child("invitelist").child("base").setValue("basement")
-                                database.child("users").child(stEmailUser)
-                                    .child("friends").child("base").setValue("basement")
-                                database.child("users").child(stEmailUser)
-                                    .child("lastnotion").setValue("lastNotion!!!")
+                                btnPrevReg?.visibility = View.VISIBLE
+                                database.child(resources.getString(R.string.db_users_str)).child(stEmailUser)
+                                    .child(resources.getString(R.string.db_count_prod_str)).setValue(0)
+                                database.child(resources.getString(R.string.db_users_str)).child(stEmailUser)
+                                    .child(resources.getString(R.string.db_count_ordinary_str)).setValue(0)
+                                database.child(resources.getString(R.string.db_users_str)).child(stEmailUser)
+                                    .child(resources.getString(R.string.db_count_inter_str)).setValue(0)
                                 etEmailUser?.visibility = View.INVISIBLE
+                                etEmailUser?.isEnabled = false
                                 etNicknameUser?.visibility = View.VISIBLE
-                                tvInfoApp?.text = "Write your nickname"
+                                etNicknameUser?.isEnabled = true
+                                tvInfoApp?.text = resources.getString(R.string.nickname_greeting)
                                 tvInfoApp?.setTextColor(Color.parseColor("#FF000000"))
                                 iCounterClicks++
                             }
                         }
                     }
                     else{
-                        tvInfoApp?.text = "Wrong email, try again"
+                        tvInfoApp?.text = resources.getString(R.string.wrong_email_message)
                         tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
                     }
                 }
                 1->{
                     if(etNicknameUser?.text.toString().length >2) {
-                        database.child("users").child(stEmailUser).child("nickname").setValue(etNicknameUser?.text.toString())
-                        etNicknameUser?.visibility = View.INVISIBLE
+                        database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_nickname_str)).setValue(etNicknameUser?.text.toString())
+                        etNicknameUser?.visibility = View.GONE
+                        etNicknameUser?.isEnabled = false
                         etNameUser?.visibility = View.VISIBLE
-                        tvInfoApp?.text = "Write your name"
+                        etNameUser?.isEnabled = true
+                        tvInfoApp?.text = resources.getString(R.string.name_greeting)
                         tvInfoApp?.setTextColor(Color.parseColor("#FF000000"))
                         iCounterClicks++
                     }else{
-                        tvInfoApp?.text = "Nickname should be at least 2 symbols"
+                        tvInfoApp?.text = resources.getString(R.string.nickname_errror_message)
                         tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
                     }
                 }
                 2->{
                     if(etNameUser?.text.toString().length >= 2) {
-                        database.child("users").child(stEmailUser).child("name").setValue(etNameUser?.text.toString())
-                        etNameUser?.visibility = View.INVISIBLE
+                        database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_name_str)).setValue(etNameUser?.text.toString())
+                        etNameUser?.visibility = View.GONE
+                        etNameUser?.isEnabled = false
                         etSurnameUser?.visibility = View.VISIBLE
-                        tvInfoApp?.text = "Write your surname"
+                        etSurnameUser?.isEnabled = true
+                        tvInfoApp?.text = resources.getString(R.string.surname_greeting)
                         tvInfoApp?.setTextColor(Color.parseColor("#FF000000"))
                         iCounterClicks++
                     }else{
-                        tvInfoApp?.text = "Name should be at least 2 symbols"
+                        tvInfoApp?.text = resources.getString(R.string.name_error_message)
                         tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
                     }
                 }
                 3->{
                     if(etNameUser?.text.toString().length >= 2) {
-                        database.child("users").child(stEmailUser).child("surname").setValue(etSurnameUser?.text.toString())
-
-                        etSurnameUser?.visibility = View.INVISIBLE
+                        database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_surname_str)).setValue(etSurnameUser?.text.toString())
+                        etSurnameUser?.visibility = View.GONE
+                        etSurnameUser?.isEnabled = false
                         etPasswordUser?.visibility = View.VISIBLE
+                        etPasswordUser?.isEnabled = true
                         etPasswordRepeatUser?.visibility = View.VISIBLE
-                        btnRegApp?.text = "Registration"
-                        tvInfoApp?.text = "Write your password"
+                        etPasswordRepeatUser?.isEnabled = true
+                        btnRegApp?.text = resources.getString(R.string.sign_up_btn)
+                        tvInfoApp?.text = resources.getString(R.string.password_greeting)
                         tvInfoApp?.setTextColor(Color.parseColor("#FF000000"))
                         iCounterClicks++
                     }else{
-                        tvInfoApp?.text = "Surname should be at least 2 symbols"
+                        tvInfoApp?.text = resources.getString(R.string.surname_error_message)
                         tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
                     }
                 }
                 4->{
                     if(etPasswordUser?.text.toString() == etPasswordRepeatUser?.text.toString()){
                         if(etPasswordUser?.text.toString().length >= 8) {
-                            database.child("users")
+                            database.child(resources.getString(R.string.db_users_str))
                                 .child(etEmailUser?.text.toString().replace(".", ""))
-                                .child("password").setValue(etPasswordUser?.text.toString())
+                                .child(resources.getString(R.string.db_password_str)).setValue(etPasswordUser?.text.toString())
                             var intentToWorkActivity = Intent(this, WorkActivity::class.java)
                             intentToWorkActivity.putExtra("email", stEmailUser)
                             startActivity(intentToWorkActivity)
                         }else{
-                            tvInfoApp?.text = "Password should be at least 8 symbols"
+                            tvInfoApp?.text = resources.getString(R.string.password_error_message)
                             tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
                         }
                     }else{
-                        tvInfoApp?.text = "Your passwords are different"
+                        tvInfoApp?.text = resources.getString(R.string.different_passwords_message)
                         tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
                     }
                 }
             }
         }
+
+        btnPrevReg?.setOnClickListener {
+            when (iCounterClicks){
+                1->{
+                    tvInfoApp?.text = resources.getString(R.string.email_greeting)
+                    database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).removeValue()
+                    etNicknameUser?.visibility = View.GONE
+                    etNicknameUser?.isEnabled = false
+                    etEmailUser?.isEnabled = true
+                    etEmailUser?.visibility = View.VISIBLE
+                    iCounterClicks--
+                }
+                2->{
+                    tvInfoApp?.text = resources.getString(R.string.nickname_greeting)
+                    etNicknameUser?.visibility = View.VISIBLE
+                    etNameUser?.visibility = View.GONE
+                    etNameUser?.isEnabled = false
+                    etNicknameUser?.isEnabled = true
+                    iCounterClicks--
+                }
+                3->{
+                    tvInfoApp?.text = resources.getString(R.string.name_greeting)
+                    etSurnameUser?.visibility = View.GONE
+                    etNameUser?.visibility = View.VISIBLE
+                    etSurnameUser?.isEnabled = false
+                    etNameUser?.isEnabled = true
+                    iCounterClicks--
+                }
+                4->{
+                    tvInfoApp?.text = resources.getString(R.string.surname_greeting)
+                    etPasswordUser?.visibility = View.GONE
+                    etPasswordRepeatUser?.visibility = View.GONE
+                    etPasswordRepeatUser?.isEnabled = false
+                    etPasswordUser?.isEnabled = false
+                    etSurnameUser?.visibility = View.VISIBLE
+                    etSurnameUser?.isEnabled = true
+                    iCounterClicks--
+                }
+            }
+        }
+
     }
 
     fun checkEmailAddress(): Boolean{
-        return !isEmpty(etEmailUser?.text.toString().replace(".","")) && android.util.Patterns.EMAIL_ADDRESS.matcher(etEmailUser?.text.toString().replace(".","")).matches()
+        return !isEmpty(etEmailUser?.text.toString().replace(".","")) && android.util.Patterns.EMAIL_ADDRESS.matcher(etEmailUser?.text.toString()).matches()
     }
 }

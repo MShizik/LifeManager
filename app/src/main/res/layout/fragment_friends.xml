@@ -7,6 +7,28 @@
     tools:context=".FragmentFriends">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#A8FFFFFF"
+        android:translationZ="8dp"
+        tools:visibility="visible">
+
+        <ProgressBar
+            android:id="@+id/main_progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:indeterminateTint="#f0989f"
+            android:progressDrawable="@drawable/progres_bar_style"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp">
@@ -17,7 +39,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Friends"
+            android:text="@string/friends_btn"
             android:textColor="@color/black"
             android:textAllCaps="false"
             android:textSize="24dp"
@@ -33,7 +55,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Invite list"
+            android:text="@string/invite_list_btn"
             android:textColor="#787878"
             android:textAllCaps="false"
             android:textSize="24dp"
@@ -82,15 +104,14 @@
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="580dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="30dp"
         android:fontFamily="@font/my_written"
-        android:text="Invite friend"
+        android:text="@string/invite_friend_btn"
         android:textAllCaps="false"
         android:textColor="#70A6D3"
-        android:textSize="20dp"
+        android:textSize="24dp"
         android:textStyle="normal"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal|bottom"/>
 
 
 </FrameLayout>

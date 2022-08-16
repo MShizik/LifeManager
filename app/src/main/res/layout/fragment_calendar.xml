@@ -1,31 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".FragmentCalendar">
 
-
-
-    <androidx.gridlayout.widget.GridLayout
-        android:id = "@+id/calendar_days_holder"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/progress_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="320dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginBottom="200dp"
-        app:rowCount = "5"
-        app:columnCount="7">
+        android:background="#A8FFFFFF"
+        android:translationZ="8dp"
+        tools:visibility="gone">
 
-    </androidx.gridlayout.widget.GridLayout>
+        <ProgressBar
+            android:id="@+id/main_progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:indeterminateTint="#f0989f"
+            android:progressDrawable="@drawable/progres_bar_style"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/progress_layout_calendar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/cal_btn_cur_year"
+        android:layout_above="@id/cal_btn_cur_mth"
+        android:background="#A8FFFFFF"
+        android:translationZ="0dp"
+        tools:visibility="visible">
+
+        <ProgressBar
+            android:id="@+id/main_progress_bar_calendar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:indeterminateTint="#f0989f"
+            android:progressDrawable="@drawable/progres_bar_style"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/cal_btn_cur_mth"
+        android:layout_below="@id/cal_btn_cur_year">
+
+        <GridView
+            android:id="@+id/calendar_days_holder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="20dp"
+            android:numColumns="7"
+            android:scrollbarSize="0dp"
+            android:verticalSpacing="15dp" />
+    </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cur_day_constraint_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_centerHorizontal="true">
 
 
         <androidx.appcompat.widget.AppCompatButton
@@ -35,10 +88,9 @@
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:background="@drawable/rounded_day"
-            android:fontFamily="@font/indie_flower"
+            android:fontFamily="@font/my_written"
             android:text="11"
-            android:paddingEnd="10dp"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,90 +108,101 @@
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2021"
-        android:textColor="#787878"
-        android:textAllCaps="false"
-        android:textSize="24dp"
-        android:textStyle="normal"
-        android:fontFamily="@font/my_written"
-        android:layout_marginBottom="100dp"
-        android:layout_marginStart="40dp"
+        android:layout_below="@id/cur_day_constraint_btn"
+        android:layout_alignParentLeft="true"
         android:layout_gravity="center|left"
-        />
+        android:gravity="left|center_vertical"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/my_written"
+        android:text="2021"
+        android:textAllCaps="false"
+        android:textColor="#787878"
+        android:textSize="24dp"
+        android:textStyle="normal" />
+
     <Button
         android:id="@+id/cal_btn_cur_year"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2022"
-        android:textColor="@color/black"
-        android:textAllCaps="false"
-        android:textSize="24dp"
-        android:textStyle="normal"
-        android:fontFamily="@font/my_written"
-        android:layout_marginBottom="100dp"
+        android:layout_below="@id/cur_day_constraint_btn"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center|center"
-        />
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/my_written"
+        android:text="2022"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:textStyle="normal" />
+
     <Button
         android:id="@+id/cal_btn_next_year"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2023"
-        android:textColor="#787878"
-        android:textAllCaps="false"
-        android:textSize="24dp"
-        android:textStyle="normal"
-        android:fontFamily="@font/my_written"
-        android:layout_marginBottom="100dp"
+        android:layout_below="@id/cur_day_constraint_btn"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="40dp"
-        android:layout_gravity="center|right"
-        />
+        android:fontFamily="@font/my_written"
+        android:gravity="right|center_vertical"
+        android:text="2023"
+        android:textAllCaps="false"
+        android:textColor="#787878"
+        android:textSize="24dp"
+        android:textStyle="normal" />
 
     <Button
         android:id="@+id/cal_btn_prev_mth"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Previous"
-        android:textColor="#787878"
-        android:textAllCaps="false"
-        android:textSize="24dp"
-        android:textStyle="normal"
-        android:fontFamily="@font/my_written"
-        android:layout_marginBottom="130dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="40dp"
-        android:layout_gravity="bottom|left"
-        />
+        android:layout_marginBottom="40dp"
+        android:fontFamily="@font/my_written"
+        android:text="Previous"
+        android:gravity="left|center_vertical"
+        android:textAllCaps="false"
+        android:textColor="#787878"
+        android:textSize="24dp"
+        android:textStyle="normal" />
+
     <Button
         android:id="@+id/cal_btn_cur_mth"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Current"
-        android:textColor="@color/black"
-        android:textAllCaps="false"
-        android:textSize="24dp"
-        android:textStyle="normal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
         android:fontFamily="@font/my_written"
-        android:layout_marginBottom="130dp"
-        android:layout_gravity="bottom|center"
-        />
+        android:text="Current"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:textStyle="normal" />
+
     <Button
         android:id="@+id/cal_btn_next_mth"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Next"
-        android:textColor="#787878"
-        android:textAllCaps="false"
-        android:textSize="24dp"
-        android:textStyle="normal"
-        android:fontFamily="@font/my_written"
-        android:layout_marginBottom="130dp"
-        android:layout_marginEnd="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|right"
-        />
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
+        android:fontFamily="@font/my_written"
+        android:text="Next"
+        android:gravity="right|center_vertical"
+        android:textAllCaps="false"
+        android:textColor="#787878"
+        android:textSize="24dp"
+        android:textStyle="normal" />
 
 
-</FrameLayout>
+</RelativeLayout>

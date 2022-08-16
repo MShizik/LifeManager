@@ -5,6 +5,9 @@
         android:drawable="@drawable/switch_thumb_false"/>
 
     <item android:state_checked="true"
-        android:drawable="@drawable/switch_thumb_true_interest"/>
+        android:drawable="@drawable/switch_thumb_true_interest">
+
+    </item>
+
 
 </selector>

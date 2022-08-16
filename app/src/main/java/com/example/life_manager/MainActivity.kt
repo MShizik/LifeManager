@@ -48,25 +48,25 @@ class MainActivity : AppCompatActivity() {
         var stNicknameUser: String? = null
 
         btnSignUser?.setOnClickListener {
-            database.child("users").child(etEmailUser?.text.toString().replace(".", "")).get()
+            database.child(resources.getString(R.string.db_users_str)).child(etEmailUser?.text.toString().replace(".", "")).get()
                 .addOnSuccessListener {
                     if (it.value != null) {
-                        if (it.child("password").value.toString()
+                        if (it.child(resources.getString(R.string.db_password_str)).value.toString()
                                 .equals(etPasswordUser?.text.toString())
                         ) {
-                            stEmailUser = etEmailUser?.text.toString()
-                            stNameUser = it.child("name").value.toString()
-                            stSurnameUser = it.child("surname").value.toString()
-                            stNicknameUser = it.child("nickname").value.toString()
+                            stEmailUser = etEmailUser?.text.toString().replace(".","")
+                            stNameUser = it.child(resources.getString(R.string.db_name_str)).value.toString()
+                            stSurnameUser = it.child(resources.getString(R.string.db_surname_str)).value.toString()
+                            stNicknameUser = it.child(resources.getString(R.string.db_nickname_str)).value.toString()
                             var intentToWorkActivity = Intent(this, WorkActivity::class.java)
                             intentToWorkActivity.putExtra("email", etEmailUser?.text.toString())
                             startActivity(intentToWorkActivity)
                         } else {
-                            tvInfoApp?.text = "Wrong password"
+                            tvInfoApp?.text = resources.getString(R.string.wrong_password_message)
                             tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
                         }
                     } else {
-                        tvInfoApp?.text = "Unknown user"
+                        tvInfoApp?.text = resources.getString(R.string.unknown_user_message)
                         tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
                     }
                 }

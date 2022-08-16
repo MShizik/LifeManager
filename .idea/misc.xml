@@ -3,29 +3,47 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3185" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/btn_stroke.xml" value="0.356" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/dialog_background.xml" value="0.341" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.341" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.3185" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/ic_calendar.xml" value="0.209" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/ic_friends.xml" value="0.341" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3185" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.2095" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/ic_person.xml" value="0.341" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/icon_calendar.xml" value="0.341" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/input_field.xml" value="0.341" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/progres_bar_style.xml" value="0.286" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/rounded_day.xml" value="0.356" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/rounded_day_interest.xml" value="0.3185" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/rounded_day_ordinary.xml" value="0.287" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/rounded_day_productive.xml" value="0.287" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/switch_thumb_true_interest.xml" value="0.286" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/switch_thumb_true_ordinary.xml" value="0.286" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/switch_thumb_true_productive.xml" value="0.286" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/thumb_interest.xml" value="0.286" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/track_interest.xml" value="0.286" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/track_ordinary.xml" value="0.286" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/drawable/track_productive.xml" value="0.286" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/font/indie_flower.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/activity_registration.xml" value="0.25" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/activity_work.xml" value="0.2015625" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/card_layout.xml" value="0.75" />
-        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/custom_friend_list_row.xml" value="0.28804347826086957" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/custom_friend_list_row.xml" value="0.33" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/custom_invite_list_row.xml" value="0.33" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/dialog_add_friend.xml" value="0.3875" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/dialog_delete_friend.xml" value="0.3875" />
-        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/fragment_calendar.xml" value="0.32065217391304346" />
-        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/fragment_current_day.xml" value="0.25" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/fragment_calendar.xml" value="0.25" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/fragment_current_day.xml" value="0.22" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/fragment_friends.xml" value="0.33" />
-        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/fragment_profile.xml" value="0.5" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/layout/progress_bar.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/menu/bottom_menu.xml" value="0.2015625" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3185" />
+        <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3185" />
         <entry key="..\:/Users/sidor/AndroidStudioProjects/Life_Manager/app/src/main/res/mipmap-anydpi-v26/ic_person.xml" value="0.341" />
       </map>
     </option>

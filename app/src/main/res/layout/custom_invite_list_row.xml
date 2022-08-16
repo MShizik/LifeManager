@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="50dp"
-        android:layout_toRightOf="@id/invite_list_name_layout"
+        android:layout_toLeftOf="@id/invite_decline_btn"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
@@ -24,6 +24,7 @@
         android:id="@+id/invite_decline_btn"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:layout_marginRight="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -32,7 +33,7 @@
         android:background="?attr/selectableItemBackground"
         android:src = "@drawable/ic_baseline_close_24"
         android:layout_marginLeft="50dp"
-        android:layout_toRightOf="@id/invite_accept_btn"/>
+        android:layout_alignParentRight="true"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id = "@+id/invite_list_name_layout"

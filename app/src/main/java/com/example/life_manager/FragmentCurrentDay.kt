@@ -160,7 +160,11 @@ class FragmentCurrentDay : Fragment() {
             database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_count_ordinary_str)).setValue(countOrdinary)
             database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_count_inter_str)).setValue(countInterest)
             database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_count_prod_str)).setValue(countProductive)
-            database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_last_notion_str)).setValue(etNoteUser.text.toString())
+            if(chosenDate == SimpleDateFormat("dd", Locale.getDefault()).format(Date()) ) {
+                database.child(resources.getString(R.string.db_users_str)).child(stEmailUser)
+                    .child(resources.getString(R.string.db_last_notion_str))
+                    .setValue(etNoteUser.text.toString())
+            }
             database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_days_str)).child(chosenYear).child(chosenMonth).child(chosenDate).child("SwitchesState").setValue(iSwitchesState)
             database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_days_str)).child(chosenYear).child(chosenMonth).child(chosenDate).child("Notion").setValue(etNoteUser.text.toString())
         }

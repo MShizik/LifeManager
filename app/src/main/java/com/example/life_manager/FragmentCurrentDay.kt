@@ -1,8 +1,5 @@
 package com.example.life_manager
 
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.media.tv.TvContract
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,18 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.Switch
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 class FragmentCurrentDay : Fragment() {
 
@@ -31,13 +24,13 @@ class FragmentCurrentDay : Fragment() {
     private var countOrdinary = 0
     private var iSwitchesState = 0
     private var iPreviousState = 0
-    private var stEmailUser : String = "aboba"
-    private var stNoteUser : String = "aboba"
+    private var stEmailUser : String = "default"
+    private var stNoteUser : String = "default"
     private var chosenYear : String = SimpleDateFormat("yyyy", Locale.getDefault()).format(Date())
     private var chosenMonth : String = SimpleDateFormat("MM", Locale.getDefault()).format(Date())
     private var chosenDate : String = SimpleDateFormat("dd", Locale.getDefault()).format(Date())
 
-    private lateinit var prbarCurDay : ConstraintLayout
+    private lateinit var progressbarCurDay : ConstraintLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,8 +52,8 @@ class FragmentCurrentDay : Fragment() {
 
         val etNoteUser : EditText = view.findViewById(R.id.cur_et_day)
 
-        prbarCurDay  = view.findViewById(R.id.progress_layout) as ConstraintLayout
-        prbarCurDay.visibility = View.VISIBLE
+        progressbarCurDay  = view.findViewById(R.id.progress_layout) as ConstraintLayout
+        progressbarCurDay.visibility = View.VISIBLE
 
 
         stEmailUser = arguments?.getString("email").toString()
@@ -90,10 +83,10 @@ class FragmentCurrentDay : Fragment() {
                     }
                 }
 
-                if(stNoteUser != "aboba"){
+                if(stNoteUser != "default"){
                     etNoteUser.setText(stNoteUser)
                 }
-                prbarCurDay.animate().alpha(0.0f).setDuration(1000L).withEndAction(Runnable{ prbarCurDay.visibility = View.GONE})
+                progressbarCurDay.animate().alpha(0.0f).setDuration(1000L).withEndAction(Runnable{ progressbarCurDay.visibility = View.GONE})
             }
         })
 

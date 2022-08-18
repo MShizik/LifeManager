@@ -183,7 +183,7 @@ class FragmentCalendar : Fragment() {
     }
 
 
-    private fun fillArrayListOfDates ( chosenMonth:String, chosenYear : String, monthLength : Int) {
+    private fun fillArrayListOfDates ( chosenMonth : String, chosenYear : String, monthLength : Int) {
         alDatesData.clear()
         for (i in 1..monthLength ){
             var tmpDate : DateHolder

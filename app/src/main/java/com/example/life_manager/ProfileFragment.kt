@@ -1,17 +1,13 @@
 package com.example.life_manager
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
@@ -20,19 +16,27 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
-import java.util.concurrent.TimeUnit
+import kotlin.math.roundToLong
 
 
 class ProfileFragment : Fragment() {
 
     private val database : DatabaseReference = Firebase.database.reference
 
-    private var stEmailUser : String = "aboba"
-    private var iSwitchesState : Int = 0
+    private var stEmailUser = "default"
 
-    var percentesProductive : Float = 0.0F
-    var percentesInterest : Float = 0.0F
-    var percentesOrdinary : Float = 0.0F
+    var percentsProductive = 0.0F
+    var percentsInterest = 0.0F
+    var percentsOrdinary = 0.0F
+
+    private lateinit var btnCurDay : Button
+    private lateinit var btnChangeUser : Button
+
+    private lateinit var tvPercentsOrdinary : TextView
+    private lateinit var tvPercentsInterest : TextView
+    private lateinit var tvPercentsProductive : TextView
+
+    private lateinit var progressbarProfile : ConstraintLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,51 +44,35 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         stEmailUser = arguments?.getString("email").toString()
-
-        println("first_step")
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var btnCurDay : Button = view.findViewById(R.id.pro_btn_day)
-        var btnChangeUser : Button = view.findViewById(R.id.pro_change_user)
+        btnCurDay = view.findViewById(R.id.pro_btn_day)
+        btnChangeUser = view.findViewById(R.id.pro_change_user)
 
-        var tvPercentsInterest : TextView = view.findViewById(R.id.pro_statistic_interest_percents_txt)
-        var tvPercentsProductive : TextView = view.findViewById(R.id.pro_statistic_productive_percents_txt)
-        var tvPercentsOrdinary : TextView = view.findViewById(R.id.pro_statistic_ordinary_percents_txt)
+        tvPercentsInterest = view.findViewById(R.id.pro_statistic_interest_percents_txt)
+        tvPercentsProductive = view.findViewById(R.id.pro_statistic_productive_percents_txt)
+        tvPercentsOrdinary = view.findViewById(R.id.pro_statistic_ordinary_percents_txt)
 
-        var prbarProfile  = view.findViewById(R.id.progress_layout) as ConstraintLayout
-        prbarProfile.visibility = View.VISIBLE
+        progressbarProfile  = view.findViewById(R.id.progress_layout)
+        progressbarProfile.visibility = View.VISIBLE
 
         btnCurDay.text = SimpleDateFormat("dd", Locale.getDefault()).format(Date())
 
-        getDataFromFirebase(object: callbackDayData{
-            override fun onCallback(iSwitchState: Int) {
-                when(iSwitchesState){
-                    1 -> {
-                        btnCurDay.setBackgroundResource(R.drawable.rounded_day_ordinary)
-                    }
-
-                    2 -> {
-                        btnCurDay.setBackgroundResource(R.drawable.rounded_day_interest)
-                    }
-
-                    3 -> {
-                        btnCurDay.setBackgroundResource(R.drawable.rounded_day_productive);
-                    }
-                }
-                prbarProfile.animate().setDuration(1000L).alpha(0.0f).withEndAction(Runnable { prbarProfile.visibility = View.GONE })
-            }
-        })
+        getProfileData()
 
         btnCurDay.setOnClickListener {
-            var fragmentToChange = FragmentCurrentDay()
-            var tmpBundle : Bundle = Bundle()
+            val fragmentToChange = FragmentCurrentDay()
+            val tmpBundle = Bundle()
             tmpBundle.putString("email",stEmailUser)
             tmpBundle.putString("date", SimpleDateFormat("dd", Locale.getDefault()).format(Date()))
-            tmpBundle.putString("month", LocalDate.parse(java.time.format.DateTimeFormatter.ISO_INSTANT.format(java.time.Instant.ofEpochSecond(Math.round((System.currentTimeMillis() / 1000).toDouble()).toLong())),DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")).month.toString())
+            tmpBundle.putString("month", LocalDate.parse(
+                DateTimeFormatter.ISO_INSTANT.format(java.time.Instant.ofEpochSecond(
+                    Math.round((System.currentTimeMillis() / 1000).toDouble())
+                )),DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")).month.toString())
             tmpBundle.putString("year", SimpleDateFormat("yyyy", Locale.getDefault()).format(Date()))
             fragmentToChange.arguments = tmpBundle
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -93,60 +81,74 @@ class ProfileFragment : Fragment() {
         }
 
         btnChangeUser.setOnClickListener {
-            var intentToWorkActivity = Intent(requireContext(), MainActivity::class.java)
+            val intentToWorkActivity = Intent(requireContext(), MainActivity::class.java)
             startActivity(intentToWorkActivity)
         }
 
-        getProfileData(object : callbackProfileData {
-            override fun onCallback(iProdPerc: Float, iInterPerc: Float, iOrdinPerc: Float) {
-                percentesProductive = iProdPerc
-                percentesInterest = iInterPerc
-                percentesOrdinary = iOrdinPerc
-                tvPercentsInterest.text = (percentesInterest*100).toInt().toString() + "%"
-                tvPercentsOrdinary.text = (percentesOrdinary*100).toInt().toString() + "%"
-                tvPercentsProductive.text = (percentesProductive*100).toInt().toString() + "%"
-            }
-        })
 
     }
 
-    fun getDataFromFirebase(callbackDayData: callbackDayData){
-        database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_days_str)).child(SimpleDateFormat("yyyy", Locale.getDefault()).format(Date())).child(LocalDate.parse(java.time.format.DateTimeFormatter.ISO_INSTANT.format(java.time.Instant.ofEpochSecond(Math.round((System.currentTimeMillis() / 1000).toDouble()).toLong())),DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")).month.toString()).child(SimpleDateFormat("dd", Locale.getDefault()).format(Date())).get().addOnSuccessListener {
-            if(it.value != null) {
-                iSwitchesState = it.child(resources.getString(R.string.db_switches_state_str)).value.toString().toInt()
-                callbackDayData.onCallback(iSwitchesState)
-            }else{
-                callbackDayData.onCallback(iSwitchesState)
-            }
-        }
-    }
 
-
-    fun getProfileData(myCallBack: callbackProfileData) {
+    private fun getProfileData() {
         database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).get().addOnSuccessListener {
-            var  tmpProductiveCount : Float = 0.1F
-            var tmpInterestCount : Float = 0.1F
-            var tmpOrdinaryCount : Float = 0.1F
-            println("second_step")
-            tmpProductiveCount = it.child(resources.getString(R.string.db_count_prod_str)).value.toString().toFloat()
-            tmpInterestCount = it.child(resources.getString(R.string.db_count_inter_str)).value.toString().toFloat()
-            tmpOrdinaryCount = it.child(resources.getString(R.string.db_count_ordinary_str)).value.toString().toFloat()
+
+            var tmpProductiveCount = it.child(resources.getString(R.string.db_count_prod_str)).value.toString().toFloat()
+            var tmpInterestCount = it.child(resources.getString(R.string.db_count_inter_str)).value.toString().toFloat()
+            var tmpOrdinaryCount = it.child(resources.getString(R.string.db_count_ordinary_str)).value.toString().toFloat()
+
             if(tmpInterestCount == 0.0F && tmpOrdinaryCount == 0.0F && tmpProductiveCount == 0.0F){
-                myCallBack.onCallback(0.33F,0.33F, 0.33F)
+
+                tmpProductiveCount = 0.33F
+                tmpInterestCount = 0.33F
+                tmpOrdinaryCount = 0.33F
+
             }else {
-                println("third_step")
-                var tmpSum : Float = tmpProductiveCount + tmpInterestCount + tmpOrdinaryCount
-                myCallBack.onCallback(tmpProductiveCount/tmpSum,tmpInterestCount/tmpSum, tmpOrdinaryCount/tmpSum)
+
+                val tmpSum : Float = tmpProductiveCount + tmpInterestCount + tmpOrdinaryCount
+                tmpProductiveCount /= tmpSum
+                tmpOrdinaryCount /= tmpSum
+                tmpInterestCount /= tmpSum
+
             }
+
+            var iSwitchState = it.child(resources.getString(R.string.db_days_str)).child(SimpleDateFormat("yyyy", Locale.getDefault()).format(Date())).child(LocalDate.parse(
+                DateTimeFormatter.ISO_INSTANT.format(java.time.Instant.ofEpochSecond(
+                    (System.currentTimeMillis() / 1000).toDouble().roundToLong()
+                )),DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")).month.toString()).child(SimpleDateFormat("dd", Locale.getDefault()).format(Date())).child(resources.getString(R.string.db_switches_state_str)).value.toString()
+            if (iSwitchState == "null"){
+
+                iSwitchState = "0"
+
+            }
+            setDataFromFirebase(tmpProductiveCount,tmpInterestCount, tmpOrdinaryCount,iSwitchState.toInt())
+
         }
     }
 
-    interface callbackProfileData {
-        fun onCallback(iProdPerc : Float, iInterPerc : Float, iOrdinPerc : Float)
-    }
+    private fun setDataFromFirebase(iProductivePercents : Float, iInterestPercents : Float, iOrdinaryPercents : Float, iSwitchState: Int){
 
-    interface callbackDayData{
-        fun onCallback(iSwitchState : Int)
+        when(iSwitchState){
+            1 -> {
+                btnCurDay.setBackgroundResource(R.drawable.rounded_day_ordinary)
+            }
+
+            2 -> {
+                btnCurDay.setBackgroundResource(R.drawable.rounded_day_interest)
+            }
+
+            3 -> {
+                btnCurDay.setBackgroundResource(R.drawable.rounded_day_productive)
+            }
+        }
+        progressbarProfile.animate().setDuration(1000L).alpha(0.0f).withEndAction(Runnable { progressbarProfile.visibility = View.GONE })
+
+        percentsProductive = iProductivePercents
+        percentsInterest = iInterestPercents
+        percentsOrdinary = iOrdinaryPercents
+        tvPercentsInterest.text = (percentsInterest*100).toInt().toString() + "%"
+        tvPercentsOrdinary.text = (percentsOrdinary*100).toInt().toString() + "%"
+        tvPercentsProductive.text = (percentsProductive*100).toInt().toString() + "%"
+
     }
 
     companion object {

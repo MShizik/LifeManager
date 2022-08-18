@@ -44,4 +44,5 @@
     <string name="nav_calendar_title">календарь</string>
     <string name="nav_profile_title">профиль</string>
     <string name="nav_friends_title">друзья</string>
+    <string name="internet_connection_error_message">Проверьте своё интернет соеденение</string>
 </resources>

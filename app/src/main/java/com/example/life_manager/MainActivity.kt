@@ -51,9 +51,7 @@ class MainActivity : AppCompatActivity() {
             database.child(resources.getString(R.string.db_users_str)).child(etEmailUser?.text.toString().replace(".", "")).get()
                 .addOnSuccessListener {
                     if (it.value != null) {
-                        if (it.child(resources.getString(R.string.db_password_str)).value.toString()
-                                .equals(etPasswordUser?.text.toString())
-                        ) {
+                        if (it.child(resources.getString(R.string.db_password_str)).value.toString() == etPasswordUser?.text.toString()) {
                             stEmailUser = etEmailUser?.text.toString().replace(".","")
                             stNameUser = it.child(resources.getString(R.string.db_name_str)).value.toString()
                             stSurnameUser = it.child(resources.getString(R.string.db_surname_str)).value.toString()
@@ -63,12 +61,16 @@ class MainActivity : AppCompatActivity() {
                             startActivity(intentToWorkActivity)
                         } else {
                             tvInfoApp?.text = resources.getString(R.string.wrong_password_message)
-                            tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
+                            tvInfoApp?.setTextColor(Color.parseColor(R.color.productive_color_light.toString()))
                         }
                     } else {
                         tvInfoApp?.text = resources.getString(R.string.unknown_user_message)
-                        tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
+                        tvInfoApp?.setTextColor(Color.parseColor(R.color.productive_color_light.toString()))
                     }
+                }
+                .addOnFailureListener {
+                    tvInfoApp?.text = resources.getString(R.string.internet_connection_error_message)
+                    tvInfoApp?.setTextColor(Color.parseColor(R.color.productive_color_light.toString()))
                 }
         }
     }

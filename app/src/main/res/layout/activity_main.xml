@@ -2,12 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style = "@style/CustomConstraintLayout.Activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    >
 
     <TextView
         android:id="@+id/main_text_greeting"
+        style = "@style/CustomTextView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="40dp"
@@ -17,7 +20,6 @@
         android:letterSpacing="0.1"
         android:lineSpacingExtra="5dp"
         android:text="@string/main_greeting"
-        android:textColor="@color/black"
         android:textSize="32dp"
         android:textStyle="normal"
         android:gravity="center_horizontal"
@@ -73,11 +75,10 @@
 
     <Button
         android:id="@+id/main_sign_btn"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
+        style="@style/CustomTextButtonActive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_in_btn"
-        android:textColor="@color/black"
         android:textAllCaps="false"
         android:textSize="32dp"
         android:textStyle="normal"
@@ -91,16 +92,14 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/main_reg_btn"
-        android:background="@drawable/btn_stroke"
+        style="@style/CustomBorderedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_up_btn"
         android:layout_marginTop="20dp"
-        android:paddingTop="2dp"
-        android:paddingBottom="4dp"
+        android:gravity="center"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:textColor="@color/black"
         android:textAllCaps="false"
         android:textSize="32dp"
         android:textStyle="normal"

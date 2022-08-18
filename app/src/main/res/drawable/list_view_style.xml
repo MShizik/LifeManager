@@ -21,12 +21,9 @@
     <item>
         <shape android:shape="rectangle"  >
             <corners android:radius="10dp" />
-
             <solid android:color="#00FFFFFF"/>
             <stroke android:color="#787878" android:width="1dp"/>
         </shape>
-
-
     </item>
 
 

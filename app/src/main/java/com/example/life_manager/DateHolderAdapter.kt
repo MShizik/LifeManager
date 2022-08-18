@@ -1,6 +1,7 @@
 package com.example.life_manager
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.ContentProviderCompat.requireContext
 
 class DateHolderAdapter(
     private val context: Context,
@@ -48,14 +50,16 @@ class DateHolderAdapter(
         btnChosenDate = convertView!!.findViewById(R.id.calendar_btn_day)
         btnChosenDate.text = alDates[position].stDate
         when (alDates[position].iSwitchState){
-            1->{
+            1 -> {
                 btnChosenDate.setBackgroundResource(R.drawable.rounded_day_ordinary)
             }
-            2->{
+
+            2 -> {
                 btnChosenDate.setBackgroundResource(R.drawable.rounded_day_interest)
             }
-            3->{
-                btnChosenDate.setBackgroundResource(R.drawable.rounded_day_productive)
+
+            3 -> {
+                btnChosenDate.setBackgroundResource(R.drawable.rounded_day_productive);
             }
         }
 

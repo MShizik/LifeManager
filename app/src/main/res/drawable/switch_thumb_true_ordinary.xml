@@ -9,7 +9,7 @@
         android:right="4dp">
 
         <shape android:shape="oval">
-            <solid android:color="#bbdefb"/>
+            <solid android:color="@color/ordinary_color_light"/>
             <size android:height="16dp"
                 android:width="16dp"/>
             <stroke android:width="0dp"

@@ -5,8 +5,8 @@
 
         <shape android:shape="oval">
             <size android:height="16dp" android:width="16dp" />
-            <stroke android:width="0.8dp" android:color="@color/black" />
-            <solid android:color="@color/white" />
+            <stroke android:width="0.8dp" android:color="@color/grey" />
+            <solid android:color="@color/transparent" />
         </shape>
     </item>
 

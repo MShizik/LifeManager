@@ -3,40 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style = "@style/CustomFrameLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ProfileFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/progress_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#A8FFFFFF"
-        android:translationZ="8dp"
-        android:visibility="gone"
-        tools:visibility="gone">
 
-        <ProgressBar
-            android:id="@+id/main_progress_bar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:indeterminateTint="#f0989f"
-            android:progressDrawable="@drawable/progres_bar_style"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cur_day_constraint_btn"
+        style="@style/CustomConstraintLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/pro_btn_day"
+            style = "@style/CustomRoundButton"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_gravity="center_horizontal"
@@ -54,6 +36,7 @@
 
         <TextView
             android:id="@+id/pro_day_answer_txt"
+            style = "@style/CustomTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -70,6 +53,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/pro_day_constraint_btn"
+        style="@style/CustomConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/cur_day_constraint_btn"
@@ -79,18 +63,20 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="40dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/pro_statistic_txt"
+            style = "@style/CustomTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/my_written"
             android:letterSpacing="0.1"
             android:text="@string/statistic_field"
-            android:textColor="@color/black"
+            android:textColor="?android:textColor"
             android:textSize="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -99,6 +85,7 @@
 
         <TextView
             android:id="@+id/pro_statistic_interest_txt"
+            style = "@style/CustomTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
@@ -106,13 +93,13 @@
             android:fontFamily="@font/my_written"
             android:letterSpacing="0.1"
             android:text="@string/interesting_days_field"
-            android:textColor="@color/black"
             android:textSize="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pro_statistic_txt" />
 
         <TextView
             android:id="@+id/pro_statistic_interest_percents_txt"
+            style = "@style/CustomTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -128,19 +115,20 @@
 
         <TextView
             android:id="@+id/pro_statistic_productive_txt"
+            style = "@style/CustomTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
             android:fontFamily="@font/my_written"
             android:letterSpacing="0.1"
             android:text="@string/productive_days_field"
-            android:textColor="@color/black"
             android:textSize="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pro_statistic_interest_txt" />
 
         <TextView
             android:id="@+id/pro_statistic_productive_percents_txt"
+            style = "@style/CustomTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -155,6 +143,7 @@
 
         <TextView
             android:id="@+id/pro_statistic_ordinary_txt"
+            style = "@style/CustomTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
@@ -162,7 +151,6 @@
             android:fontFamily="@font/my_written"
             android:letterSpacing="0.1"
             android:text="@string/ordinary_days_field"
-            android:textColor="@color/black"
             android:textSize="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pro_statistic_productive_txt" />
@@ -187,18 +175,41 @@
 
     <Button
         android:id="@+id/pro_change_user"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
+        style="@style/CustomTextButtonActive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="500dp"
+        android:layout_below="@id/pro_day_constraint_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="50dp"
         android:fontFamily="@font/my_written"
         android:text="@string/change_user_btn"
         android:textAllCaps="false"
-        android:textColor="@color/black"
         android:textSize="32dp"
-        android:textStyle="normal"
-        android:layout_margin="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/pro_day_constraint_btn"/>
+        android:textStyle="normal" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/progress_layout"
+        style="@style/CustomProgressBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ProgressBar
+            android:id="@+id/main_progress_bar"
+            style="@style/customProgressBarStyle"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:indeterminateTint="#f0989f"
+            android:progressDrawable="@drawable/progres_bar_style"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

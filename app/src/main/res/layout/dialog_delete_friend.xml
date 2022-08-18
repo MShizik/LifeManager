@@ -8,6 +8,7 @@
 
     <TextView
         android:id="@+id/delete_text_field"
+        style = "@style/CustomTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -16,7 +17,6 @@
         android:ems="10"
         android:text="@string/delete_friend_btn"
         android:fontFamily="@font/my_written"
-        android:textColorHint="#686868"
         android:letterSpacing="0.1"
         android:textSize="24dp"
         android:gravity="center"

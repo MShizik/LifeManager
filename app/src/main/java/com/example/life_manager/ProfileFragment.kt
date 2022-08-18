@@ -2,6 +2,7 @@ package com.example.life_manager
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
@@ -70,11 +72,10 @@ class ProfileFragment : Fragment() {
                     }
 
                     3 -> {
-                        btnCurDay.setBackgroundResource(R.drawable.rounded_day_productive)
+                        btnCurDay.setBackgroundResource(R.drawable.rounded_day_productive);
                     }
                 }
-                TimeUnit.MILLISECONDS.sleep(500L)
-                prbarProfile.visibility = View.GONE
+                prbarProfile.animate().setDuration(1000L).alpha(0.0f).withEndAction(Runnable { prbarProfile.visibility = View.GONE })
             }
         })
 
@@ -112,7 +113,9 @@ class ProfileFragment : Fragment() {
     fun getDataFromFirebase(callbackDayData: callbackDayData){
         database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_days_str)).child(SimpleDateFormat("yyyy", Locale.getDefault()).format(Date())).child(LocalDate.parse(java.time.format.DateTimeFormatter.ISO_INSTANT.format(java.time.Instant.ofEpochSecond(Math.round((System.currentTimeMillis() / 1000).toDouble()).toLong())),DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")).month.toString()).child(SimpleDateFormat("dd", Locale.getDefault()).format(Date())).get().addOnSuccessListener {
             if(it.value != null) {
-                iSwitchesState = it.child("SwitchesState").value.toString().toInt()
+                iSwitchesState = it.child(resources.getString(R.string.db_switches_state_str)).value.toString().toInt()
+                callbackDayData.onCallback(iSwitchesState)
+            }else{
                 callbackDayData.onCallback(iSwitchesState)
             }
         }

@@ -40,4 +40,8 @@
     <string name="productive_days_field">Продуктивных дней:</string>
     <string name="ordinary_days_field">Обычных дней</string>
     <string name="change_user_btn">Сменить пользователя</string>
+    <string name="nav_days_title">день</string>
+    <string name="nav_calendar_title">календарь</string>
+    <string name="nav_profile_title">профиль</string>
+    <string name="nav_friends_title">друзья</string>
 </resources>

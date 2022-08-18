@@ -3,7 +3,7 @@
 
     <item
         android:id = "@+id/menu_item_current_day"
-        android:title="@null"
+        android:title="@string/nav_days_title"
         android:icon = "@drawable/ic_date_01"
         android:gravity="center"
         android:font="@font/indie_flower"
@@ -12,16 +12,16 @@
         android:id = "@+id/menu_item_calendar"
         android:icon = "@drawable/ic_calendar"
         android:orderInCategory="2"
-        android:title="@null" />
+        android:title="@string/nav_calendar_title" />
     <item
         android:id = "@+id/menu_item_profile"
         android:icon = "@drawable/ic_profile"
-        android:title="@null"
+        android:title="@string/nav_profile_title"
         android:orderInCategory="3"/>
     <item
         android:id = "@+id/menu_item_friends"
         android:icon = "@drawable/ic_friends"
-        android:title="@null"
+        android:title="@string/nav_friends_title"
         android:orderInCategory="4"/>
 
 </menu>

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style = "@style/CustomConstraintLayout.Activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
@@ -10,6 +11,7 @@
 
     <TextView
         android:id="@+id/reg_text_greeting"
+        style="@style/CustomTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -18,7 +20,6 @@
         android:fontFamily="@font/my_written"
         android:letterSpacing="0.1"
         android:text="@string/reg_greeting"
-        android:textColor="@color/black"
         android:textSize="32dp"
         android:textStyle="normal"
         android:gravity="center_horizontal"
@@ -30,6 +31,7 @@
 
     <EditText
         android:id="@+id/reg_text_email_field"
+        style = "@style/CustomEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
@@ -46,7 +48,6 @@
         android:minHeight="48dp"
         android:paddingLeft="5dp"
         android:paddingBottom="4dp"
-        android:textColorHint="#686868"
         android:textSize="20dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -57,6 +58,7 @@
 
     <EditText
         android:id="@+id/reg_text_nickname_field"
+        style = "@style/CustomEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
@@ -66,7 +68,6 @@
         android:ems="10"
         android:fontFamily="@font/my_written"
         android:letterSpacing="0.1"
-        android:textColorHint="#686868"
         android:hint="Nickname"
         android:minHeight="48dp"
         android:textSize="20dp"
@@ -82,6 +83,7 @@
 
     <EditText
         android:id="@+id/reg_text_name_field"
+        style = "@style/CustomEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
@@ -92,7 +94,6 @@
         android:minHeight="48dp"
         android:fontFamily="@font/my_written"
         android:letterSpacing="0.1"
-        android:textColorHint="#686868"
         android:hint="Name"
         android:textSize="20dp"
         android:gravity="center_vertical|left"
@@ -107,6 +108,7 @@
 
     <EditText
         android:id="@+id/reg_text_surname_field"
+        style = "@style/CustomEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
@@ -117,7 +119,6 @@
         android:minHeight="48dp"
         android:fontFamily="@font/my_written"
         android:letterSpacing="0.1"
-        android:textColorHint="#686868"
         android:hint="Surname"
         android:textSize="20dp"
         android:gravity="center_vertical|left"
@@ -132,6 +133,7 @@
 
     <EditText
         android:id="@+id/reg_text_password_field"
+        style = "@style/CustomEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
@@ -147,7 +149,6 @@
         android:letterSpacing="0.1"
         android:minHeight="48dp"
         android:paddingBottom="4dp"
-        android:textColorHint="#686868"
         android:textSize="20dp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/reg_text_password_repeat_field"
@@ -157,6 +158,7 @@
 
     <EditText
         android:id="@+id/reg_text_password_repeat_field"
+        style = "@style/CustomEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
@@ -171,7 +173,6 @@
         android:letterSpacing="0.1"
         android:minHeight="48dp"
         android:paddingBottom="4dp"
-        android:textColorHint="#686868"
         android:textSize="20dp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/reg_registration_btn"
@@ -181,7 +182,7 @@
 
     <Button
         android:id="@+id/reg_registration_btn"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
+        style="@style/CustomTextButtonActive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="250dp"
@@ -189,7 +190,6 @@
         android:letterSpacing="0.1"
         android:text="@string/next_btn"
         android:textAllCaps="false"
-        android:textColor="@color/black"
         android:textSize="32dp"
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -199,7 +199,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/reg_prev_step_btn"
-        android:background="@drawable/btn_stroke"
+        style = "@style/CustomBorderedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -208,7 +208,6 @@
         android:letterSpacing="0.1"
         android:text="@string/previous_btn"
         android:textAllCaps="false"
-        android:textColor="@color/black"
         android:textSize="32dp"
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"

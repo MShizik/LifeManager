@@ -52,4 +52,10 @@
     <string name="db_surname_str" translatable="false">surname</string>
     <string name="db_invite_list_str" translatable="false">invitelist</string>
     <string name="db_friend_list_str" translatable="false">friendlist</string>
+    <string name="db_notion_str" translatable="false">Notion</string>
+    <string name="db_switches_state_str" translatable="false">SwitchesState</string>
+    <string name="nav_days_title">day</string>
+    <string name="nav_calendar_title">calendar</string>
+    <string name="nav_profile_title">profile</string>
+    <string name="nav_friends_title">firends</string>
 </resources>

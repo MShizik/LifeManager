@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Life_Manager">
         <activity android:name=".RegistrationActivity"></activity>
-        <activity android:name=".WorkActivity" />
+        <activity android:name=".WorkActivity" android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

@@ -3,30 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style = "@style/CustomFrameLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".FragmentFriends">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/progress_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#A8FFFFFF"
-        android:translationZ="8dp"
-        tools:visibility="visible">
 
-        <ProgressBar
-            android:id="@+id/main_progress_bar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:indeterminateTint="#f0989f"
-            android:progressDrawable="@drawable/progres_bar_style"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -36,11 +17,10 @@
 
         <Button
             android:id="@+id/friend_friend_list_btn"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+            style="@style/CustomTextButtonActive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/friends_btn"
-            android:textColor="@color/black"
             android:textAllCaps="false"
             android:textSize="24dp"
             android:textStyle="normal"
@@ -52,7 +32,7 @@
 
         <Button
             android:id="@+id/friend_invite_list_btn"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+            style="@style/CustomTextButtonActive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/invite_list_btn"
@@ -80,9 +60,12 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="8dp"
         android:overScrollMode="never"
+        android:stateListAnimator="@null"
         android:scrollbars="none"
         android:visibility="visible"
-        tools:listitem="@layout/custom_friend_list_row" />
+        tools:listitem="@layout/custom_friend_list_row" >
+
+    </ListView>
 
     <ListView
         android:id="@+id/friend_invite_list_view"
@@ -94,6 +77,7 @@
         android:layout_marginBottom="160dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="8dp"
+        android:stateListAnimator="@null"
         android:overScrollMode="never"
         android:scrollbars="none"
         android:visibility="invisible"
@@ -112,6 +96,27 @@
         android:textSize="24dp"
         android:textStyle="normal"
         android:layout_gravity="center_horizontal|bottom"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/progress_layout"
+        style="@style/CustomProgressBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/main_progress_bar"
+            style="@style/customProgressBarStyle"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:indeterminateTint="#f0989f"
+            android:progressDrawable="@drawable/progres_bar_style"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </FrameLayout>

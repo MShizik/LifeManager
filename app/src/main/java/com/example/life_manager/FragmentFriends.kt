@@ -33,6 +33,11 @@ class FragmentFriends : Fragment() {
     private lateinit var adapterFriendsList : DataFriendAdapter
     private lateinit var adapterInviteList : DataInviteAdapter
 
+    private lateinit var lvFriendListView : ListView
+    private lateinit var lvInviteListView : ListView
+
+    private lateinit var prbarFriends : ConstraintLayout
+
     val database  = Firebase.database.reference
 
 
@@ -51,10 +56,10 @@ class FragmentFriends : Fragment() {
         val btnInviteListOpen : Button = view.findViewById(R.id.friend_invite_list_btn)
         val btnInviteFriend : Button = view.findViewById(R.id.friend_friend_list_new_btn)
 
-        val lvFriendListView : ListView = view.findViewById(R.id.friend_list_view)
-        val lvInviteListView : ListView = view.findViewById(R.id.friend_invite_list_view)
+        lvFriendListView = view.findViewById(R.id.friend_list_view)
+        lvInviteListView = view.findViewById(R.id.friend_invite_list_view)
 
-        val prbarFriends = view.findViewById(R.id.progress_layout) as ConstraintLayout
+        prbarFriends = view.findViewById(R.id.progress_layout) as ConstraintLayout
         prbarFriends.visibility = View.VISIBLE
 
         adapterFriendsList = DataFriendAdapter(requireContext(), alFriendList)
@@ -65,44 +70,36 @@ class FragmentFriends : Fragment() {
 
         stEmailUser = arguments?.getString("email").toString()
 
+        presetIntoFr()
+
         getFriendsData(object : callbackFriendList{
             override fun onCallback(iChildrenCount : Long, tmpData : DataHolder) {
                 if(iChildrenCount != 0.toLong()) {
                     alFriendList.add(tmpData)
                     if (alFriendList.size >= iChildrenCount) {
                         recheckAdapter()
-                        lvFriendListView.visibility = View.VISIBLE
-                        lvInviteListView.visibility = View.INVISIBLE
-                        TimeUnit.MILLISECONDS.sleep(500L)
-                        prbarFriends.visibility = View.GONE
+                        changeFromInviteToFriends()
                     }
                 }else{
-                    TimeUnit.MILLISECONDS.sleep(500L)
-                    prbarFriends.visibility = View.GONE
+                    changeFromInviteToFriends()
                 }
             }
         })
 
         btnInviteListOpen.setOnClickListener{
-            prbarFriends.visibility = View.VISIBLE
-            btnFriendListOpen.setTextColor(Color.parseColor("#787878"))
-            btnInviteListOpen.setTextColor(Color.parseColor("#FF000000"))
+            presetFrtoIn()
+            btnFriendListOpen.setTextAppearance(R.style.CustomTextButtonInactive)
+            btnInviteListOpen.setTextAppearance(R.style.CustomTextButtonActive)
             getInviteData(object : callbackInviteList{
                 override fun onCallback(iChildrenCount: Long, tmpData: inviteListDataHolder) {
                     if(iChildrenCount == 0L){
-                        lvFriendListView.visibility = View.INVISIBLE
-                        lvInviteListView.visibility = View.VISIBLE
-                        TimeUnit.MILLISECONDS.sleep(500L)
-                        prbarFriends.visibility = View.GONE
+                        changeFromFriendsToInvite()
                     }
                     else {
                         alInviteList.add(tmpData)
                         if(alInviteList.size.toLong() == iChildrenCount) {
                             recheckAdapter()
-                            lvFriendListView.visibility = View.INVISIBLE
-                            lvInviteListView.visibility = View.VISIBLE
-                            TimeUnit.MILLISECONDS.sleep(500L)
-                            prbarFriends.visibility = View.GONE
+                            changeFromFriendsToInvite()
                         }
                     }
                 }
@@ -110,23 +107,19 @@ class FragmentFriends : Fragment() {
         }
 
         btnFriendListOpen.setOnClickListener {
-            prbarFriends.visibility = View.VISIBLE
-            btnFriendListOpen.setTextColor(Color.parseColor("#FF000000"))
-            btnInviteListOpen.setTextColor(Color.parseColor("#787878"))
+            presetIntoFr()
+            btnFriendListOpen.setTextAppearance(R.style.CustomTextButtonActive)
+            btnInviteListOpen.setTextAppearance(R.style.CustomTextButtonInactive)
             getFriendsData(object : callbackFriendList{
                 override fun onCallback(iChildrenCount : Long, tmpData : DataHolder) {
                     if(iChildrenCount != 0.toLong()) {
                         alFriendList.add(tmpData)
                         if (alFriendList.size >= iChildrenCount) {
                             recheckAdapter()
-                            lvFriendListView.visibility = View.VISIBLE
-                            lvInviteListView.visibility = View.INVISIBLE
-                            TimeUnit.MILLISECONDS.sleep(500L)
-                            prbarFriends.visibility = View.GONE
+                            changeFromInviteToFriends()
                         }
                     }else{
-                        TimeUnit.MILLISECONDS.sleep(500L)
-                        prbarFriends.visibility = View.GONE
+                        changeFromInviteToFriends()
                     }
 
                 }
@@ -145,7 +138,6 @@ class FragmentFriends : Fragment() {
     }
 
     fun recheckAdapter(){
-        println("hohohoho")
         adapterInviteList.notifyDataSetChanged()
         adapterFriendsList.notifyDataSetChanged()
     }
@@ -170,13 +162,12 @@ class FragmentFriends : Fragment() {
                     var percentesInterest: Int = 0
                     var percentesOrdinary: Int = 0
 
-                    database.child(resources.getString(R.string.db_users_str)).child(i.key.toString()).get()
+                    database.child(getActivity()?.getString(R.string.db_users_str).toString()).child(i.key.toString()).get()
                         .addOnSuccessListener { datatwo ->
                             tmpNameFriend = datatwo.child(resources.getString(R.string.db_name_str)).value.toString()
                             tmpSurNameFriend = datatwo.child(resources.getString(R.string.db_surname_str)).value.toString()
                             tmpNickNameFriend = datatwo.child(resources.getString(R.string.db_nickname_str)).value.toString()
                             tmpLastNotion = datatwo.child(resources.getString(R.string.db_last_notion_str)).value.toString()
-                            println("last" + tmpLastNotion)
 
                             tmpProductiveCount =
                                 datatwo.child(resources.getString(R.string.db_count_prod_str)).value.toString().toInt()
@@ -221,7 +212,6 @@ class FragmentFriends : Fragment() {
 
     fun getInviteData(callbackInviteList: callbackInviteList){
         database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_invite_list_str)).get().addOnSuccessListener { it ->
-            System.out.println(stEmailUser.toString()+"fcccck")
             alInviteList.clear()
             if(it.value == null){
                 callbackInviteList.onCallback(0L, inviteListDataHolder("","","","",""))
@@ -258,10 +248,11 @@ class FragmentFriends : Fragment() {
             val dialog_find_friend = Dialog(requireContext())
             dialog_find_friend.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog_find_friend.setContentView(R.layout.dialog_add_friend)
+            dialog_find_friend.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             val etEmailUser = dialog_find_friend.findViewById(R.id.add_text_email_field) as EditText
             val dialog_util_confirmation_btn = dialog_find_friend.findViewById(R.id.add_find_btn) as Button
             dialog_util_confirmation_btn.setOnClickListener {
-                database.child(resources.getString(R.string.db_users_str)).child(etEmailUser.text.toString()).get().addOnSuccessListener {
+                database.child(resources.getString(R.string.db_users_str)).child(etEmailUser.text.toString().replace(".","")).get().addOnSuccessListener {
                     if(it.value != null) {
                         database.child(resources.getString(R.string.db_users_str)).child(etEmailUser.text.toString().replace(".", ""))
                             .child(resources.getString(R.string.db_invite_list_str)).child(stEmailUser).setValue(1)
@@ -277,8 +268,9 @@ class FragmentFriends : Fragment() {
     fun startDialogDeleteFriend(stEmailFriend : String, position: Int){
         Handler(Looper.getMainLooper()).post {
             val dialog_delete_friend = Dialog(requireContext())
-            dialog_delete_friend.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog_delete_friend.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog_delete_friend.setContentView(R.layout.dialog_delete_friend)
+            dialog_delete_friend.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             val btnDeleteFriend =
                 dialog_delete_friend.findViewById(R.id.delete_accept_btn) as Button
             val btnDeclineDelete =
@@ -307,6 +299,32 @@ class FragmentFriends : Fragment() {
 
     interface callbackInviteList{
         fun onCallback(iChildrenCount : Long, tmpData : inviteListDataHolder)
+    }
+
+    fun changeFromInviteToFriends(){
+        lvFriendListView.animate().alpha(1.0f).setDuration(1000L).setListener(null)
+        lvInviteListView.animate().alpha(0.0f).setDuration(1000L).withEndAction(Runnable { lvInviteListView.visibility = View.INVISIBLE })
+        prbarFriends.animate().alpha(0.0f).setDuration(1000L).withEndAction(Runnable { prbarFriends.visibility = View.GONE })
+    }
+
+    fun presetIntoFr(){
+        lvFriendListView.visibility = View.VISIBLE
+        lvFriendListView.alpha = 0.0f
+        lvInviteListView.visibility = View.VISIBLE
+        prbarFriends.visibility = View.VISIBLE
+    }
+
+    fun presetFrtoIn(){
+        lvInviteListView.visibility = View.VISIBLE
+        lvInviteListView.alpha= 0.0f
+        lvFriendListView.visibility = View.VISIBLE
+        prbarFriends.visibility = View.VISIBLE
+    }
+
+    fun changeFromFriendsToInvite(){
+        lvFriendListView.animate().alpha(0.0f).setDuration(1000L).withEndAction(Runnable { lvFriendListView.visibility = View.INVISIBLE })
+        lvInviteListView.animate().alpha(1.0f).setDuration(1000L).setListener(null)
+        prbarFriends.animate().alpha(0.0f).setDuration(1000L).withEndAction(Runnable { prbarFriends.visibility = View.GONE })
     }
 
 

@@ -1,5 +1,72 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Life_Manager" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.Life_Manager" parent="Theme.AppCompat.NoActionBar">
+        <item name ="android:forceDarkAllowed">true</item>
+        <item name="android:textColor">@color/backgroundGrey</item>
+        <item name="android:strokeColor">@color/white</item>
+        <item name="android:colorPrimary">@color/darkGrey</item>
+        <item name = "android:colorAccent">@color/darkWhite</item>
     </style>
+
+    <style name="CustomConstraintLayout.Activity">
+        <item name = "android:background">@color/backgroundGrey</item>
+    </style>
+
+    <style name = "CustomFrameLayout">
+        <item name = "android:background">@color/backgroundGrey</item>
+    </style>
+
+    <style name = "CustomProgressBarLayout" >
+        <item name = "android:background">@color/backgroundGrey</item>
+    </style>
+
+    <style name = "CustomTextButtonActive" parent = "@style/Widget.MaterialComponents.Button.TextButton">
+        <item name = "android:textColor">@color/white</item>
+    </style>
+
+    <style name="CustomTextButtonInactive" parent = "@style/Widget.MaterialComponents.Button.TextButton">
+        <item name = "android:textColor">@color/grey</item>
+    </style>
+
+    <style name = "CustomConstraintLayout">
+        <item name = "android:background" >
+            @color/transparent
+        </item>
+    </style>
+
+    <style name="customProgressBarStyle" >
+        <item name = "android:background">@color/transparent</item>
+    </style>
+
+    <style name = "CustomTextView">
+        <item name = "android:background">@color/transparent</item>
+        <item name = "android:textColor">@color/white</item>
+    </style>
+
+    <style name = "CustomRoundButton">
+        <item name = "android:textColor" >@color/white</item>
+    </style>
+
+    <style name="CustomBorderedButton">
+        <item name="android:background">@drawable/btn_stroke</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="CustomEditText">
+        <item name = "android:background">@drawable/input_field</item>
+        <item name = "android:textColorHint">@color/darkWhite</item>
+        <item name = "android:textColor">@color/white</item>
+    </style>
+
+    <style name="CustomNavText">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/my_written</item>
+        <item name="android:textSize">24sp</item>
+        <item name = "android:textColor">@color/white</item>
+    </style>
+
+    <style name = "CustomNavBar">
+        <item name="android:background">@color/backgroundGrey</item>
+    </style>
+
 </resources>

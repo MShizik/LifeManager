@@ -138,8 +138,8 @@ class FragmentCurrentDay : Fragment() {
             if (iPreviousState == 0){
                 when (iSwitchesState){
                     1-> countOrdinary +=1
-                    2->countInterest+=1
-                    3->countProductive+=1
+                    2-> countInterest +=1
+                    3-> countProductive +=1
                 }
             }else if(iPreviousState != iSwitchesState){
                 when (iSwitchesState){
@@ -150,8 +150,8 @@ class FragmentCurrentDay : Fragment() {
                 when (iPreviousState)
                 {
                     1-> countOrdinary -=1
-                    2->countInterest-=1
-                    3->countProductive-=1
+                    2-> countInterest-=1
+                    3-> countProductive-=1
                 }
             }
             database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_count_ordinary_str)).setValue(countOrdinary)

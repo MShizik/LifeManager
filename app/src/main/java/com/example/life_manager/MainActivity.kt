@@ -61,16 +61,16 @@ class MainActivity : AppCompatActivity() {
                             startActivity(intentToWorkActivity)
                         } else {
                             tvInfoApp?.text = resources.getString(R.string.wrong_password_message)
-                            tvInfoApp?.setTextColor(Color.parseColor(R.color.productive_color_light.toString()))
+                            tvInfoApp?.setTextColor(resources.getColor(R.color.productive_color_light))
                         }
                     } else {
                         tvInfoApp?.text = resources.getString(R.string.unknown_user_message)
-                        tvInfoApp?.setTextColor(Color.parseColor(R.color.productive_color_light.toString()))
+                        tvInfoApp?.setTextColor(resources.getColor(R.color.productive_color_light))
                     }
                 }
                 .addOnFailureListener {
                     tvInfoApp?.text = resources.getString(R.string.internet_connection_error_message)
-                    tvInfoApp?.setTextColor(Color.parseColor(R.color.productive_color_light.toString()))
+                    tvInfoApp?.setTextColor(resources.getColor(R.color.productive_color_light))
                 }
         }
     }

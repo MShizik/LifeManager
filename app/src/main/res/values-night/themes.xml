@@ -68,5 +68,8 @@
     <style name = "CustomNavBar">
         <item name="android:background">@color/backgroundGrey</item>
     </style>
+    <style name = "StyleText">
+        <item name = "android:textColor">@color/white</item>
+    </style>
 
 </resources>

@@ -49,7 +49,11 @@ class DataFriendAdapter  (private val context: Context, private val arrayList: j
             tvFirstName.text = arrayList[position].stFirstName
             tvSurName.text = arrayList[position].stSurName
             tvNickName.text = arrayList[position].stNickName
-            tvLastNotion.text = arrayList[position].stLastNotion
+            if(arrayList[position].stLastNotion == ""){
+                tvLastNotion.visibility = View.GONE
+            }else {
+                tvLastNotion.text = arrayList[position].stLastNotion
+            }
             tvPercentsProductive.text = arrayList[position].stPercentsProductive + "%"
             tvPercentsInterest.text = arrayList[position].stPercentsInterest + "%"
             tvPercentsOrdinary.text = arrayList[position].stPercentsOrdinary + "%"

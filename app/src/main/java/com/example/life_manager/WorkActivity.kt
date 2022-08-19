@@ -73,6 +73,8 @@ class WorkActivity : AppCompatActivity() {
         BottomNavBar.removeTabAt(0)
         BottomNavBar.addTabAt(0,bottomBarTabTmp)
 
+        BottomNavBar.setTabEnabledAt(0,true)
+
         fragmentToChange = FragmentCurrentDay()
         var tmpBundle : Bundle = Bundle()
         tmpBundle.putString("email",stEmailUser)

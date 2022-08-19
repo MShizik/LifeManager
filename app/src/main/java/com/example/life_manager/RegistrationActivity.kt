@@ -48,10 +48,12 @@ class RegistrationActivity : AppCompatActivity() {
         btnRegApp = findViewById(R.id.reg_registration_btn)
         btnPrevReg = findViewById(R.id.reg_prev_step_btn)
 
-        var iCounterClicks : Int = 0
+        var iCounterClicks = 0
 
-        var stEmailUser = "aboba"
+        var stEmailUser = "default"
         database = Firebase.database.reference
+
+        btnRegApp?.text = resources.getString(R.string.next_btn)
 
         btnRegApp?.setOnClickListener {
             when (iCounterClicks){
@@ -61,7 +63,7 @@ class RegistrationActivity : AppCompatActivity() {
                         database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).get().addOnSuccessListener {
                             if (it.child(resources.getString(R.string.db_password_str)).value != null) {
                                 tvInfoApp?.text =resources.getString(R.string.reg_exist_user_message)
-                                tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
+                                tvInfoApp?.setTextColor(resources.getColor(R.color.productive_color_light))
                             }
                             else{
                                 btnPrevReg?.visibility = View.VISIBLE
@@ -76,14 +78,14 @@ class RegistrationActivity : AppCompatActivity() {
                                 etNicknameUser?.visibility = View.VISIBLE
                                 etNicknameUser?.isEnabled = true
                                 tvInfoApp?.text = resources.getString(R.string.nickname_greeting)
-                                tvInfoApp?.setTextColor(Color.parseColor("#FF000000"))
+                                tvInfoApp?.setTextAppearance(R.style.StyleText)
                                 iCounterClicks++
                             }
                         }
                     }
                     else{
                         tvInfoApp?.text = resources.getString(R.string.wrong_email_message)
-                        tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
+                        tvInfoApp?.setTextColor(resources.getColor(R.color.productive_color_light))
                     }
                 }
                 1->{
@@ -94,11 +96,11 @@ class RegistrationActivity : AppCompatActivity() {
                         etNameUser?.visibility = View.VISIBLE
                         etNameUser?.isEnabled = true
                         tvInfoApp?.text = resources.getString(R.string.name_greeting)
-                        tvInfoApp?.setTextColor(Color.parseColor("#FF000000"))
+                        tvInfoApp?.setTextAppearance(R.style.StyleText)
                         iCounterClicks++
                     }else{
                         tvInfoApp?.text = resources.getString(R.string.nickname_errror_message)
-                        tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
+                        tvInfoApp?.setTextColor(resources.getColor(R.color.productive_color_light))
                     }
                 }
                 2->{
@@ -109,11 +111,11 @@ class RegistrationActivity : AppCompatActivity() {
                         etSurnameUser?.visibility = View.VISIBLE
                         etSurnameUser?.isEnabled = true
                         tvInfoApp?.text = resources.getString(R.string.surname_greeting)
-                        tvInfoApp?.setTextColor(Color.parseColor("#FF000000"))
+                        tvInfoApp?.setTextAppearance(R.style.StyleText)
                         iCounterClicks++
                     }else{
                         tvInfoApp?.text = resources.getString(R.string.name_error_message)
-                        tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
+                        tvInfoApp?.setTextColor(resources.getColor(R.color.productive_color_light))
                     }
                 }
                 3->{
@@ -127,11 +129,12 @@ class RegistrationActivity : AppCompatActivity() {
                         etPasswordRepeatUser?.isEnabled = true
                         btnRegApp?.text = resources.getString(R.string.sign_up_btn)
                         tvInfoApp?.text = resources.getString(R.string.password_greeting)
-                        tvInfoApp?.setTextColor(Color.parseColor("#FF000000"))
+                        tvInfoApp?.setTextAppearance(R.style.StyleText)
+                        btnRegApp?.text = resources.getString(R.string.reg_btn)
                         iCounterClicks++
                     }else{
                         tvInfoApp?.text = resources.getString(R.string.surname_error_message)
-                        tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
+                        tvInfoApp?.setTextColor(resources.getColor(R.color.productive_color_light))
                     }
                 }
                 4->{
@@ -145,11 +148,11 @@ class RegistrationActivity : AppCompatActivity() {
                             startActivity(intentToWorkActivity)
                         }else{
                             tvInfoApp?.text = resources.getString(R.string.password_error_message)
-                            tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
+                            tvInfoApp?.setTextColor(resources.getColor(R.color.productive_color_light))
                         }
                     }else{
                         tvInfoApp?.text = resources.getString(R.string.different_passwords_message)
-                        tvInfoApp?.setTextColor(Color.parseColor("#f0989f"))
+                        tvInfoApp?.setTextColor(resources.getColor(R.color.productive_color_light))
                     }
                 }
             }
@@ -190,6 +193,7 @@ class RegistrationActivity : AppCompatActivity() {
                     etPasswordUser?.isEnabled = false
                     etSurnameUser?.visibility = View.VISIBLE
                     etSurnameUser?.isEnabled = true
+                    btnRegApp?.text = resources.getString(R.string.next_btn)
                     iCounterClicks--
                 }
             }

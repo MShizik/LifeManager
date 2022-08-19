@@ -102,7 +102,6 @@ class FragmentFriends : Fragment() {
     private fun getFriendsData(){
         database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_friend_list_str)).get().addOnSuccessListener {
             alFriendList.clear()
-            System.out.println("w're here")
             if (it.value == null){
                 setFriendListInfo(0.toLong(), DataHolder("","","","","","","",""))
             }else {
@@ -111,23 +110,23 @@ class FragmentFriends : Fragment() {
                         .addOnSuccessListener { datatwo ->
 
                             val tmpProductiveCount =
-                                datatwo.child(resources.getString(R.string.db_count_prod_str)).value.toString().toInt()
+                                datatwo.child(resources.getString(R.string.db_count_prod_str)).value.toString().toFloat()
                             val tmpInterestCount =
-                                datatwo.child(resources.getString(R.string.db_count_inter_str)).value.toString().toInt()
+                                datatwo.child(resources.getString(R.string.db_count_inter_str)).value.toString().toFloat()
                             val tmpOrdinaryCount =
-                                datatwo.child(resources.getString(R.string.db_count_ordinary_str)).value.toString().toInt()
+                                datatwo.child(resources.getString(R.string.db_count_ordinary_str)).value.toString().toFloat()
 
                             var percentsOrdinary = 33
                             var percentsInterest = 33
                             var percentsProductive = 33
 
-                            if (tmpProductiveCount != 0 && tmpInterestCount != 0 && tmpOrdinaryCount != 0) {
+                            if (tmpProductiveCount != 0F || tmpInterestCount != 0F || tmpOrdinaryCount != 0F) {
                                 percentsProductive =
-                                    tmpProductiveCount / (tmpProductiveCount + tmpInterestCount + tmpOrdinaryCount) * 100
+                                    (tmpProductiveCount / (tmpProductiveCount + tmpInterestCount + tmpOrdinaryCount) * 100).toInt()
                                 percentsInterest =
-                                    tmpInterestCount / (tmpProductiveCount + tmpInterestCount + tmpOrdinaryCount) * 100
+                                    (tmpInterestCount / (tmpProductiveCount + tmpInterestCount + tmpOrdinaryCount) * 100).toInt()
                                 percentsOrdinary =
-                                    tmpInterestCount / (tmpProductiveCount + tmpInterestCount + tmpOrdinaryCount) * 100
+                                    (tmpOrdinaryCount / (tmpProductiveCount + tmpInterestCount + tmpOrdinaryCount) * 100).toInt()
                             }
                             setFriendListInfo(
                                 it.childrenCount,

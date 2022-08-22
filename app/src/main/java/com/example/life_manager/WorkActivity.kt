@@ -73,7 +73,7 @@ class WorkActivity : AppCompatActivity() {
         BottomNavBar.removeTabAt(0)
         BottomNavBar.addTabAt(0,bottomBarTabTmp)
 
-        BottomNavBar.setTabEnabledAt(0,true)
+        BottomNavBar.setTabEnabledById(R.id.menu_item_current_day,true)
 
         fragmentToChange = FragmentCurrentDay()
         var tmpBundle : Bundle = Bundle()

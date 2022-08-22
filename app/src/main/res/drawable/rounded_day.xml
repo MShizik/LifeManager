@@ -9,5 +9,4 @@
         android:color="@color/transparent"/>
     <stroke android:color="@color/black"
         android:width = "0.5dp"/>
-
 </shape>

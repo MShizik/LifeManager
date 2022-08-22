@@ -9,6 +9,7 @@ import android.widget.GridView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.datayumyum.pos.SwipeListener
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -156,6 +157,28 @@ class FragmentCalendar : Fragment() {
             transaction.replace(R.id.work_fragment_holder, fragmentToChange)
             transaction.commit()
         }
+
+        grlDaysHolder.setOnTouchListener(object : SwipeListener(requireContext()){
+            override fun onSwipeLeft(){
+                showCalendarProgressBar()
+
+                changeDateByPeriod(0,1)
+
+                alDatesData.clear()
+
+                fillArrayListOfDates(dateCurDate.month.toString(), dateCurDate.year.toString(), dateCurDate.month.maxLength())
+            }
+            override fun onSwipeRight(){
+                showCalendarProgressBar()
+
+                changeDateByPeriod(0,-1)
+
+                alDatesData.clear()
+
+                fillArrayListOfDates(dateCurDate.month.toString(), dateCurDate.year.toString(), dateCurDate.month.maxLength())
+
+            }
+        })
 
     }
 

@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.animation.ScaleAnimation
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.widget.AppCompatButton
@@ -52,6 +55,10 @@ class FragmentCurrentDay : Fragment() {
 
         val etNoteUser : EditText = view.findViewById(R.id.cur_et_day)
 
+        val popupMessageLayout : ConstraintLayout = view.findViewById(R.id.popup_constraint_layout)
+
+        popupMessageLayout.visibility = View.GONE
+
         progressbarCurDay  = view.findViewById(R.id.progress_layout) as ConstraintLayout
         progressbarCurDay.visibility = View.VISIBLE
 
@@ -70,16 +77,23 @@ class FragmentCurrentDay : Fragment() {
                     1 -> {
                         switchOrdinaryDay.isChecked = true
                         btnCurDay.setBackgroundResource(R.drawable.rounded_day_ordinary)
+
+                        btnCurDay.isEnabled = true
+                        btnCurDay.isActivated = true
                     }
 
                     2 -> {
                         switchInterestDay.isChecked = true
                         btnCurDay.setBackgroundResource(R.drawable.rounded_day_interest)
+                        btnCurDay.isEnabled = true
+                        btnCurDay.isActivated = true
                     }
 
                     3 -> {
                         switchProductiveDay.isChecked = true
                         btnCurDay.setBackgroundResource(R.drawable.rounded_day_productive)
+                        btnCurDay.isEnabled = true
+                        btnCurDay.isActivated = true
                     }
                 }
 
@@ -134,6 +148,11 @@ class FragmentCurrentDay : Fragment() {
         }
 
         btnSaveUser.setOnClickListener{
+
+            popupMessageLayout.visibility = View.VISIBLE
+            popupMessageLayout.translationY = (-150).toFloat()
+            popupMessageLayout.animate().translationY(0F).setDuration(1000L).withEndAction{popupMessageLayout.animate().translationY(popupMessageLayout.height*(-1).toFloat()).setDuration(1000L).withEndAction{popupMessageLayout.visibility = View.GONE}}
+
             var tmpDataSaver : Int = 0
             if (iPreviousState == 0){
                 when (iSwitchesState){
@@ -154,6 +173,7 @@ class FragmentCurrentDay : Fragment() {
                     3-> countProductive-=1
                 }
             }
+            iPreviousState = iSwitchesState
             database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_count_ordinary_str)).setValue(countOrdinary)
             database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_count_inter_str)).setValue(countInterest)
             database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_count_prod_str)).setValue(countProductive)

@@ -116,6 +116,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/my_written"
         android:letterSpacing="0.1"
-        android:text="Хороший день"
+        android:lineSpacingExtra="5dp"
+        android:gravity="center_horizontal"
         android:textSize="16dp" />
 </RelativeLayout>

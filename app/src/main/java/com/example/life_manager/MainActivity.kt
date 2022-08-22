@@ -43,9 +43,7 @@ class MainActivity : AppCompatActivity() {
 
 
         var stEmailUser: String? = null
-        var stNameUser: String? = null
-        var stSurnameUser: String? = null
-        var stNicknameUser: String? = null
+
 
         btnSignUser?.setOnClickListener {
             database.child(resources.getString(R.string.db_users_str)).child(etEmailUser?.text.toString().replace(".", "")).get()
@@ -53,9 +51,6 @@ class MainActivity : AppCompatActivity() {
                     if (it.value != null) {
                         if (it.child(resources.getString(R.string.db_password_str)).value.toString() == etPasswordUser?.text.toString()) {
                             stEmailUser = etEmailUser?.text.toString().replace(".","")
-                            stNameUser = it.child(resources.getString(R.string.db_name_str)).value.toString()
-                            stSurnameUser = it.child(resources.getString(R.string.db_surname_str)).value.toString()
-                            stNicknameUser = it.child(resources.getString(R.string.db_nickname_str)).value.toString()
                             var intentToWorkActivity = Intent(this, WorkActivity::class.java)
                             intentToWorkActivity.putExtra("email", etEmailUser?.text.toString())
                             startActivity(intentToWorkActivity)

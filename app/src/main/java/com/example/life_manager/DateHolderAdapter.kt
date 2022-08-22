@@ -51,15 +51,15 @@ class DateHolderAdapter(
         btnChosenDate.text = alDates[position].stDate
         when (alDates[position].iSwitchState){
             1 -> {
-                btnChosenDate.setBackgroundResource(R.drawable.rounded_day_ordinary)
+                btnChosenDate.setBackgroundResource(R.drawable.rounded_day_ordinary_for_calendar)
             }
 
             2 -> {
-                btnChosenDate.setBackgroundResource(R.drawable.rounded_day_interest)
+                btnChosenDate.setBackgroundResource(R.drawable.rounded_day_interest_for_calendar)
             }
 
             3 -> {
-                btnChosenDate.setBackgroundResource(R.drawable.rounded_day_productive);
+                btnChosenDate.setBackgroundResource(R.drawable.rounded_day_productive_for_calendar);
             }
         }
 

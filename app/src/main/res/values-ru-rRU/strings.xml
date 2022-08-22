@@ -46,4 +46,7 @@
     <string name="nav_friends_title">друзья</string>
     <string name="internet_connection_error_message">Проверьте своё интернет соеденение</string>
     <string name="reg_btn">регистрация</string>
+    <string name="popup_success_message">данные успешно сохранены</string>
+    <string name="find_unknown_user_message">Пользователь не найден</string>
+    <string name="find_user_success_message">Приглашение успешно отправлено</string>
 </resources>

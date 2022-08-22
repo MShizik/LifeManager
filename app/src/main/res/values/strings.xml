@@ -60,4 +60,7 @@
     <string name="nav_friends_title">firends</string>
     <string name="internet_connection_error_message">Check your internet connection</string>
     <string name="reg_btn">registration</string>
+    <string name="popup_success_message">Data saved successfully</string>
+    <string name="find_unknown_user_message">User with such email doesn\'t exist</string>
+    <string name="find_user_success_message">Invitation was sent to the user</string>
 </resources>

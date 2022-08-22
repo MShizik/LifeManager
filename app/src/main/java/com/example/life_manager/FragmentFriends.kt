@@ -1,5 +1,6 @@
 package com.example.life_manager
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -12,10 +13,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import com.datayumyum.pos.SwipeListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import org.w3c.dom.Text
 
 
 class FragmentFriends : Fragment() {
@@ -37,6 +41,9 @@ class FragmentFriends : Fragment() {
 
     private lateinit var progressbarFriends : ConstraintLayout
 
+    private lateinit var clPopupMessage : ConstraintLayout
+    private lateinit var tvPopupMessageField : TextView
+
     val database  = Firebase.database.reference
 
 
@@ -48,6 +55,7 @@ class FragmentFriends : Fragment() {
         return inflater.inflate(R.layout.fragment_friends, container, false)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -60,6 +68,10 @@ class FragmentFriends : Fragment() {
 
         progressbarFriends = view.findViewById(R.id.progress_layout) as ConstraintLayout
         progressbarFriends.visibility = View.VISIBLE
+
+        clPopupMessage = view.findViewById(R.id.popup_constraint_layout)
+        tvPopupMessageField = view.findViewById(R.id.popup_message_field)
+        clPopupMessage.visibility = View.GONE
 
         adapterFriendsList = DataFriendAdapter(requireContext(), alFriendList)
         adapterInviteList = DataInviteAdapter(requireContext(), alInviteList)
@@ -92,6 +104,32 @@ class FragmentFriends : Fragment() {
 
             return@setOnItemLongClickListener(true)
         }
+
+        lvFriendListView.setOnTouchListener(object : SwipeListener(requireContext()){
+            override fun onSwipeLeft() {
+                super.onSwipeLeft()
+                presetFrToIn()
+                getInviteData()
+            }
+            override fun onSwipeRight() {
+                super.onSwipeLeft()
+                presetFrToIn()
+                getInviteData()
+            }
+        })
+
+        lvInviteListView.setOnTouchListener(object : SwipeListener(requireContext()){
+            override fun onSwipeLeft() {
+                super.onSwipeLeft()
+                presetInToFr()
+                getFriendsData()
+            }
+            override fun onSwipeRight() {
+                super.onSwipeLeft()
+                presetInToFr()
+                getFriendsData()
+            }
+        })
     }
 
     private fun recheckAdapter(){
@@ -183,13 +221,9 @@ class FragmentFriends : Fragment() {
             val etEmailUser = dialogFindFriend.findViewById(R.id.add_text_email_field) as EditText
             val dialog_util_confirmation_btn = dialogFindFriend.findViewById(R.id.add_find_btn) as Button
             dialog_util_confirmation_btn.setOnClickListener {
-                database.child(resources.getString(R.string.db_users_str)).child(etEmailUser.text.toString().replace(".","")).get().addOnSuccessListener {
-                    if(it.value != null) {
-                        database.child(resources.getString(R.string.db_users_str)).child(etEmailUser.text.toString().replace(".", ""))
-                            .child(resources.getString(R.string.db_invite_list_str)).child(stEmailUser).setValue(1)
-                    }
-                }
-                    dialogFindFriend.cancel()
+
+                dialogFindFriend.cancel()
+                sentMessageToTheUser(etEmailUser.text.toString())
             }
             dialogFindFriend.setCancelable(true)
             dialogFindFriend.show()
@@ -291,6 +325,35 @@ class FragmentFriends : Fragment() {
         progressbarFriends.animate().alpha(0.0f).setDuration(1000L).withEndAction {
             progressbarFriends.visibility = View.GONE
         }
+    }
+
+    private fun sentMessageToTheUser(stFriendEmail : String){
+        database.child(resources.getString(R.string.db_users_str)).child(stFriendEmail.replace(".","")).get().addOnSuccessListener {
+            if(it.value != null) {
+                database.child(resources.getString(R.string.db_users_str)).child(stFriendEmail.replace(".", ""))
+                    .child(resources.getString(R.string.db_invite_list_str)).child(stEmailUser).setValue(1)
+                showSuccessPopup()
+            }else{
+                showFailPopup()
+            }
+        }
+    }
+
+    private fun showSuccessPopup(){
+        clPopupMessage.visibility = View.VISIBLE
+        tvPopupMessageField.text = resources.getString(R.string.find_user_success_message)
+        clPopupMessage.translationY = (-150).toFloat()
+        clPopupMessage.animate().translationY(0F).setDuration(1000L).withEndAction{clPopupMessage.animate().translationY(clPopupMessage.height*(-1).toFloat()).setDuration(1000L).withEndAction{clPopupMessage.visibility = View.GONE}}
+    }
+
+    private fun showFailPopup(){
+        clPopupMessage.visibility = View.VISIBLE
+        tvPopupMessageField.text = resources.getString(R.string.find_unknown_user_message)
+        tvPopupMessageField.setTextColor(resources.getColor(R.color.productive_color_light))
+        clPopupMessage.translationY = (-150).toFloat()
+        clPopupMessage.animate().translationY(0F).setDuration(1000L).withEndAction{clPopupMessage.animate().translationY(clPopupMessage.height*(-1).toFloat()).setDuration(1000L).withEndAction{
+            tvPopupMessageField.setTextAppearance(R.style.StyleText)
+            clPopupMessage.visibility = View.GONE}}
     }
 
 

@@ -16,7 +16,7 @@
         android:layout_width="33dp"
         android:layout_height="33dp"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/rounded_day"
+        android:background="@drawable/rounded_day_for_calendar"
         android:fontFamily="@font/my_written"
         android:gravity="center"
         android:text="1"

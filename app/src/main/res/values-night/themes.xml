@@ -45,6 +45,7 @@
 
     <style name = "CustomRoundButton">
         <item name = "android:textColor" >@color/white</item>
+        <item name = "android:backgroundTint">@null</item>
     </style>
 
     <style name="CustomBorderedButton">

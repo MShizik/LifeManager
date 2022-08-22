@@ -6,8 +6,7 @@
         android:width="65dp"
         android:height="65dp"/>
     <solid
-        android:color="#bbdefb"/>
+        android:color="@color/ordinary_color_light"/>
     <stroke android:color="@color/black"
         android:width = "0.5dp"/>
-
 </shape>

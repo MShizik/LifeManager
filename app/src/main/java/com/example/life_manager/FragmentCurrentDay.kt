@@ -65,7 +65,7 @@ class FragmentCurrentDay : Fragment() {
 
         stEmailUser = arguments?.getString("email").toString()
 
-        chosenDate = arguments?.getString("date").toString()
+        chosenDate = arguments?.getSerializable("curdate").toString()
         chosenMonth = arguments?.getString("month").toString()
         chosenYear = arguments?.getString("year").toString()
 

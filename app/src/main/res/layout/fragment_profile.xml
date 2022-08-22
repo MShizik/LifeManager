@@ -62,21 +62,20 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="50dp"
-        android:layout_marginBottom="40dp"
+
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/pro_statistic_txt"
-            style = "@style/CustomTextView"
+            style="@style/CustomTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/my_written"
             android:letterSpacing="0.1"
             android:text="@string/statistic_field"
-            android:textColor="?android:textColor"
             android:textSize="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +84,7 @@
 
         <TextView
             android:id="@+id/pro_statistic_interest_txt"
-            style = "@style/CustomTextView"
+            style="@style/CustomTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
@@ -99,7 +98,7 @@
 
         <TextView
             android:id="@+id/pro_statistic_interest_percents_txt"
-            style = "@style/CustomTextView"
+            style="@style/CustomTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -115,7 +114,7 @@
 
         <TextView
             android:id="@+id/pro_statistic_productive_txt"
-            style = "@style/CustomTextView"
+            style="@style/CustomTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
@@ -128,7 +127,7 @@
 
         <TextView
             android:id="@+id/pro_statistic_productive_percents_txt"
-            style = "@style/CustomTextView"
+            style="@style/CustomTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -143,7 +142,7 @@
 
         <TextView
             android:id="@+id/pro_statistic_ordinary_txt"
-            style = "@style/CustomTextView"
+            style="@style/CustomTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
@@ -174,21 +173,40 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/pro_change_user"
+        android:id="@+id/pro_set_schedudle"
         style="@style/CustomTextButtonActive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/pro_day_constraint_btn"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="50dp"
-        android:layout_marginBottom="50dp"
         android:fontFamily="@font/my_written"
+        android:text="@string/notification_set_btn"
+        android:textAllCaps="false"
+        android:textSize="32dp"
+        android:textStyle="normal" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/pro_change_user"
+        style="@style/CustomBorderedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below = "@id/pro_set_schedudle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/my_written"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:text="@string/change_user_btn"
         android:textAllCaps="false"
         android:textSize="32dp"
         android:textStyle="normal" />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/progress_layout"
@@ -196,7 +214,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <ProgressBar
             android:id="@+id/main_progress_bar"

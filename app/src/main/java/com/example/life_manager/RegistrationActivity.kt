@@ -1,5 +1,7 @@
 package com.example.life_manager
 
+import android.app.*
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +17,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import org.w3c.dom.Text
+import java.util.*
 
 class RegistrationActivity : AppCompatActivity() {
 

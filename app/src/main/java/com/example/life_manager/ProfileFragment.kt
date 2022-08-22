@@ -1,5 +1,11 @@
 package com.example.life_manager
 
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Context.*
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +13,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
@@ -31,6 +39,7 @@ class ProfileFragment : Fragment() {
 
     private lateinit var btnCurDay : Button
     private lateinit var btnChangeUser : Button
+    private lateinit var btnSetNotification : Button
 
     private lateinit var tvPercentsOrdinary : TextView
     private lateinit var tvPercentsInterest : TextView
@@ -52,6 +61,7 @@ class ProfileFragment : Fragment() {
 
         btnCurDay = view.findViewById(R.id.pro_btn_day)
         btnChangeUser = view.findViewById(R.id.pro_change_user)
+        btnSetNotification = view.findViewById(R.id.pro_set_schedudle)
 
         tvPercentsInterest = view.findViewById(R.id.pro_statistic_interest_percents_txt)
         tvPercentsProductive = view.findViewById(R.id.pro_statistic_productive_percents_txt)
@@ -83,6 +93,11 @@ class ProfileFragment : Fragment() {
         btnChangeUser.setOnClickListener {
             val intentToWorkActivity = Intent(requireContext(), MainActivity::class.java)
             startActivity(intentToWorkActivity)
+        }
+
+        btnSetNotification.setOnClickListener{
+            createNotificationChannel()
+            scheduleNotification()
         }
 
 
@@ -150,6 +165,58 @@ class ProfileFragment : Fragment() {
         tvPercentsProductive.text = (percentsProductive*100).toInt().toString() + "%"
 
     }
+
+
+    private fun scheduleNotification()
+    {
+        val intent = Intent(requireContext(), everyDayNotification::class.java)
+        val title = resources.getString(R.string.notification_title)
+        val message = resources.getString(R.string.notification_message)
+        intent.putExtra(titleExtra, title)
+        intent.putExtra(messageExtra, message)
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            requireContext(),
+            notificationID,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val time = getTime()
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            time,
+            pendingIntent
+        )
+    }
+
+
+    private fun getTime(): Long
+    {
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = System.currentTimeMillis()
+        calendar.set(Calendar.HOUR_OF_DAY, 2)
+        calendar.set(Calendar.MINUTE,0)
+
+        if (Calendar.getInstance().after(calendar)) {
+            calendar.add(Calendar.DATE, 1)
+        }
+
+        return calendar.timeInMillis
+    }
+
+    private fun createNotificationChannel()
+    {
+        val name = "Notif Channel"
+        val desc = "A Description of the Channel"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(channelID, name, importance)
+        channel.description = desc
+        val notificationManager = activity?.getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
+
 
     companion object {
         @JvmStatic

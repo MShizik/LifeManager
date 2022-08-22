@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
-import kotlinx.coroutines.newFixedThreadPoolContext
 import nl.joery.animatedbottombar.AnimatedBottomBar
 import java.text.SimpleDateFormat
 import java.time.Instant
@@ -78,9 +77,7 @@ class WorkActivity : AppCompatActivity() {
         fragmentToChange = FragmentCurrentDay()
         var tmpBundle : Bundle = Bundle()
         tmpBundle.putString("email",stEmailUser)
-        tmpBundle.putString("date", curdate)
-        tmpBundle.putString("month", curmth)
-        tmpBundle.putString("year", curyear)
+        tmpBundle.putSerializable("curdate", LocalDate.parse(java.time.format.DateTimeFormatter.ISO_INSTANT.format(java.time.Instant.ofEpochSecond(Math.round((System.currentTimeMillis() / 1000).toDouble()).toLong())),DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")))
         fragmentToChange.arguments = tmpBundle
         supportFragmentManager
             .beginTransaction()

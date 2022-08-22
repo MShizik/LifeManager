@@ -63,4 +63,7 @@
     <string name="popup_success_message">Data saved successfully</string>
     <string name="find_unknown_user_message">User with such email doesn\'t exist</string>
     <string name="find_user_success_message">Invitation was sent to the user</string>
+    <string name="notification_title">Mark your day!</string>
+    <string name="notification_message">And don\'t forget about schedudle.</string>
+    <string name="notification_set_btn">Set notification</string>
 </resources>

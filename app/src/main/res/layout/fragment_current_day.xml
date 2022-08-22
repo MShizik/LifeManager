@@ -17,7 +17,8 @@
         android:background="@drawable/popup_message"
         android:translationZ="10dp"
         android:translationY="0dp"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/textView"
@@ -276,6 +277,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/cur_back_to_cal"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_back"
+        android:background="@color/transparent"/>
 
 
 </RelativeLayout>

@@ -49,4 +49,7 @@
     <string name="popup_success_message">данные успешно сохранены</string>
     <string name="find_unknown_user_message">Пользователь не найден</string>
     <string name="find_user_success_message">Приглашение успешно отправлено</string>
+    <string name="notification_title">Не забудь записать свой день!</string>
+    <string name="notification_message">И составить расписание на завтра.</string>
+    <string name="notification_set_btn">Создать уведомление</string>
 </resources>

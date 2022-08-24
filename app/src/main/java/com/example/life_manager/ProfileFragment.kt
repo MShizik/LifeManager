@@ -1,12 +1,11 @@
 package com.example.life_manager
 
-import android.app.AlarmManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
-import android.content.Context.*
+import android.content.Context.ALARM_SERVICE
+import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +15,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
@@ -46,6 +46,9 @@ class ProfileFragment : Fragment() {
     private lateinit var tvPercentsProductive : TextView
 
     private lateinit var progressbarProfile : ConstraintLayout
+    private lateinit var popupNotificationLayout : ConstraintLayout
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,6 +73,11 @@ class ProfileFragment : Fragment() {
         progressbarProfile  = view.findViewById(R.id.progress_layout)
         progressbarProfile.visibility = View.VISIBLE
 
+        popupNotificationLayout = view.findViewById(R.id.popup_constraint_layout)
+        popupNotificationLayout.visibility = View.GONE
+
+
+
         btnCurDay.text = SimpleDateFormat("dd", Locale.getDefault()).format(Date())
 
         getProfileData()
@@ -78,12 +86,8 @@ class ProfileFragment : Fragment() {
             val fragmentToChange = FragmentCurrentDay()
             val tmpBundle = Bundle()
             tmpBundle.putString("email",stEmailUser)
-            tmpBundle.putString("date", SimpleDateFormat("dd", Locale.getDefault()).format(Date()))
-            tmpBundle.putString("month", LocalDate.parse(
-                DateTimeFormatter.ISO_INSTANT.format(java.time.Instant.ofEpochSecond(
-                    Math.round((System.currentTimeMillis() / 1000).toDouble())
-                )),DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")).month.toString())
-            tmpBundle.putString("year", SimpleDateFormat("yyyy", Locale.getDefault()).format(Date()))
+            tmpBundle.putSerializable("curdate",LocalDate.parse(java.time.format.DateTimeFormatter.ISO_INSTANT.format(java.time.Instant.ofEpochSecond(Math.round((System.currentTimeMillis() / 1000).toDouble()).toLong())),DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")))
+            tmpBundle.putInt("prevfragment",2)
             fragmentToChange.arguments = tmpBundle
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.work_fragment_holder, fragmentToChange)
@@ -96,6 +100,7 @@ class ProfileFragment : Fragment() {
         }
 
         btnSetNotification.setOnClickListener{
+            createSchedudlePopup()
             createNotificationChannel()
             scheduleNotification()
         }
@@ -155,7 +160,9 @@ class ProfileFragment : Fragment() {
                 btnCurDay.setBackgroundResource(R.drawable.rounded_day_productive)
             }
         }
-        progressbarProfile.animate().setDuration(1000L).alpha(0.0f).withEndAction(Runnable { progressbarProfile.visibility = View.GONE })
+        progressbarProfile.animate().setDuration(1000L).alpha(0.0f).withEndAction(Runnable {
+            progressbarProfile.visibility = View.GONE
+        })
 
         percentsProductive = iProductivePercents
         percentsInterest = iInterestPercents
@@ -169,52 +176,58 @@ class ProfileFragment : Fragment() {
 
     private fun scheduleNotification()
     {
-        val intent = Intent(requireContext(), everyDayNotification::class.java)
-        val title = resources.getString(R.string.notification_title)
-        val message = resources.getString(R.string.notification_message)
-        intent.putExtra(titleExtra, title)
-        intent.putExtra(messageExtra, message)
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, 22)
+        calendar.set(Calendar.MINUTE, 30)
+        calendar.set(Calendar.SECOND, 0)
 
+        if (Calendar.getInstance().after(calendar)) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+        val intent = Intent(requireContext(), MemoBroadcast::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
             requireContext(),
-            notificationID,
+            0,
             intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val time = getTime()
-        alarmManager.setExactAndAllowWhileIdle(
+        val alarmManager = activity?.getSystemService(ALARM_SERVICE) as AlarmManager
+        alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
-            time,
+            calendar.getTimeInMillis(),
+            AlarmManager.INTERVAL_DAY,
             pendingIntent
         )
-    }
-
-
-    private fun getTime(): Long
-    {
-        val calendar = Calendar.getInstance()
-        calendar.timeInMillis = System.currentTimeMillis()
-        calendar.set(Calendar.HOUR_OF_DAY, 2)
-        calendar.set(Calendar.MINUTE,0)
-
-        if (Calendar.getInstance().after(calendar)) {
-            calendar.add(Calendar.DATE, 1)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                calendar.getTimeInMillis(),
+                pendingIntent
+            )
         }
-
-        return calendar.timeInMillis
     }
 
-    private fun createNotificationChannel()
-    {
-        val name = "Notif Channel"
-        val desc = "A Description of the Channel"
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel(channelID, name, importance)
-        channel.description = desc
-        val notificationManager = activity?.getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
+    private fun createNotificationChannel(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name: CharSequence = "PASTICCINO"
+            val description = "PASTICCINO`S CHANNEL"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel("Notification", name, importance)
+            channel.description = description
+            val notificationManager = activity?.getSystemService(
+                NotificationManager::class.java
+            )
+            notificationManager?.createNotificationChannel(channel)
+        }
+    }
+
+    //EggTimerFragment.kt
+
+    private fun createSchedudlePopup(){
+        popupNotificationLayout.visibility = View.VISIBLE
+        popupNotificationLayout.translationY = (-150).toFloat()
+        popupNotificationLayout.animate().translationY(0F).setDuration(1000L).withEndAction{popupNotificationLayout.animate().translationY(popupNotificationLayout.height*(-1).toFloat()).setDuration(1000L).withEndAction{popupNotificationLayout.visibility = View.GONE}}
     }
 
 

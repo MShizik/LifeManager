@@ -1,16 +1,21 @@
 package com.example.life_manager
 
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Intent
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                     if (it.value != null) {
                         if (it.child(resources.getString(R.string.db_password_str)).value.toString() == etPasswordUser?.text.toString()) {
                             stEmailUser = etEmailUser?.text.toString().replace(".","")
+
                             var intentToWorkActivity = Intent(this, WorkActivity::class.java)
                             intentToWorkActivity.putExtra("email", etEmailUser?.text.toString())
                             startActivity(intentToWorkActivity)

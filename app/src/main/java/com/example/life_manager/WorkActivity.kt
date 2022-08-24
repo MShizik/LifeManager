@@ -19,10 +19,11 @@ class WorkActivity : AppCompatActivity() {
 
     lateinit var BottomNavBar : AnimatedBottomBar
     lateinit var stEmailUser : String
+    private var checker : Boolean = false
+
 
     var curdate  = SimpleDateFormat("dd", Locale.getDefault()).format(Date())
-    var curmth = LocalDate.parse(java.time.format.DateTimeFormatter.ISO_INSTANT.format(java.time.Instant.ofEpochSecond(Math.round((System.currentTimeMillis() / 1000).toDouble()).toLong())),DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")).month.toString()
-    var curyear = SimpleDateFormat("yyyy", Locale.getDefault()).format(Date())
+    var ldCurrentDate = LocalDate.parse(java.time.format.DateTimeFormatter.ISO_INSTANT.format(java.time.Instant.ofEpochSecond(Math.round((System.currentTimeMillis() / 1000).toDouble()).toLong())),DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"))
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +36,7 @@ class WorkActivity : AppCompatActivity() {
         var fragmentToChange : Fragment
 
         var bottomBarTabTmp = BottomNavBar.createTab(R.drawable.ic_date_01, R.string.nav_days_title, R.id.menu_item_calendar)
+
 
         when (curdate){
             "01" -> bottomBarTabTmp = BottomNavBar.createTab(R.drawable.ic_date_01,R.string.nav_days_title,R.id.menu_item_current_day)
@@ -69,15 +71,15 @@ class WorkActivity : AppCompatActivity() {
             "30" -> bottomBarTabTmp = BottomNavBar.createTab(R.drawable.ic_date_30,R.string.nav_days_title,R.id.menu_item_current_day)
             "31" -> bottomBarTabTmp = BottomNavBar.createTab(R.drawable.ic_date_31,R.string.nav_days_title,R.id.menu_item_current_day)
         }
-        BottomNavBar.removeTabAt(0)
-        BottomNavBar.addTabAt(0,bottomBarTabTmp)
 
-        BottomNavBar.setTabEnabledById(R.id.menu_item_current_day,true)
+
+        BottomNavBar.setTabEnabledAt(0,true)
 
         fragmentToChange = FragmentCurrentDay()
         var tmpBundle : Bundle = Bundle()
         tmpBundle.putString("email",stEmailUser)
-        tmpBundle.putSerializable("curdate", LocalDate.parse(java.time.format.DateTimeFormatter.ISO_INSTANT.format(java.time.Instant.ofEpochSecond(Math.round((System.currentTimeMillis() / 1000).toDouble()).toLong())),DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")))
+        tmpBundle.putSerializable("curdate", ldCurrentDate)
+        tmpBundle.putInt("prevfragment",0)
         fragmentToChange.arguments = tmpBundle
         supportFragmentManager
             .beginTransaction()
@@ -93,10 +95,33 @@ class WorkActivity : AppCompatActivity() {
                 newTab: AnimatedBottomBar.Tab
             ) {
                 when (newIndex) {
+                    0-> {
+                        if(!checker){
+                            BottomNavBar.removeTabAt(0)
+                            BottomNavBar.addTabAt(0,bottomBarTabTmp)
+                            checker = true
+                        }
+                        fragmentToChange = FragmentCurrentDay()
+                        var tmpBundle: Bundle = Bundle()
+                        tmpBundle.putString("email", stEmailUser)
+                        tmpBundle.putSerializable("curdate",ldCurrentDate)
+                        tmpBundle.putInt("prevfragment",0)
+                        fragmentToChange.arguments = tmpBundle
+                        supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.work_fragment_holder, fragmentToChange)
+                            .commit()
+                    }
                     1 -> {
+                        if(!checker){
+                            BottomNavBar.removeTabAt(0)
+                            BottomNavBar.addTabAt(0,bottomBarTabTmp)
+                            checker = true
+                        }
                         fragmentToChange = FragmentCalendar()
                         var tmpBundle: Bundle = Bundle()
                         tmpBundle.putString("email", stEmailUser)
+                        tmpBundle.putSerializable("curdate",ldCurrentDate)
                         fragmentToChange.arguments = tmpBundle
                         supportFragmentManager
                             .beginTransaction()
@@ -104,6 +129,11 @@ class WorkActivity : AppCompatActivity() {
                             .commit()
                     }
                     2 -> {
+                        if(!checker){
+                            BottomNavBar.removeTabAt(0)
+                            BottomNavBar.addTabAt(0,bottomBarTabTmp)
+                            checker = true
+                        }
                         fragmentToChange = ProfileFragment()
                         var tmpBundle: Bundle = Bundle()
                         tmpBundle.putString("email", stEmailUser)
@@ -113,35 +143,12 @@ class WorkActivity : AppCompatActivity() {
                             .replace(R.id.work_fragment_holder, fragmentToChange)
                             .commit()
                     }
-                    0-> {
-                        fragmentToChange = FragmentCurrentDay()
-                        var tmpBundle: Bundle = Bundle()
-                        tmpBundle.putString("email", stEmailUser)
-                        tmpBundle.putString(
-                            "date",
-                            SimpleDateFormat("dd", Locale.getDefault()).format(Date())
-                        )
-                        tmpBundle.putString(
-                            "month", LocalDate.parse(
-                                DateTimeFormatter.ISO_INSTANT.format(
-                                    Instant.ofEpochSecond(
-                                        Math.round((System.currentTimeMillis() / 1000).toDouble())
-                                            .toLong()
-                                    )
-                                ), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
-                            ).month.toString()
-                        )
-                        tmpBundle.putString(
-                            "year",
-                            SimpleDateFormat("yyyy", Locale.getDefault()).format(Date())
-                        )
-                        fragmentToChange.arguments = tmpBundle
-                        supportFragmentManager
-                            .beginTransaction()
-                            .replace(R.id.work_fragment_holder, fragmentToChange)
-                            .commit()
-                    }
                     3 -> {
+                        if(!checker){
+                            BottomNavBar.removeTabAt(0)
+                            BottomNavBar.addTabAt(0,bottomBarTabTmp)
+                            checker = true
+                        }
                         fragmentToChange = FragmentFriends()
                         var tmpBundle: Bundle = Bundle()
                         tmpBundle.putString("email", stEmailUser)
@@ -156,4 +163,6 @@ class WorkActivity : AppCompatActivity() {
             }
         })
     }
+
+
 }

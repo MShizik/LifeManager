@@ -66,4 +66,6 @@
     <string name="notification_title">Mark your day!</string>
     <string name="notification_message">And don\'t forget about schedudle.</string>
     <string name="notification_set_btn">Set notification</string>
+    <string name="notification_delete_btn">Delete notification</string>
+    <string name="notification_set_popup">Notification is set</string>
 </resources>

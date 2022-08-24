@@ -30,14 +30,11 @@ class FragmentCalendar : Fragment() {
 
     private var alDatesData : ArrayList<DateHolder> = arrayListOf()
 
-    private var dateCurDate = LocalDate.parse(
-        DateTimeFormatter.ISO_INSTANT.format(
-            java.time.Instant.ofEpochSecond(
-                (System.currentTimeMillis() / 1000).toDouble().roundToLong()
-            )
-        ), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"))
-    private var prevdate = dateCurDate.plus(Period.of(-1,-1,0))
-    private var nextdate = dateCurDate.plus(Period.of(1,1,0))
+    private val ldCurrentReserveDate :LocalDate = LocalDate.parse(java.time.format.DateTimeFormatter.ISO_INSTANT.format(java.time.Instant.ofEpochSecond(Math.round((System.currentTimeMillis() / 1000).toDouble()).toLong())),DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"))
+
+    private lateinit var dateCurDate : LocalDate
+    private lateinit var prevdate : LocalDate
+    private lateinit var nextdate : LocalDate
 
 
 
@@ -84,6 +81,10 @@ class FragmentCalendar : Fragment() {
         deleteGridLayout()
 
         stEmailUser = arguments?.getString("email").toString()
+        dateCurDate = arguments?.getSerializable("curdate") as LocalDate
+        prevdate = dateCurDate.plus(Period.of(-1,-1,0))
+        nextdate = dateCurDate.plus(Period.of(1,1,0))
+
 
         getDataFromFirebase(dateCurDate.month.toString())
 
@@ -95,9 +96,8 @@ class FragmentCalendar : Fragment() {
             val fragmentToChange = FragmentCurrentDay()
             val tmpBundle = Bundle()
             tmpBundle.putString("email",stEmailUser)
-            tmpBundle.putString("date", dateCurDate.dayOfMonth.toString())
-            tmpBundle.putString("month", dateCurDate.month.toString())
-            tmpBundle.putString("year", dateCurDate.year.toString())
+            tmpBundle.putSerializable("curdate", ldCurrentReserveDate)
+            tmpBundle.putInt("prevfragment",1)
             fragmentToChange.arguments = tmpBundle
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.work_fragment_holder, fragmentToChange)
@@ -149,9 +149,8 @@ class FragmentCalendar : Fragment() {
             val fragmentToChange = FragmentCurrentDay()
             val tmpBundle  = Bundle()
             tmpBundle.putString("email",stEmailUser)
-            tmpBundle.putString("date", alDatesData[i].stDate)
-            tmpBundle.putString("month", dateCurDate.month.toString())
-            tmpBundle.putString("year", dateCurDate.year.toString())
+            tmpBundle.putSerializable("curdate",LocalDate.of(dateCurDate.year,dateCurDate.month,alDatesData[i].stDate.toString().toInt()))
+            tmpBundle.putInt("prevfragment",1)
             fragmentToChange.arguments = tmpBundle
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.work_fragment_holder, fragmentToChange)

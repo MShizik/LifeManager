@@ -38,7 +38,7 @@
     <string name="statistic_field">Статистика:</string>
     <string name="interesting_days_field">Интересных дней:</string>
     <string name="productive_days_field">Продуктивных дней:</string>
-    <string name="ordinary_days_field">Обычных дней</string>
+    <string name="ordinary_days_field">Обычных дней:</string>
     <string name="change_user_btn">Сменить пользователя</string>
     <string name="nav_days_title">день</string>
     <string name="nav_calendar_title">календарь</string>
@@ -52,4 +52,6 @@
     <string name="notification_title">Не забудь записать свой день!</string>
     <string name="notification_message">И составить расписание на завтра.</string>
     <string name="notification_set_btn">Создать уведомление</string>
+    <string name="notification_delete_btn">Убрать напоминание</string>
+    <string name="notification_set_popup">Напоминание установлено</string>
 </resources>

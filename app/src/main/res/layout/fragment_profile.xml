@@ -7,6 +7,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ProfileFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/popup_constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/popup_message"
+        android:translationY="0dp"
+        android:translationZ="10dp"
+        android:visibility="gone"
+        tools:visibility="gone">
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/CustomTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/my_written"
+            android:letterSpacing="0.1"
+            android:text="@string/notification_set_popup"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -180,33 +208,37 @@
         android:layout_below="@id/pro_day_constraint_btn"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="50dp"
         android:fontFamily="@font/my_written"
         android:text="@string/notification_set_btn"
         android:textAllCaps="false"
         android:textSize="32dp"
-        android:textStyle="normal" />
+        android:textStyle="normal"
+        android:visibility="visible"/>
 
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/pro_change_user"
-        style="@style/CustomBorderedButton"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below = "@id/pro_set_schedudle"
+        android:layout_below="@id/pro_set_schedudle"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="@font/my_written"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:text="@string/change_user_btn"
-        android:textAllCaps="false"
-        android:textSize="32dp"
-        android:textStyle="normal" />
+        android:layout_marginTop="40dp">
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/pro_change_user"
+            style="@style/CustomBorderedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/my_written"
+            android:text="@string/change_user_btn"
+            android:textSize="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/progress_layout"
@@ -214,20 +246,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <ProgressBar
             android:id="@+id/main_progress_bar"
             style="@style/customProgressBarStyle"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:indeterminateTint="#f0989f"
+            android:indeterminateTint="@color/productive_color_light"
             android:progressDrawable="@drawable/progres_bar_style"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </RelativeLayout>

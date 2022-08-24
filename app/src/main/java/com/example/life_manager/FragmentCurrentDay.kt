@@ -11,12 +11,15 @@ import android.view.animation.ScaleAnimation
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class FragmentCurrentDay : Fragment() {
@@ -29,6 +32,10 @@ class FragmentCurrentDay : Fragment() {
     private var iPreviousState = 0
     private var stEmailUser : String = "default"
     private var stNoteUser : String = "default"
+    private var ldChosenDate = LocalDate.parse(java.time.format.DateTimeFormatter.ISO_INSTANT.format(java.time.Instant.ofEpochSecond(Math.round((System.currentTimeMillis() / 1000).toDouble()).toLong())),
+        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"))
+    private var iPrevFragment = 0
+
     private var chosenYear : String = SimpleDateFormat("yyyy", Locale.getDefault()).format(Date())
     private var chosenMonth : String = SimpleDateFormat("MM", Locale.getDefault()).format(Date())
     private var chosenDate : String = SimpleDateFormat("dd", Locale.getDefault()).format(Date())
@@ -49,6 +56,8 @@ class FragmentCurrentDay : Fragment() {
         val btnCurDay : AppCompatButton = view.findViewById(R.id.cur_btn_day)
         val btnSaveUser : Button = view.findViewById(R.id.cur_day_save_btn)
 
+        val btnBackToCalendar : AppCompatImageButton = view.findViewById(R.id.cur_back_to_cal)
+
         val switchOrdinaryDay : SwitchCompat = view.findViewById(R.id.cur_day_switch_ordinary)
         val switchProductiveDay : SwitchCompat = view.findViewById(R.id.cur_day_switch_productive)
         val switchInterestDay : SwitchCompat = view.findViewById(R.id.cur_day_switch_interest)
@@ -65,11 +74,16 @@ class FragmentCurrentDay : Fragment() {
 
         stEmailUser = arguments?.getString("email").toString()
 
-        chosenDate = arguments?.getSerializable("curdate").toString()
-        chosenMonth = arguments?.getString("month").toString()
-        chosenYear = arguments?.getString("year").toString()
+        ldChosenDate = arguments?.getSerializable("curdate") as LocalDate?
+        chosenDate = ldChosenDate.dayOfMonth.toString()
+        chosenMonth = ldChosenDate.month.toString()
+        chosenYear = ldChosenDate.year.toString()
 
+        iPrevFragment = arguments?.getInt("prevfragment") as Int
 
+        if(iPrevFragment != 0){
+            btnBackToCalendar.visibility = View.VISIBLE
+        }
 
         getDataFromFirebase(object : callbackCurDayData{
             override fun OnCallback() {
@@ -184,6 +198,31 @@ class FragmentCurrentDay : Fragment() {
             }
             database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_days_str)).child(chosenYear).child(chosenMonth).child(chosenDate).child(resources.getString(R.string.db_switches_state_str)).setValue(iSwitchesState)
             database.child(resources.getString(R.string.db_users_str)).child(stEmailUser).child(resources.getString(R.string.db_days_str)).child(chosenYear).child(chosenMonth).child(chosenDate).child(resources.getString(R.string.db_notion_str)).setValue(etNoteUser.text.toString())
+        }
+
+
+        btnBackToCalendar.setOnClickListener {
+            when (iPrevFragment) {
+                1 -> {
+                    var fragmentToChange = FragmentCalendar()
+                    var tmpBundle: Bundle = Bundle()
+                    tmpBundle.putString("email", stEmailUser)
+                    tmpBundle.putSerializable("curdate",ldChosenDate)
+                    fragmentToChange.arguments = tmpBundle
+                    val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.work_fragment_holder, fragmentToChange)
+                    transaction.commit()
+                }
+                2 -> {
+                    var fragmentToChange = ProfileFragment()
+                    var tmpBundle: Bundle = Bundle()
+                    tmpBundle.putString("email", stEmailUser)
+                    fragmentToChange.arguments = tmpBundle
+                    val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.work_fragment_holder, fragmentToChange)
+                    transaction.commit()
+                }
+            }
         }
 
 

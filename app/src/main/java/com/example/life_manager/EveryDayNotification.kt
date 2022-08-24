@@ -12,7 +12,7 @@ const val channelID = "channel1"
 const val titleExtra = "titleExtra"
 const val messageExtra = "messageExtra"
 
-class everyDayNotification : BroadcastReceiver()
+class EveryDayNotification : BroadcastReceiver()
 {
     override fun onReceive(context: Context, intent: Intent)
     {

@@ -24,11 +24,10 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="20dp"
+            android:listSelector="@color/transparent"
             android:numColumns="7"
             android:scrollbarSize="0dp"
-            android:verticalSpacing="15dp"
-            android:listSelector="@color/transparent"
-            />
+            android:verticalSpacing="15dp" />
     </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,7 +40,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/calendar_btn_day"
             style="@style/CustomRoundButton"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="30dp"
             android:layout_gravity="center_horizontal"
             android:layout_width="140dp"
             android:layout_height="140dp"
@@ -71,7 +70,7 @@
         android:layout_alignParentLeft="true"
         android:layout_gravity="center|left"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="80dp"
         android:fontFamily="@font/my_written"
         android:gravity="left|center_vertical"
         android:text="2021"
@@ -87,7 +86,7 @@
         android:layout_below="@id/cur_day_constraint_btn"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center|center"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="80dp"
         android:fontFamily="@font/my_written"
         android:text="2022"
         android:textAllCaps="false"
@@ -101,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/cur_day_constraint_btn"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="40dp"
         android:fontFamily="@font/my_written"
         android:gravity="right|center_vertical"
@@ -164,8 +163,8 @@
         android:layout_height="match_parent"
         android:layout_above="@id/cal_btn_cur_mth"
         android:layout_below="@id/cal_btn_cur_year"
-        tools:visibility="visible"
-        android:elevation="0dp">
+        android:elevation="0dp"
+        tools:visibility="visible">
 
         <ProgressBar
             android:id="@+id/main_progress_bar_calendar"
@@ -178,17 +177,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/progress_layout"
+        style="@style/CustomProgressBarLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style = "@style/CustomProgressBarLayout"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <ProgressBar
             android:id="@+id/main_progress_bar"

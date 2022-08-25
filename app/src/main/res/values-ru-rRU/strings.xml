@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Life_Manager</string>
+    <string name="app_name">Life Manager</string>
     <string name="main_greeting">Жизнь коротка, используй её с умом</string>
     <string name="sign_up_btn">регистрация</string>
     <string name="sign_in_btn">войти</string>

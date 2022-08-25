@@ -50,7 +50,7 @@
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/rounded_day"
             android:fontFamily="@font/my_written"
             android:gravity="center_horizontal|center_vertical"
@@ -88,7 +88,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="50dp"
 
 
@@ -246,7 +246,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <ProgressBar
             android:id="@+id/main_progress_bar"

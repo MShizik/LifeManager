@@ -5,8 +5,10 @@ import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.system.Os.remove
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +27,8 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.math.roundToLong
+
+
 
 
 class ProfileFragment : Fragment() {
@@ -95,6 +99,9 @@ class ProfileFragment : Fragment() {
         }
 
         btnChangeUser.setOnClickListener {
+            val preferencesUserData = requireContext().getSharedPreferences("user",Context.MODE_PRIVATE)
+            preferencesUserData.edit().remove("email").apply()
+            preferencesUserData.edit().remove("password").apply()
             val intentToWorkActivity = Intent(requireContext(), MainActivity::class.java)
             startActivity(intentToWorkActivity)
         }

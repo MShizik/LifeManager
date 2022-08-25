@@ -4,7 +4,9 @@ import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
@@ -41,13 +43,29 @@ class MainActivity : AppCompatActivity() {
         btnSignUser = findViewById(R.id.main_sign_btn)
         btnRegUser = findViewById(R.id.main_reg_btn)
 
+        val preferencesUserSign = getSharedPreferences("user", Context.MODE_PRIVATE)
+
         btnRegUser?.setOnClickListener {
             val regIntent = Intent(this, RegistrationActivity::class.java)
             startActivity(regIntent)
         }
 
-
         var stEmailUser: String? = null
+
+        if(preferencesUserSign.contains("email") and preferencesUserSign.contains("password")) {
+            database.child(resources.getString(R.string.db_users_str))
+                .child(preferencesUserSign.getString("email","default").toString()).get()
+                .addOnSuccessListener {
+                    if (it.value != null) {
+                        if (it.child(resources.getString(R.string.db_password_str)).value.toString() == preferencesUserSign.getString("password","default")) {
+                            stEmailUser = preferencesUserSign.getString("email","default").toString()
+                            var intentToWorkActivity = Intent(this, WorkActivity::class.java)
+                            intentToWorkActivity.putExtra("email", stEmailUser)
+                            startActivity(intentToWorkActivity)
+                        }
+                    }
+                }
+        }
 
 
         btnSignUser?.setOnClickListener {
@@ -57,6 +75,12 @@ class MainActivity : AppCompatActivity() {
                         if (it.child(resources.getString(R.string.db_password_str)).value.toString() == etPasswordUser?.text.toString()) {
                             stEmailUser = etEmailUser?.text.toString().replace(".","")
 
+                            if(!(preferencesUserSign.contains("email") and preferencesUserSign.contains("password"))){
+                                val preferencesEditor = preferencesUserSign.edit()
+                                preferencesEditor.putString("email",etEmailUser?.text.toString().replace(".",""))
+                                preferencesEditor.putString("password",etPasswordUser?.text.toString())
+                                preferencesEditor.apply()
+                            }
                             var intentToWorkActivity = Intent(this, WorkActivity::class.java)
                             intentToWorkActivity.putExtra("email", etEmailUser?.text.toString())
                             startActivity(intentToWorkActivity)

@@ -144,8 +144,16 @@ class RegistrationActivity : AppCompatActivity() {
                     if(etPasswordUser?.text.toString() == etPasswordRepeatUser?.text.toString()){
                         if(etPasswordUser?.text.toString().length >= 8) {
                             database.child(resources.getString(R.string.db_users_str))
-                                .child(etEmailUser?.text.toString().replace(".", ""))
+                                .child(stEmailUser)
                                 .child(resources.getString(R.string.db_password_str)).setValue(etPasswordUser?.text.toString())
+
+                            val preferencesUserData = getSharedPreferences("user",Context.MODE_PRIVATE)
+                            if(!(preferencesUserData.contains("email") and preferencesUserData.contains("password"))){
+                                val preferencesEditor = preferencesUserData.edit()
+                                preferencesEditor.putString("email",etEmailUser?.text.toString().replace(".",""))
+                                preferencesEditor.putString("password",etPasswordUser?.text.toString())
+                                preferencesEditor.apply()
+                            }
                             var intentToWorkActivity = Intent(this, WorkActivity::class.java)
                             intentToWorkActivity.putExtra("email", stEmailUser)
                             startActivity(intentToWorkActivity)
@@ -201,6 +209,11 @@ class RegistrationActivity : AppCompatActivity() {
                 }
             }
         }
+
+    }
+
+    override fun onStop() {
+        super.onStop()
 
     }
 
